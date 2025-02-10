@@ -1,5 +1,8 @@
 package ozdemir0ozdemir.topicproject.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,24 +15,16 @@ import org.testcontainers.junit.jupiter.Container;
 import ozdemir0ozdemir.topicproject.model.TopicDefinition;
 import ozdemir0ozdemir.topicproject.model.TopicTitle;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class TopicDefinitionRepositoryTest {
 
-    @Container
-    @ServiceConnection
-    static final PostgreSQLContainer<?> postgres =
-            new PostgreSQLContainer<>("postgres:16-alpine");
+    @Container @ServiceConnection
+    static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine");
 
-    @Autowired
-    TopicTitleRepository titleRepository;
+    @Autowired TopicTitleRepository titleRepository;
 
-    @Autowired
-    TopicDefinitionRepository definitionRepository;
+    @Autowired TopicDefinitionRepository definitionRepository;
 
     @BeforeEach
     public void setUp() {
@@ -38,10 +33,11 @@ class TopicDefinitionRepositoryTest {
 
         title1 = titleRepository.save(title1);
 
-
-        TopicDefinition definition = new TopicDefinition()
-                .setTopicTitle(title1)
-                .setDefinition("Yeni bir başlangıcın ilk adımları olabilir. Belki iyi bir şey olur! swh");
+        TopicDefinition definition =
+                new TopicDefinition()
+                        .setTopicTitle(title1)
+                        .setDefinition(
+                                "Yeni bir başlangıcın ilk adımları olabilir. Belki iyi bir şey olur! swh");
 
         definitionRepository.save(definition);
     }
@@ -71,5 +67,4 @@ class TopicDefinitionRepositoryTest {
         assertThat(definition.getDefinition())
                 .isEqualTo("Yeni bir başlangıcın ilk adımları olabilir. Belki iyi bir şey olur! swh");
     }
-
 }

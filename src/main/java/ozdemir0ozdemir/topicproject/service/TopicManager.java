@@ -1,5 +1,6 @@
 package ozdemir0ozdemir.topicproject.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ozdemir0ozdemir.topicproject.model.TopicDefinition;
@@ -7,15 +8,12 @@ import ozdemir0ozdemir.topicproject.model.TopicTitle;
 import ozdemir0ozdemir.topicproject.repository.TopicDefinitionRepository;
 import ozdemir0ozdemir.topicproject.repository.TopicTitleRepository;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class TopicManager {
 
     private final TopicTitleRepository topicTitleRepository;
     private final TopicDefinitionRepository topicDefinitionRepository;
-
 
     public TopicTitle saveTitle(TopicTitle title) {
         title.setId(null);

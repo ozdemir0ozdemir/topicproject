@@ -18,5 +18,4 @@ public class TestcontainersConfiguration {
                 .withUsername("topic")
                 .withPassword("topic");
     }
-
 }
