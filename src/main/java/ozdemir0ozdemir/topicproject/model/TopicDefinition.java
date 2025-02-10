@@ -1,5 +1,7 @@
 package ozdemir0ozdemir.topicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,11 +23,16 @@ public class TopicDefinition {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	// TODO: Convert this property to only topic title id in json response
+    @JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "topic_title_id", referencedColumnName = "topic_title_id", nullable = false)
 	private TopicTitle topicTitle;
 
 	@Column(name = "topic_definition", nullable = false)
 	private String definition;
+
+    @JsonProperty("topic_title_id")
+    public Long getTopicTitleId() {
+        return this.topicTitle.getId();
+    }
 }
