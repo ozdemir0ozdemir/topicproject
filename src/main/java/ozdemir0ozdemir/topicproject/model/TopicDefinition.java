@@ -23,7 +23,7 @@ public class TopicDefinition {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-    @JsonIgnore
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "topic_title_id", referencedColumnName = "topic_title_id", nullable = false)
 	private TopicTitle topicTitle;
@@ -31,8 +31,8 @@ public class TopicDefinition {
 	@Column(name = "topic_definition", nullable = false)
 	private String definition;
 
-    @JsonProperty("topic_title_id")
-    public Long getTopicTitleId() {
-        return this.topicTitle.getId();
-    }
+	@JsonProperty("topic_title_id")
+	public Long getTopicTitleId() {
+		return this.topicTitle.getId();
+	}
 }
