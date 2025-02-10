@@ -21,10 +21,11 @@ public class TopicDefinition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "topic_title_id", referencedColumnName = "topic_title_id")
+    // TODO: Convert this property to only topic title id in json response
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "topic_title_id", referencedColumnName = "topic_title_id", nullable = false)
     private TopicTitle topicTitle;
 
-    @Column(name = "topic_definition")
+    @Column(name = "topic_definition", nullable = false)
     private String definition;
 }
