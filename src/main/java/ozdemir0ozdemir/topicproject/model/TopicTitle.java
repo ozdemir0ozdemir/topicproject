@@ -16,11 +16,11 @@ import lombok.experimental.Accessors;
 @Table(name = "topic_titles")
 public class TopicTitle {
 
-    @Column(name = "topic_title_id", updatable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Column(name = "topic_title_id", updatable = false)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "topic_title")
-    private String title;
+	@Column(name = "topic_title")
+	private String title;
 }

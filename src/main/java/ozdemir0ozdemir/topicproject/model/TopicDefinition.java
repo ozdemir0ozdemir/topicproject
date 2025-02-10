@@ -16,16 +16,16 @@ import lombok.experimental.Accessors;
 @Table(name = "topic_definitions")
 public class TopicDefinition {
 
-    @Column(name = "topic_definition_id", updatable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Column(name = "topic_definition_id", updatable = false)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    // TODO: Convert this property to only topic title id in json response
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "topic_title_id", referencedColumnName = "topic_title_id", nullable = false)
-    private TopicTitle topicTitle;
+	// TODO: Convert this property to only topic title id in json response
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "topic_title_id", referencedColumnName = "topic_title_id", nullable = false)
+	private TopicTitle topicTitle;
 
-    @Column(name = "topic_definition", nullable = false)
-    private String definition;
+	@Column(name = "topic_definition", nullable = false)
+	private String definition;
 }

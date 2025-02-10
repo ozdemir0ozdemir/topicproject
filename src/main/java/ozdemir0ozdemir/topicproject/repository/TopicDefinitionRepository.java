@@ -7,6 +7,6 @@ import ozdemir0ozdemir.topicproject.model.TopicDefinition;
 
 public interface TopicDefinitionRepository extends JpaRepository<TopicDefinition, Long> {
 
-    @Query("from TopicDefinition td where td.topicTitle.id = :topicTitleId")
-    List<TopicDefinition> findAllByTopicTitleId(Long topicTitleId);
+	@Query("from TopicDefinition td where td.topicTitle.id = :topicTitleId")
+	List<TopicDefinition> findAllByTopicTitleId(Long topicTitleId);
 }

@@ -13,13 +13,13 @@ import ozdemir0ozdemir.topicproject.service.TopicManager;
 @RequestMapping("api/v1/topics")
 record TopicController(TopicManager topics) {
 
-    @GetMapping
-    List<TopicTitle> getAllTopicTitles() {
-        return this.topics.getAllTitles();
-    }
+	@GetMapping
+	List<TopicTitle> getAllTopicTitles() {
+		return this.topics.getAllTitles();
+	}
 
-    @GetMapping("/definitions/{topicTitleId}")
-    List<TopicDefinition> getAllTopicDefinitionsByTopicTitleUId(@PathVariable Long topicTitleId) {
-        return this.topics.getDefinitionsByTitleId(topicTitleId);
-    }
+	@GetMapping("/definitions/{topicTitleId}")
+	List<TopicDefinition> getAllTopicDefinitionsByTopicTitleUId(@PathVariable Long topicTitleId) {
+		return this.topics.getDefinitionsByTitleId(topicTitleId);
+	}
 }
