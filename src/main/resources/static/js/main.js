@@ -1,59 +1,72 @@
-const xhttp = new XMLHttpRequest();
-const topicTitlesList = document.querySelector(".topic-titles-list");
-const topicTitleHeader = document.querySelector(".topic-definitions-title");
+import {TopicService} from "./topic-service.js";
 
-topicTitlesList.innerHTML = "";
+const newTopicTitle = document.querySelector("#new-topic-title");
+const newTopicDefinition = document.querySelector("#new-definition-text");
 
-xhttp.onload = function () {
-  let titlesList = JSON.parse(xhttp.responseText);
-  let htmlString = "";
-  titlesList.forEach((item, index) => {
-    htmlString += createTopicTitleItem(item.id, item.title);
-    if(index === 0){
-      topicTitleHeader.innerHTML = item.title;
-      getTopicDefinitionsByTopicTitleId(item.id);
-    }
-  });
+const currentTopic = {
+  id: null,
+  title: null,
 
-
-
-  topicTitlesList.innerHTML = htmlString;
-
-  // DEV ONLY -- DELETED SOON
-  for(let i = 0; i < 10; i++) {
-    topicTitlesList.innerHTML += htmlString;
+  setTopic(id, title) {
+    this.id = id;
+    this.title = title;
+    getTopicDefinitionsByTopicTitleId(id, title);
   }
+};
 
+refreshAllTopicTitles();
 
-  const topicLinks = document.querySelectorAll(".topic-title a");
-  topicLinks.forEach(link => {
-    link.addEventListener("click", function(event) {
+document
+    .querySelector(".topic-titles-list")
+    .addEventListener("click", event => {
       event.preventDefault();
-      const id = link.getAttribute("data-id");
-      topicTitleHeader.innerHTML = link.innerHTML;
-      getTopicDefinitionsByTopicTitleId(id)
+      const id = event.target.getAttribute("data-id");
+      if(event.target && id){
+        currentTopic.setTopic(id, event.target.innerHTML);
+      }
     });
-  });
-}
 
+document
+    .querySelector(".topic-titles-refresh-button")
+    .addEventListener("click", () => refreshAllTopicTitles());
 
+document
+    .querySelector(".topic-titles-add-button")
+    .addEventListener("click", () => {
+      if(newTopicTitle.value){
+        TopicService.saveNewTopicTitle(newTopicTitle.value)
+            .then(result => {
+              refreshAllTopicTitles();
+              newTopicTitle.value= "";
+            });
+      }
 
+    });
 
-xhttp.open("GET", "api/v1/topics");
-xhttp.send();
+document
+    .querySelector(".new-definition-add-button")
+    .addEventListener("click", () => {
+      if(newTopicDefinition.value){
+        TopicService.saveNewTopicDefinition(currentTopic, newTopicDefinition.value)
+            .then(result => {
+              getTopicDefinitionsByTopicTitleId(currentTopic.id, currentTopic.title);
+              newTopicDefinition.value= "";
+            });
+      }
 
+    });
 
+currentTopic.setTopic(1, "10 şubat 2025 topicproject'in başlaması");
 
 function createTopicTitleItem(id, title) {
   return `
     <li class="topic-title">
       <a href="#" data-id="${id}">${title}</a>
-    </li>
-  `;
+    </li>`;
 }
 
 function createTopicDefinitionItem(id, definition) {
- return `
+  return `
   <div class="topic-definition-card">
     <div class="topic-definition-text">
       ${definition}
@@ -62,31 +75,26 @@ function createTopicDefinitionItem(id, definition) {
  `;
 }
 
-function getTopicDefinitionsByTopicTitleId(topicTitleId) {
-  const request = new XMLHttpRequest();
+function refreshAllTopicTitles() {
+  const topicTitlesList = document.querySelector(".topic-titles-list");
+  topicTitlesList.innerHTML = "";
 
-  request.onload = () => {
-    const definitionsList = JSON.parse(request.responseText);
+  TopicService.getAllTopicTitles()
+      .then(topicTitleList => topicTitleList
+          .map(title => createTopicTitleItem(title.id, title.title))
+          .join(""))
+      .then(titles => topicTitlesList.innerHTML = titles);
+}
 
-    const definitionCards = document.querySelector(".topic-definition-cards");
-    definitionCards.innerHTML = "";
+function getTopicDefinitionsByTopicTitleId(topicTitleId, topicTitle) {
+  const topicTitleHeader = document.querySelector(".topic-definitions-title");
+  topicTitleHeader.innerHTML = topicTitle;
 
-    let htmlString = "";
-
-    definitionsList.forEach(item => {
-      htmlString += createTopicDefinitionItem(item.id, item.definition);
-    });
-
-    definitionCards.innerHTML = htmlString;
-
-    // DEV ONLY -- DELETED SOON
-    for(let i = 0; i < 10; i++) {
-      definitionCards.innerHTML += htmlString;
-    }
-
-  }
-
-  request.open("GET", `api/v1/topics/definitions/${topicTitleId}`)
-  request.send();
+  const definitionCards = document.querySelector(".topic-definition-cards");
+  TopicService.getAllDefinitionsByTopicTitleId(topicTitleId)
+      .then(defList => defList
+          .map(def => createTopicDefinitionItem(def.id, def.definition))
+          .join(""))
+      .then(definitions => definitionCards.innerHTML = definitions);
 }
 

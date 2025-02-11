@@ -1,6 +1,5 @@
 package ozdemir0ozdemir.topicproject.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,7 +22,6 @@ public class TopicDefinition {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "topic_title_id", referencedColumnName = "topic_title_id", nullable = false)
 	private TopicTitle topicTitle;

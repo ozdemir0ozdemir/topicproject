@@ -10,16 +10,17 @@
   <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-
 <main class="topics-container">
   <div class="topic-titles-container">
+    <div class="topic-title-header">
+      <h1 style="margin-bottom: 25px;">TopicProject</h1>
+    </div>
     <div class="topic-titles-form">
       <input type="text" name="new-topic-title" id="new-topic-title" placeholder="Type new topic's title">
-      <button class="topic-titles-refresh-button" type="button">Add Topic Title</button>
+      <button class="topic-titles-add-button" type="button">Add Topic Title</button>
       <button class="topic-titles-refresh-button" type="button">Refresh</button>
       <hr style="margin: 1rem 0;"/>
     </div>
-
     <ul class="topic-titles-list">
       <li class="topic-title">
         <a href="#">
@@ -47,7 +48,7 @@
     </div>
     <div class="topic-definition-form">
       <textarea class="new-definition-text" name="new-definition-text" id="new-definition-text" cols="30" rows="10" placeholder="Type to create new definition about the title..."></textarea>
-      <button type="button">Add new definition</button>
+      <button type="button" class="new-definition-add-button">Add new definition</button>
     </div>
   </div>
 </main>
