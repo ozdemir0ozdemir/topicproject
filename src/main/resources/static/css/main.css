@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,500&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Ubuntu, sans-serif;
+}
+
+body {
+  height: 100vh;
+
+}
+
+
+:root {
+  --theme-color: #053168;
+}
+/* Topic Titles and Definitions */
+
+.topics-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.topic-titles-container,
+.topic-definitions-container {
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.topic-titles-container {
+  padding: 1rem;
+  min-width: 260px;
+}
+
+.topic-definitions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+.topic-titles-form {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+
+#new-topic-title {
+  width: 100%;
+  padding: .5rem;
+
+}
+
+.topic-titles-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  margin-bottom: 200px;
+}
+
+.topic-title > a {
+  color: var(--theme-color);
+  text-decoration: none;
+}
+
+.topic-titles-refresh-button {
+  width: 100%;
+  height: 2rem;
+}
+
+.topic-definitions-title {
+  margin-bottom: 2rem;
+  position: sticky;
+  top: 0;
+  background-color: var(--theme-color);
+  color: white;
+  width: 100%;
+  padding: 1rem;
+}
+
+.topic-definition-cards {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 30px;
+}
+.topic-definition-card {
+  width: 95%;
+  padding: 2rem 2rem 2rem 2rem;
+  background-color: #e8ebf4;
+  border-radius: 20px;
+}
+
+.topic-definition-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 200px;
+  margin-top: 50px;
+}
+
+.new-definition-text {
+  width: 90%;
+  height: 200px;
+  padding: .5rem;
+  font-family: Ubuntu, sans-serif;
+  resize: none;
+}
+
+.topic-definition-form > button{
+  padding: 1rem;
+  width: 90%;
+}
+
+
+
+
