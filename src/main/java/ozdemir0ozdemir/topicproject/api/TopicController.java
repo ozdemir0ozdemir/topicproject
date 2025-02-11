@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +21,14 @@ record TopicController(TopicManager topics) {
 	@Operation(summary = "Get all topic titles")
 	@ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Topic titles found")})
 	@GetMapping
-	List<TopicTitle> getAllTopicTitles() {
-		return this.topics.getAllTitles();
+	ResponseEntity<List<TopicTitle>> getAllTopicTitles() {
+		return ResponseEntity.ok(this.topics.getAllTitles());
 	}
 
+	@Operation(summary = "Get all topic definitions by topic title id")
+	@ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Topic definitions found")})
 	@GetMapping("/definitions/{topicTitleId}")
-	List<TopicDefinition> getAllTopicDefinitionsByTopicTitleUId(@PathVariable Long topicTitleId) {
-		return this.topics.getDefinitionsByTitleId(topicTitleId);
+	ResponseEntity<List<TopicDefinition>> getAllTopicDefinitionsByTopicTitleUId(@PathVariable Long topicTitleId) {
+		return ResponseEntity.ok(this.topics.getDefinitionsByTitleId(topicTitleId));
 	}
 }
