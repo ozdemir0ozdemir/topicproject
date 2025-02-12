@@ -1,6 +1,5 @@
-package ozdemir0ozdemir.topicproject.repository;
+package ozdemir0ozdemir.topicproject.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ozdemir0ozdemir.topicproject.entity.TopicTitle;
 
 public interface TopicTitleRepository extends JpaRepository<TopicTitle, Long> {}

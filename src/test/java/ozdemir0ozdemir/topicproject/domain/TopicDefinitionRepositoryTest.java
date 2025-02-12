@@ -1,4 +1,4 @@
-package ozdemir0ozdemir.topicproject.repository;
+package ozdemir0ozdemir.topicproject.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
-import ozdemir0ozdemir.topicproject.entity.TopicDefinition;
-import ozdemir0ozdemir.topicproject.entity.TopicTitle;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

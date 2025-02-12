@@ -3,9 +3,9 @@ package ozdemir0ozdemir.topicproject;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ozdemir0ozdemir.topicproject.entity.TopicDefinition;
-import ozdemir0ozdemir.topicproject.entity.TopicTitle;
-import ozdemir0ozdemir.topicproject.service.TopicManager;
+import ozdemir0ozdemir.topicproject.domain.TopicDefinition;
+import ozdemir0ozdemir.topicproject.domain.TopicTitle;
+import ozdemir0ozdemir.topicproject.domain.TopicManager;
 
 @Configuration
 public class ExampleDataCreator {

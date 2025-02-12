@@ -1,10 +1,10 @@
-package ozdemir0ozdemir.topicproject.controller;
+package ozdemir0ozdemir.topicproject.api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ozdemir0ozdemir.topicproject.entity.TopicDefinition;
-import ozdemir0ozdemir.topicproject.entity.TopicTitle;
-import ozdemir0ozdemir.topicproject.service.TopicManager;
+import ozdemir0ozdemir.topicproject.domain.TopicDefinition;
+import ozdemir0ozdemir.topicproject.domain.TopicTitle;
+import ozdemir0ozdemir.topicproject.domain.TopicManager;
 
 import java.util.List;
 

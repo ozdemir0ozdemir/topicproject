@@ -1,4 +1,4 @@
-package ozdemir0ozdemir.topicproject.response;
+package ozdemir0ozdemir.topicproject.api;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,5 @@
-package ozdemir0ozdemir.topicproject.entity;
+package ozdemir0ozdemir.topicproject.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

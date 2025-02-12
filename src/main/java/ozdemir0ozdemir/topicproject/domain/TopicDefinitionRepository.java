@@ -1,8 +1,7 @@
-package ozdemir0ozdemir.topicproject.repository;
+package ozdemir0ozdemir.topicproject.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import ozdemir0ozdemir.topicproject.entity.TopicDefinition;
 
 import java.util.List;
 
