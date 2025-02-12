@@ -23,6 +23,10 @@ class SanitizerTest {
             "yeni(başlık,yeni-baslik",
             "yeni*başlık,yeni-baslik",
             "yeni?başlık,yeni-baslik",
+            "yeni[başlık,yeni-baslik",
+            "yeni\\başlık,yeni-baslik",
+            "yeni~başlık,yeni-baslik",
+            "yeni<başlık,yeni-baslik",
     })
     void should_sanitizeTitle(String rawTitle, String exceptedTitle) {
         assertThat(Sanitizer.sanitizeTitle(rawTitle)).isEqualTo(exceptedTitle);
