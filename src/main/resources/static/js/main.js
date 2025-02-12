@@ -83,7 +83,7 @@ function createTopicDefinitionItem(id, definition) {
   return `
   <div class="topic-definition-card">
     <div class="topic-definition-text">
-      ${definition}
+      ${definition.replaceAll("<", "&lt;")}
     </div>
   </div>
  `;
