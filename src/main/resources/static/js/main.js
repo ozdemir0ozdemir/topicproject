@@ -56,6 +56,14 @@ document
 
     });
 
+
+// Index Problems Answer with query param
+// document
+//     .addEventListener("DOMContentLoaded", event => {
+//       const encoded = encodeURIComponent(new URLSearchParams(window.location.search).get("topic"));
+//       console.log(encoded);
+//     })
+
 currentTopic.setTopic(1, "10 şubat 2025 topicproject'in başlaması");
 
 function createTopicTitleItem(id, title) {

@@ -3,8 +3,8 @@ package ozdemir0ozdemir.topicproject;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ozdemir0ozdemir.topicproject.model.TopicDefinition;
-import ozdemir0ozdemir.topicproject.model.TopicTitle;
+import ozdemir0ozdemir.topicproject.entity.TopicDefinition;
+import ozdemir0ozdemir.topicproject.entity.TopicTitle;
 import ozdemir0ozdemir.topicproject.service.TopicManager;
 
 @Configuration

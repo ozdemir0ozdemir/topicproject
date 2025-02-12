@@ -12,8 +12,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
-import ozdemir0ozdemir.topicproject.model.TopicDefinition;
-import ozdemir0ozdemir.topicproject.model.TopicTitle;
+import ozdemir0ozdemir.topicproject.entity.TopicDefinition;
+import ozdemir0ozdemir.topicproject.entity.TopicTitle;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -29,15 +29,19 @@ class TopicDefinitionRepositoryTest {
 	@Autowired
 	TopicDefinitionRepository definitionRepository;
 
+	private TopicTitle title;
+	private TopicDefinition definition ;
+
+
 	@BeforeEach
 	public void setUp() {
-		TopicTitle title1 = new TopicTitle();
-		title1.setTitle("10 şubat 2025 topicproject\'in başlaması");
+		title = new TopicTitle();
+		title.setTitle("10 şubat 2025 topicproject\'in başlaması");
 
-		title1 = titleRepository.save(title1);
+		title = titleRepository.save(title);
 
-		TopicDefinition definition = new TopicDefinition()
-				.setTopicTitle(title1)
+		definition = new TopicDefinition()
+				.setTopicTitle(title)
 				.setDefinition("Yeni bir başlangıcın ilk adımları olabilir. Belki iyi bir şey olur! swh");
 
 		definitionRepository.save(definition);

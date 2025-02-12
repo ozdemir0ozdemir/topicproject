@@ -3,8 +3,8 @@ package ozdemir0ozdemir.topicproject.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ozdemir0ozdemir.topicproject.model.TopicDefinition;
-import ozdemir0ozdemir.topicproject.model.TopicTitle;
+import ozdemir0ozdemir.topicproject.entity.TopicDefinition;
+import ozdemir0ozdemir.topicproject.entity.TopicTitle;
 import ozdemir0ozdemir.topicproject.repository.TopicDefinitionRepository;
 import ozdemir0ozdemir.topicproject.repository.TopicTitleRepository;
 

@@ -1,4 +1,4 @@
-package ozdemir0ozdemir.topicproject.model;
+package ozdemir0ozdemir.topicproject.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;

@@ -1,12 +1,11 @@
 const apiUrl = "http://localhost:8080/api/v1";
-const topicsUrl = apiUrl + "/topics"
-const definitionsUrl = topicsUrl + "/definitions";
+
 
 export const TopicService = {
 
   async getAllTopicTitles() {
     try {
-      const response = await fetch(topicsUrl);
+      const response = await fetch(`${apiUrl}/topics`);
       if (!response.ok) {
         throw new Error(`Hata: ${response.status}`)
       }
@@ -19,7 +18,7 @@ export const TopicService = {
 
   async getAllDefinitionsByTopicTitleId(topicTitleId) {
     try {
-      const response = await fetch(definitionsUrl + "/" + topicTitleId);
+      const response = await fetch(`${apiUrl}/topics/${topicTitleId}/definitions`);
       if (!response.ok) {
         throw new Error(`Hata: ${response.status}`)
       }
@@ -32,7 +31,7 @@ export const TopicService = {
 
   async saveNewTopicTitle(topicTitle) {
     try {
-      const response = await fetch(topicsUrl, {
+      const response = await fetch(`${apiUrl}/topics`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({'title': topicTitle})
@@ -49,7 +48,7 @@ export const TopicService = {
 
   async saveNewTopicDefinition(topic, definition) {
     try {
-      const response = await fetch(definitionsUrl + "/" + topic.id, {
+      const response = await fetch(`${apiUrl}/topics/${topic.id}/definitions`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
