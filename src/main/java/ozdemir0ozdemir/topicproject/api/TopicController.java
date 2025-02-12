@@ -20,6 +20,11 @@ record TopicController(TopicManager topics) {
 		return ResponseEntity.ok(this.topics.getAllTitles());
 	}
 
+	@GetMapping("{topicTitleId}")
+	ResponseEntity<TopicTitleDto> getTopicTitleById(@PathVariable Long topicTitleId) {
+		return ResponseEntity.ok(this.topics.getTitleByTitleId(topicTitleId));
+	}
+
 	@GetMapping("{topicTitleId}/definitions")
 	ResponseEntity<List<TopicDefinitionDto>> getAllTopicDefinitionsByTopicTitleUId(@PathVariable Long topicTitleId) {
 		return ResponseEntity.ok(this.topics.getDefinitionsByTitleId(topicTitleId));

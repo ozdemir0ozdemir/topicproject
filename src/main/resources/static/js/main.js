@@ -61,8 +61,9 @@ document
 // Index Problems Answer with query param
 const topic = new URLSearchParams(window.location.search).get("topic");
 if(topic){
-  console.log("Topic: ",encodeURIComponent(topic));
   // TODO: get queried topic
+  TopicService.getTopicTitleById(encodeURIComponent(topic))
+      .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title));
 } else {
   TopicService.getTopicTitleByRandom()
       .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title));
