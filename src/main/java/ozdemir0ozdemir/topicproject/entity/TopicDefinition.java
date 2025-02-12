@@ -28,9 +28,4 @@ public class TopicDefinition {
 
 	@Column(name = "topic_definition", nullable = false)
 	private String definition;
-
-	@JsonProperty("topic_title_id")
-	public Long getTopicTitleId() {
-		return this.topicTitle.getId();
-	}
 }
