@@ -35,6 +35,13 @@ public class TopicManager {
 						() -> new RuntimeException("Topic title with id " + titleId + " searched, but not founded"));
 	}
 
+	public TopicTitleDto getTitleByRandom() {
+		return this.topicTitleRepository
+				.findByRandom()
+				.map(TopicTitleDto::from)
+				.orElseThrow(() -> new RuntimeException("No topic title found"));
+	}
+
 	public List<TopicTitleDto> getAllTitles() {
 		return this.topicTitleRepository.findAll().stream()
 				.map(TopicTitleDto::from)

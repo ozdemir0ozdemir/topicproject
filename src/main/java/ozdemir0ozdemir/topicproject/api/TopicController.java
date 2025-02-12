@@ -10,6 +10,11 @@ import ozdemir0ozdemir.topicproject.domain.*;
 @CrossOrigin // TODO: DEV ONLY -- DELETED SOON
 record TopicController(TopicManager topics) {
 
+	@GetMapping("/random")
+	ResponseEntity<TopicTitleDto> getTopicByRandom() {
+		return ResponseEntity.ok(this.topics.getTitleByRandom());
+	}
+
 	@GetMapping
 	ResponseEntity<List<TopicTitleDto>> getAllTopicTitles() {
 		return ResponseEntity.ok(this.topics.getAllTitles());

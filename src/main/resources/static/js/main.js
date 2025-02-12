@@ -17,22 +17,6 @@ const currentTopic = {
   }
 };
 
-refreshAllTopicTitles();
-
-document
-    .querySelector(".topic-titles-list")
-    .addEventListener("click", event => {
-      event.preventDefault();
-      const id = event.target.getAttribute("data-id");
-      if(event.target && id){
-        currentTopic.setTopic(id, event.target.innerHTML);
-      }
-    });
-
-document
-    .querySelector(".topic-titles-refresh-button")
-    .addEventListener("click", () => refreshAllTopicTitles());
-
 document
     .querySelector(".topic-titles-add-button")
     .addEventListener("click", () => {
@@ -44,6 +28,20 @@ document
             });
       }
 
+    });
+
+document
+    .querySelector(".topic-titles-refresh-button")
+    .addEventListener("click", () => refreshAllTopicTitles());
+
+document
+    .querySelector(".topic-titles-list")
+    .addEventListener("click", event => {
+      event.preventDefault();
+      const id = event.target.getAttribute("data-id");
+      if(event.target && id){
+        currentTopic.setTopic(id, event.target.innerHTML);
+      }
     });
 
 document
@@ -61,13 +59,18 @@ document
 
 
 // Index Problems Answer with query param
-// document
-//     .addEventListener("DOMContentLoaded", event => {
-//       const encoded = encodeURIComponent(new URLSearchParams(window.location.search).get("topic"));
-//       console.log(encoded);
-//     })
+const topic = new URLSearchParams(window.location.search).get("topic");
+if(topic){
+  console.log("Topic: ",encodeURIComponent(topic));
+  // TODO: get queried topic
+} else {
+  TopicService.getTopicTitleByRandom()
+      .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title));
+}
 
-currentTopic.setTopic(1, "10 şubat 2025 topicproject'in başlaması");
+
+refreshAllTopicTitles();
+
 
 function createTopicTitleItem(id, title) {
   return `

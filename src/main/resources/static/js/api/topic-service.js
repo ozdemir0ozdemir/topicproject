@@ -19,6 +19,19 @@ const TopicService = {
     }
   },
 
+  async getTopicTitleByRandom() {
+    try {
+      const response = await fetch(`${apiUrl}/topics/random`);
+      if (!response.ok) {
+        throw new Error(`Hata: ${response.status}`)
+      }
+      return await response.json();
+    } catch (error) {
+      console.log("Hata: ", error);
+      return null;
+    }
+  },
+
   async getAllDefinitionsByTopicTitleId(topicTitleId) {
     try {
       const response = await fetch(`${apiUrl}/topics/${topicTitleId}/definitions`);
