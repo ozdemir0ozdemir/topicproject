@@ -23,4 +23,7 @@ class TopicTitle {
 
 	@Column(name = "topic_title")
 	private String title;
+
+	@Column(name = "topic_title_sanitized")
+	private String topicTitleSanitized;
 }

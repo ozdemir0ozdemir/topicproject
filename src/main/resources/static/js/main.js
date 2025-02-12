@@ -9,10 +9,12 @@ const newTopicDefinition = document.querySelector("#new-definition-text");
 const currentTopic = {
   id: null,
   title: null,
+  sanitizedTitle: null,
 
-  setTopic(id, title) {
+  setTopic(id, title, sanitizedTitle) {
     this.id = id;
     this.title = title;
+    this.sanitizedTitle = sanitizedTitle;
     getTopicDefinitionsByTopicTitleId(id, title);
   }
 };
@@ -20,11 +22,11 @@ const currentTopic = {
 document
     .querySelector(".topic-titles-add-button")
     .addEventListener("click", () => {
-      if(newTopicTitle.value){
+      if (newTopicTitle.value) {
         TopicService.saveNewTopicTitle(newTopicTitle.value)
             .then(result => {
               refreshAllTopicTitles();
-              newTopicTitle.value= "";
+              newTopicTitle.value = "";
             });
       }
 
@@ -39,7 +41,7 @@ document
     .addEventListener("click", event => {
       event.preventDefault();
       const id = event.target.getAttribute("data-id");
-      if(event.target && id){
+      if (event.target && id) {
         currentTopic.setTopic(id, event.target.innerHTML);
       }
     });
@@ -47,11 +49,11 @@ document
 document
     .querySelector(".new-definition-add-button")
     .addEventListener("click", () => {
-      if(newTopicDefinition.value){
+      if (newTopicDefinition.value) {
         TopicService.saveNewTopicDefinition(currentTopic, newTopicDefinition.value)
             .then(result => {
               getTopicDefinitionsByTopicTitleId(currentTopic.id, currentTopic.title);
-              newTopicDefinition.value= "";
+              newTopicDefinition.value = "";
             });
       }
 
@@ -60,13 +62,15 @@ document
 
 // Index Problems Answer with query param
 const topic = new URLSearchParams(window.location.search).get("topic");
-if(topic){
-  // TODO: get queried topic
+console.log(window.location.search["topic"]);
+if (topic) {
   TopicService.getTopicTitleById(encodeURIComponent(topic))
-      .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title));
+      .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title, topicTitle.sanitizedTitle));
 } else {
   TopicService.getTopicTitleByRandom()
-      .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title));
+      .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title, topicTitle.sanitizedTitle))
+      // FIXME: if search is empty ? else &
+      .then(topicTitle => window.history.pushState({}, "", window.location.href + `?topic=${currentTopic.sanitizedTitle}`));
 }
 
 

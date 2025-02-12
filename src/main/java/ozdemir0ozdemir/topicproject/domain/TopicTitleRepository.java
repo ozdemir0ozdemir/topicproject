@@ -8,4 +8,7 @@ interface TopicTitleRepository extends JpaRepository<TopicTitle, Long> {
 
 	@Query("from TopicTitle order by random() limit 1")
 	Optional<TopicTitle> findByRandom();
+
+	@Query("from TopicTitle tt where tt.topicTitleSanitized = :topicTitleIdentifier")
+	Optional<TopicTitle> findByTopicTitleIdentifier(String topicTitleIdentifier);
 }

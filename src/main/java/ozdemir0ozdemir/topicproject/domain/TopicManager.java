@@ -3,6 +3,7 @@ package ozdemir0ozdemir.topicproject.domain;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ozdemir0ozdemir.topicproject.util.Sanitizer;
 
 @Service
 @RequiredArgsConstructor
@@ -12,7 +13,9 @@ public class TopicManager {
 	private final TopicDefinitionRepository topicDefinitionRepository;
 
 	public TopicTitleDto saveTitle(String topicTitle) {
-		var tt = new TopicTitle().setTitle(topicTitle);
+		var tt = new TopicTitle()
+				.setTitle(topicTitle)
+				.setTopicTitleSanitized(Sanitizer.sanitizeTitle(topicTitle));
 		tt = this.topicTitleRepository.save(tt);
 
 		return TopicTitleDto.from(tt);
@@ -33,6 +36,14 @@ public class TopicManager {
 				.map(TopicTitleDto::from)
 				.orElseThrow(
 						() -> new RuntimeException("Topic title with id " + titleId + " searched, but not founded"));
+	}
+
+	public TopicTitleDto getTitleBySanitizedTitle(String topicTitleIdentifier) {
+		return this.topicTitleRepository
+				.findByTopicTitleIdentifier(topicTitleIdentifier)
+				.map(TopicTitleDto::from)
+				.orElseThrow(
+						() -> new RuntimeException("Topic title with id " + topicTitleIdentifier + " searched, but not founded"));
 	}
 
 	public TopicTitleDto getTitleByRandom() {
