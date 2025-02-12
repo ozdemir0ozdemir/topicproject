@@ -12,8 +12,7 @@ public class TopicManager {
 	private final TopicDefinitionRepository topicDefinitionRepository;
 
 	public TopicTitleDto saveTitle(String topicTitle) {
-		var tt = new TopicTitle()
-				.setTitle(topicTitle);
+		var tt = new TopicTitle().setTitle(topicTitle);
 		tt = this.topicTitleRepository.save(tt);
 
 		return TopicTitleDto.from(tt);
@@ -37,17 +36,14 @@ public class TopicManager {
 	}
 
 	public List<TopicTitleDto> getAllTitles() {
-		return this.topicTitleRepository
-				.findAll().stream()
+		return this.topicTitleRepository.findAll().stream()
 				.map(TopicTitleDto::from)
 				.toList();
 	}
 
 	public List<TopicDefinitionDto> getDefinitionsByTitleId(Long topicTitleId) {
-		return this.topicDefinitionRepository
-				.findAllByTopicTitleId(topicTitleId).stream()
+		return this.topicDefinitionRepository.findAllByTopicTitleId(topicTitleId).stream()
 				.map(TopicDefinitionDto::from)
 				.toList();
 	}
-
 }

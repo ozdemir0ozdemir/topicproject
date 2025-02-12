@@ -1,10 +1,9 @@
 package ozdemir0ozdemir.topicproject.api;
 
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ozdemir0ozdemir.topicproject.domain.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/topics")

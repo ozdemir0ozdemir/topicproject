@@ -1,4 +1,3 @@
 package ozdemir0ozdemir.topicproject.api;
 
-public record NewTopicTitleRequest(String title) {
-}
+public record NewTopicTitleRequest(String title) {}

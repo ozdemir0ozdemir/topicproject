@@ -7,15 +7,14 @@ import lombok.Setter;
 @Setter
 public final class Response<T> {
 
-    private T payload;
+	private T payload;
 
-    private Response(T payload) {
-        this.payload = payload;
-    }
+	private Response(T payload) {
+		this.payload = payload;
+	}
 
-    // Static factory methods
-    public static <T> Response<T> of(T payload) {
-        return new Response<>(payload);
-    }
-
+	// Static factory methods
+	public static <T> Response<T> of(T payload) {
+		return new Response<>(payload);
+	}
 }

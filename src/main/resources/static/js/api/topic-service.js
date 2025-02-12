@@ -1,7 +1,10 @@
+"use strict";
+
+import TopicRequest from "./topic-request.js";
+
 const apiUrl = "http://localhost:8080/api/v1";
 
-
-export const TopicService = {
+const TopicService = {
 
   async getAllTopicTitles() {
     try {
@@ -34,7 +37,7 @@ export const TopicService = {
       const response = await fetch(`${apiUrl}/topics`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({'title': topicTitle})
+        body: JSON.stringify(TopicRequest.newTitle(topicTitle))
       });
       if (!response.ok) {
         throw new Error(`Error: ${topicTitle} cannot be saved`);
@@ -51,11 +54,7 @@ export const TopicService = {
       const response = await fetch(`${apiUrl}/topics/${topic.id}/definitions`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          'topicTitle': topic,
-          'definition': definition,
-          'topic_title_id': topic.id,
-        })
+        body: JSON.stringify(TopicRequest.newDefinition(definition))
       });
       if (!response.ok) {
         throw new Error(`Error: definition cannot be saved`);
@@ -67,6 +66,6 @@ export const TopicService = {
     }
   },
 
-
-
 }
+
+export default TopicService;

@@ -1,4 +1,7 @@
-import {TopicService} from "./topic-service.js";
+"use strict";
+
+import TopicService from "./api/topic-service.js";
+
 
 const newTopicTitle = document.querySelector("#new-topic-title");
 const newTopicDefinition = document.querySelector("#new-definition-text");

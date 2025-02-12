@@ -28,8 +28,7 @@ class TopicDefinitionRepositoryTest {
 	TopicDefinitionRepository definitionRepository;
 
 	private TopicTitle title;
-	private TopicDefinition definition ;
-
+	private TopicDefinition definition;
 
 	@BeforeEach
 	public void setUp() {
