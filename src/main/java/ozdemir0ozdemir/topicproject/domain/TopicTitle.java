@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Entity
 @Table(name = "topic_titles")
-public class TopicTitle {
+class TopicTitle {
 
 	@Column(name = "topic_title_id", updatable = false)
 	@Id

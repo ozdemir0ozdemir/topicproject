@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface TopicDefinitionRepository extends JpaRepository<TopicDefinition, Long> {
+interface TopicDefinitionRepository extends JpaRepository<TopicDefinition, Long> {
 
 	@Query("from TopicDefinition td where td.topicTitle.id = :topicTitleId")
 	List<TopicDefinition> findAllByTopicTitleId(Long topicTitleId);

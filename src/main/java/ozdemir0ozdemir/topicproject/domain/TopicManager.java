@@ -11,28 +11,43 @@ public class TopicManager {
 	private final TopicTitleRepository topicTitleRepository;
 	private final TopicDefinitionRepository topicDefinitionRepository;
 
-	public TopicTitle saveTitle(TopicTitle title) {
-		title.setId(null);
-		return this.topicTitleRepository.save(title);
+	public TopicTitleDto saveTitle(String topicTitle) {
+		var tt = new TopicTitle()
+				.setTitle(topicTitle);
+		tt = this.topicTitleRepository.save(tt);
+
+		return TopicTitleDto.from(tt);
 	}
 
-	public TopicDefinition saveDefinition(TopicDefinition definition) {
-		definition.setId(null);
-		return this.topicDefinitionRepository.save(definition);
+	public TopicDefinitionDto saveDefinition(Long topicTitleId, String topicDefinition) {
+		var td = new TopicDefinition()
+				.setTopicTitle(this.topicTitleRepository.getReferenceById(topicTitleId))
+				.setDefinition(topicDefinition);
+
+		td = this.topicDefinitionRepository.save(td);
+		return TopicDefinitionDto.from(td);
 	}
 
-	public List<TopicTitle> getAllTitles() {
-		return this.topicTitleRepository.findAll();
-	}
-
-	public TopicTitle getTitleByTitleId(Long titleId) {
+	public TopicTitleDto getTitleByTitleId(Long titleId) {
 		return this.topicTitleRepository
 				.findById(titleId)
+				.map(TopicTitleDto::from)
 				.orElseThrow(
 						() -> new RuntimeException("Topic title with id " + titleId + " searched, but not founded"));
 	}
 
-	public List<TopicDefinition> getDefinitionsByTitleId(Long topicTitleId) {
-		return this.topicDefinitionRepository.findAllByTopicTitleId(topicTitleId);
+	public List<TopicTitleDto> getAllTitles() {
+		return this.topicTitleRepository
+				.findAll().stream()
+				.map(TopicTitleDto::from)
+				.toList();
 	}
+
+	public List<TopicDefinitionDto> getDefinitionsByTitleId(Long topicTitleId) {
+		return this.topicDefinitionRepository
+				.findAllByTopicTitleId(topicTitleId).stream()
+				.map(TopicDefinitionDto::from)
+				.toList();
+	}
+
 }
