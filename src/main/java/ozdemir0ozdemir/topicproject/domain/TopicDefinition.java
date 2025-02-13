@@ -26,5 +26,6 @@ class TopicDefinition {
 	private TopicTitle topicTitle;
 
 	@Column(name = "topic_definition", nullable = false)
+	@Lob
 	private String definition;
 }

@@ -37,13 +37,12 @@ header {
 .topic-definitions-container {
   overflow-y: scroll;
   overflow-x: hidden;
-  padding-bottom: 100px;
   background-color: #eaeaea;
 }
 
 .topic-titles-container {
-  padding: 1rem;
   min-width: 260px;
+  padding: 16px 16px 100px 16px;
 }
 
 .topic-definitions-container {
@@ -51,6 +50,7 @@ header {
   flex-direction: column;
   justify-content: start;
   align-items: start;
+  padding: 1rem 1rem 100px 1rem;
 }
 
 .topic-titles-form {
@@ -87,7 +87,6 @@ header {
   margin-bottom: 2rem;
   color: var(--theme-color);
   width: 100%;
-  padding: 1rem;
   font-size: 1.6rem;
 }
 
@@ -97,15 +96,12 @@ header {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  gap: 30px;
+  gap: 2rem;
 }
 .topic-definition-card {
-  width: 95%;
-  padding: 2rem 2rem 2rem 2rem;
-  background-color: #e8ebf4;
-  border-radius: 10px;
-  box-shadow: 4px 4px 10px 0 #d3d3d3 inset;
-
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #cbd3e8;
+  padding: .5rem;
 }
 
 .topic-definition-form {
@@ -118,7 +114,7 @@ header {
 }
 
 .new-definition-text {
-  width: 95%;
+  width: 100%;
   height: 200px;
   padding: .5rem;
   font-family: Ubuntu, sans-serif;
@@ -127,7 +123,7 @@ header {
 
 .topic-definition-form > button{
   padding: 1rem;
-  width: 95%;
+  width: 100%;
 }
 
 
