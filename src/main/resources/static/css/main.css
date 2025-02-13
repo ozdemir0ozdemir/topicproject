@@ -7,26 +7,38 @@
   font-family: Ubuntu, sans-serif;
 }
 
-body {
-  height: 100vh;
-}
-
 
 :root {
   --theme-color: #053168;
 }
-/* Topic Titles and Definitions */
 
+body {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 75px 1fr;
+}
+
+header {
+  background-color: var(--theme-color);
+  color:white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+/* Topic Titles and Definitions */
 .topics-container {
   display: grid;
   grid-template-columns: 1fr 3fr;
+  height: calc(100vh - 75px);
 }
 
 .topic-titles-container,
 .topic-definitions-container {
-  height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
+  padding-bottom: 100px;
+  background-color: #eaeaea;
 }
 
 .topic-titles-container {
@@ -58,7 +70,7 @@ body {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
-  margin-bottom: 200px;
+
 }
 
 .topic-title > a {
@@ -73,12 +85,10 @@ body {
 
 .topic-definitions-title {
   margin-bottom: 2rem;
-  position: sticky;
-  top: 0;
-  background-color: var(--theme-color);
-  color: white;
+  color: var(--theme-color);
   width: 100%;
   padding: 1rem;
+  font-size: 1.6rem;
 }
 
 .topic-definition-cards {
@@ -104,7 +114,6 @@ body {
   width: 100%;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 200px;
   margin-top: 50px;
 }
 

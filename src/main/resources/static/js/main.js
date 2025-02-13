@@ -16,6 +16,7 @@ const currentTopic = {
     this.title = title;
     this.sanitizedTitle = sanitizedTitle;
     getTopicDefinitionsByTopicTitleId(id, title);
+    // window.history.pushState({}, sanitizedTitle, window.location.href + `?topic=${sanitizedTitle}`);
   }
 };
 
@@ -62,7 +63,6 @@ document
 
 // Index Problems Answer with query param
 const topic = new URLSearchParams(window.location.search).get("topic");
-console.log(window.location.search["topic"]);
 if (topic) {
   TopicService.getTopicTitleById(encodeURIComponent(topic))
       .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title, topicTitle.sanitizedTitle));
@@ -70,7 +70,7 @@ if (topic) {
   TopicService.getTopicTitleByRandom()
       .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title, topicTitle.sanitizedTitle))
       // FIXME: if search is empty ? else &
-      .then(topicTitle => window.history.pushState({}, "", window.location.href + `?topic=${currentTopic.sanitizedTitle}`));
+      .then(topicTitle => window.history.replaceState({}, currentTopic.sanitizedTitle, window.location.href + `&topic=${currentTopic.sanitizedTitle}`));
 }
 
 
