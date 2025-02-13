@@ -18,13 +18,16 @@ const NewDefinitionForm = {
       }
 
     });
+
+    return this;
   },
 
   updatePlaceholder(title) {
     this.textarea.setAttribute(
         "placeholder",
         `Type to create new definition about "${title}"`);
-  }
+  },
+
 };
 
 export default NewDefinitionForm;

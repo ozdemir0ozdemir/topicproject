@@ -7,125 +7,152 @@
   font-family: Ubuntu, sans-serif;
 }
 
-
 :root {
+  /* CONSTANTS*/
+  --HEADER-SIZE: 50px;
+  --BUTTON-HEIGHT: 28px;
+  /* COLORS */
   --theme-color: #053168;
+  --bg-color: #eaeaea;
+  --LINE-COLOR: #cccccc;
+
 }
 
 body {
+  background-color: var(--bg-color);
   height: 100vh;
   display: grid;
-  grid-template-rows: 75px 1fr;
+  grid-template-rows: var(--HEADER-SIZE) 1fr;
 }
 
 header {
-  background-color: var(--theme-color);
-  color:white;
+  color: var(--theme-color);
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 16px;
 }
 
-/* Topic Titles and Definitions */
-.topics-container {
+main {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  height: calc(100vh - 75px);
+  height: calc(100vh - var(--HEADER-SIZE));
 }
 
-.topic-titles-container,
-.topic-definitions-container {
+
+.left-frame,
+.right-frame {
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: #eaeaea;
 }
 
-.topic-titles-container {
+/* LEFT FRAME */
+.left-frame {
   min-width: 260px;
   padding: 16px 16px 100px 16px;
+
+  .topic-titles-form {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--LINE-COLOR);
+    margin-bottom: 1rem;
+
+    input[type=text] {
+      padding: .5rem;
+    }
+
+    button {
+      height: var(--BUTTON-HEIGHT);
+    }
+  }
+
+  .topic-titles-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topic-titles-refresh-button {
+    height: var(--BUTTON-HEIGHT);
+  }
+
+  .topic-titles-list {
+    list-style-position: inside;
+    list-style-type: "-";
+    display: flex;
+    flex-direction: column;
+    color: var(--theme-color);
+    gap: 9px;
+    padding-top: 16px;
+  }
+
+  .topic-title > a {
+    color: var(--theme-color);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
-.topic-definitions-container {
+/* RIGHT FRAME */
+.right-frame {
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
-  padding: 1rem 1rem 100px 1rem;
+  padding: 0 1rem 100px 1rem;
+
+  .topic-definitions-title {
+    margin-bottom: 2rem;
+    color: var(--theme-color);
+    width: 100%;
+    font-size: 1.6rem;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-color);
+    padding: 10px 0;
+    box-shadow: 0 4px 10px -5px var(--LINE-COLOR);
+    border-bottom: 1px solid var(--LINE-COLOR);
+  }
+
+  .topic-definition-cards {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .topic-definition-card {
+    border-bottom: 1px solid var(--LINE-COLOR);
+    padding: .5rem;
+    width: 100%;
+  }
+
+  .topic-definition-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 50px;
+
+    textarea {
+      height: 200px;
+      padding: .5rem;
+      resize: none;
+    }
+
+    button {
+      height: var(--BUTTON-HEIGHT);
+
+    }
+  }
+
 }
 
-.topic-titles-form {
-  display: flex;
-  flex-direction: column;
-  gap: .3rem;
-}
 
-#new-topic-title {
-  width: 100%;
-  padding: .5rem;
 
-}
 
-.topic-titles-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-
-}
-
-.topic-title > a {
-  color: var(--theme-color);
-  text-decoration: none;
-}
-
-.topic-titles-form > button {
-  width: 100%;
-  height: 2rem;
-}
-
-.topic-definitions-title {
-  margin-bottom: 2rem;
-  color: var(--theme-color);
-  width: 100%;
-  font-size: 1.6rem;
-}
-
-.topic-definition-cards {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  gap: 2rem;
-}
-.topic-definition-card {
-  background-color: #f1f1f1;
-  border-bottom: 1px solid #cbd3e8;
-  padding: .5rem;
-  width: 100%;
-}
-
-.topic-definition-form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 50px;
-}
-
-.new-definition-text {
-  width: 100%;
-  height: 200px;
-  padding: .5rem;
-  font-family: Ubuntu, sans-serif;
-  resize: none;
-}
-
-.topic-definition-form > button{
-  padding: 1rem;
-  width: 100%;
-}
 
 
 

@@ -13,26 +13,36 @@
 <header>
   <h1>TopicProject</h1>
 </header>
-<main class="topics-container">
+<main >
 
-  <div class="topic-titles-container">
+  <div class="left-frame">
+
     <div class="topic-titles-form">
-      <input type="text" name="new-topic-title" id="new-topic-title" placeholder="Type new topic's title">
-      <button class="topic-titles-add-button" type="button">Add Topic Title</button>
-      <button class="topic-titles-refresh-button" type="button">Refresh</button>
-      <hr style="margin: 1rem 0;"/>
+      <input type="text"
+             name="new-topic-title"
+             id="new-topic-title"
+             placeholder="Type new topic's title">
+      <button class="topic-titles-add-button"
+              type="button">
+        Add Topic Title
+      </button>
     </div>
-    <ul class="topic-titles-list">
-      <li class="topic-title">
-        <a href="#">
-          Creating container for image: testcontainers/ryuk:0.11.0
-        </a>
-      </li>
-    </ul>
+
+    <div class="topic-titles-container">
+      <button class="topic-titles-refresh-button"
+              type="button">Refresh</button>
+
+      <ul class="topic-titles-list">
+        <!-- Dynamic Topic Title List -->
+      </ul>
+    </div>
+
   </div>
 
-  <div class="topic-definitions-container">
-     <h1 class="topic-definitions-title">Topic Project Application Title</h1>
+  <div class="right-frame">
+     <h1 class="topic-definitions-title">
+       Topic Project Application Title
+     </h1>
      <div class="topic-definition-cards">
 
        <div class="topic-definition-card">
@@ -52,8 +62,6 @@
        <textarea class="new-definition-text"
                  name="new-definition-text"
                  id="new-definition-text"
-                 cols="30"
-                 rows="10"
                  placeholder="Type to create new definition about the title..."></textarea>
        <button type="button"
                class="new-definition-add-button">
@@ -61,7 +69,6 @@
        </button>
      </div>
    </div>
-
 
 </main>
 

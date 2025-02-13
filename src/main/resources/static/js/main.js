@@ -18,6 +18,7 @@ const currentTopic = {
     this.sanitizedTitle = sanitizedTitle;
     getTopicDefinitionsByTopicTitleId(id, title);
     NewDefinitionForm.updatePlaceholder(title);
+    document.title = `${title} - TopicProject`
     // window.history.pushState({}, sanitizedTitle, window.location.href + `?topic=${sanitizedTitle}`);
   }
 };
