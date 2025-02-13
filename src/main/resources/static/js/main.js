@@ -1,10 +1,11 @@
 "use strict";
 
 import TopicService from "./api/topic-service.js";
+import NewDefinitionForm from "./component/new-definition-form.js";
 
 
 const newTopicTitle = document.querySelector("#new-topic-title");
-const newTopicDefinition = document.querySelector("#new-definition-text");
+
 
 const currentTopic = {
   id: null,
@@ -16,6 +17,7 @@ const currentTopic = {
     this.title = title;
     this.sanitizedTitle = sanitizedTitle;
     getTopicDefinitionsByTopicTitleId(id, title);
+    NewDefinitionForm.updatePlaceholder(title);
     // window.history.pushState({}, sanitizedTitle, window.location.href + `?topic=${sanitizedTitle}`);
   }
 };
@@ -47,19 +49,15 @@ document
       }
     });
 
-document
-    .querySelector(".new-definition-add-button")
-    .addEventListener("click", () => {
-      if (newTopicDefinition.value) {
-        TopicService.saveNewTopicDefinition(currentTopic, newTopicDefinition.value)
-            .then(result => {
-              getTopicDefinitionsByTopicTitleId(currentTopic.id, currentTopic.title);
-              newTopicDefinition.value = "";
-            });
-      }
 
-    });
-
+NewDefinitionForm.init(
+    document.querySelector("#new-definition-text"),
+    document.querySelector(".new-definition-add-button"),
+    newTopicDefinition =>
+        TopicService
+            .saveNewTopicDefinition(currentTopic, newTopicDefinition)
+            .then(result => getTopicDefinitionsByTopicTitleId(currentTopic.id, currentTopic.title))
+);
 
 // Index Problems Answer with query param
 const topic = new URLSearchParams(window.location.search).get("topic");
