@@ -2,7 +2,7 @@
 
 import TopicService from "./api/topic-service.js";
 import NewDefinitionForm from "./component/new-definition-form.js";
-
+import TopicTitlesList from "./component/topic-titles-list.js";
 
 const newTopicTitle = document.querySelector("#new-topic-title");
 
@@ -19,8 +19,15 @@ const currentTopic = {
     getTopicDefinitionsByTopicTitleId(id, title);
     NewDefinitionForm.updatePlaceholder(title);
     document.title = `${title} - TopicProject`
+
+    // FIXME: url must respect topic changes
     // window.history.pushState({}, sanitizedTitle, window.location.href + `?topic=${sanitizedTitle}`);
   }
+};
+
+TopicTitlesList.topicChangeCallback = (id, title) => {
+  // FIXME: lack of sanitized title
+  currentTopic.setTopic(id, title, "");
 };
 
 document
@@ -36,20 +43,6 @@ document
 
     });
 
-document
-    .querySelector(".topic-titles-refresh-button")
-    .addEventListener("click", () => refreshAllTopicTitles());
-
-document
-    .querySelector(".topic-titles-list")
-    .addEventListener("click", event => {
-      event.preventDefault();
-      const id = event.target.getAttribute("data-id");
-      if (event.target && id) {
-        currentTopic.setTopic(id, event.target.innerHTML);
-      }
-    });
-
 
 NewDefinitionForm.init(
     document.querySelector("#new-definition-text"),
@@ -59,6 +52,8 @@ NewDefinitionForm.init(
             .saveNewTopicDefinition(currentTopic, newTopicDefinition)
             .then(result => getTopicDefinitionsByTopicTitleId(currentTopic.id, currentTopic.title))
 );
+
+
 
 // Index Problems Answer with query param
 const topic = new URLSearchParams(window.location.search).get("topic");
@@ -73,15 +68,6 @@ if (topic) {
 }
 
 
-refreshAllTopicTitles();
-
-
-function createTopicTitleItem(id, title) {
-  return `
-    <li class="topic-title">
-      <a href="#" data-id="${id}">${title}</a>
-    </li>`;
-}
 
 function createTopicDefinitionItem(id, definition) {
   return `
@@ -91,17 +77,6 @@ function createTopicDefinitionItem(id, definition) {
     </div>
   </div>
  `;
-}
-
-function refreshAllTopicTitles() {
-  const topicTitlesList = document.querySelector(".topic-titles-list");
-  topicTitlesList.innerHTML = "";
-
-  TopicService.getAllTopicTitles()
-      .then(topicTitleList => topicTitleList
-          .map(title => createTopicTitleItem(title.id, title.title))
-          .join(""))
-      .then(titles => topicTitlesList.innerHTML = titles);
 }
 
 function getTopicDefinitionsByTopicTitleId(topicTitleId, topicTitle) {
