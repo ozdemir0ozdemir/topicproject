@@ -13,9 +13,7 @@ public class TopicManager {
 	private final TopicDefinitionRepository topicDefinitionRepository;
 
 	public TopicTitleDto saveTitle(String topicTitle) {
-		var tt = new TopicTitle()
-				.setTitle(topicTitle)
-				.setTopicTitleSanitized(Sanitizer.sanitizeTitle(topicTitle));
+		var tt = new TopicTitle().setTitle(topicTitle).setTopicTitleSanitized(Sanitizer.sanitizeTitle(topicTitle));
 		tt = this.topicTitleRepository.save(tt);
 
 		return TopicTitleDto.from(tt);
@@ -42,8 +40,8 @@ public class TopicManager {
 		return this.topicTitleRepository
 				.findByTopicTitleIdentifier(topicTitleIdentifier)
 				.map(TopicTitleDto::from)
-				.orElseThrow(
-						() -> new RuntimeException("Topic title with id " + topicTitleIdentifier + " searched, but not founded"));
+				.orElseThrow(() -> new RuntimeException(
+						"Topic title with id " + topicTitleIdentifier + " searched, but not founded"));
 	}
 
 	public TopicTitleDto getTitleByRandom() {
