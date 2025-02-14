@@ -45,9 +45,9 @@ const TopicService = {
     }
   },
 
-  async getAllDefinitionsByTopicId(topicId) {
+  async getAllDefinitionsByTopicId(topicId, page) {
     try {
-      const response = await fetch(`${apiUrl}/topics/${topicId}/definitions`);
+      const response = await fetch(`${apiUrl}/topics/${topicId}/definitions?page=${page}`);
       if (!response.ok) {
         throw new Error(`Hata: ${response.status}`)
       }

@@ -1,7 +1,6 @@
 "use strict";
 
 
-
 /* ---------------------------------------------------------------------------
 * Private Section
 * */
@@ -38,13 +37,13 @@ const PageInfo = {
     this.setCurrentPageFor(paginationFor, this.get(paginationFor).totalPages);
   },
 
-  setCurrentPageFor(paginationFor, value) {
+  setCurrentPageFor(paginationFor, pageNumber) {
     const page = this.get(paginationFor);
 
     // Bounds security
-    value = value < 1 ? 1 : value;
-    value = value > page.totalPages ? page.totalPages : value;
-    page.currentPage = +value;
+    pageNumber = pageNumber < 1 ? 1 : pageNumber;
+    pageNumber = pageNumber > page.totalPages ? page.totalPages : pageNumber;
+    page.currentPage = +pageNumber;
 
     // Previous & Next Buttons disable-enable
     if(page.currentPage === 1){
@@ -66,15 +65,24 @@ const PageInfo = {
     // update all selectors
     this.get(paginationFor)
         .selectElement
-        .forEach(select => select.value = value);
+        .forEach(select => select.value = pageNumber);
 
     // FIXME : invoke proper listener
-    this.pageChangedListeners.forEach(listener => listener(value, paginationFor))
+    this.pageChangedListeners.forEach(listener => listener(pageNumber, paginationFor))
   },
 
   updateTotalPagesFor(paginationFor, totalPages) {
-    this.get(paginationFor)
-        .totalPages = totalPages;
+    const pagination = this.get(paginationFor);
+
+    pagination.totalPages = totalPages;
+
+    pagination.selectElement.forEach(el => {
+      el.innerHTML = "";
+
+      for(let i = 1; i <= totalPages; i++) {
+          el.innerHTML += `<option value="${i}" ${pagination.currentPage === i ? 'selected="selected"':''}>${i}</option>`;
+      }
+    });
   },
 
   create(paginationFor, currentPage, totalPages, selectElement, previousButtons, nextButtons) {
@@ -130,7 +138,7 @@ const Pagination = {
   },
 
   updateTotalPagesFor(paginationFor, totalPages) {
-    PageInfo.updateTotalPagesFor(paginationFor, totalPages);
+     PageInfo.updateTotalPagesFor(paginationFor, totalPages);
   },
 
   init(parent = document, totalPages) {
@@ -145,7 +153,6 @@ const Pagination = {
     paginationRoot.classList.add("pagination");
     paginationRoot.setAttribute(DATA_PAGINATION_FOR, paginationFor);
 
-    // FIXME: options are arbitrary
     paginationRoot.innerHTML = `
         <button class ="previous-button" title="first page" data-action="first" type="button" disabled="disabled">|&lt;</button>
         <button class ="previous-button" title="previous page" data-action="previous" type="button" disabled="disabled">&lt;</button>
@@ -160,7 +167,6 @@ const Pagination = {
       selector.innerHTML += `<option value="${i}">${i}</option>`;
     }
 
-    // FIXME: pagination info is arbitrary
     PageInfo.create(
         paginationFor,
         1,
@@ -199,7 +205,6 @@ const Pagination = {
 
     paginationRoot.addEventListener("click", listener);
     paginationRoot.addEventListener("change", listener);
-
 
     paginationRoot.classList.add(sudoElement.classList);
     sudoElement.replaceWith(paginationRoot);

@@ -7,7 +7,8 @@ import Pagination from "./pagination.js";
 /* ---------------------------------------------------------------------------
 * Private Section
 * */
-const HTML_TAG = "DefinitionList"
+const HTML_TAG = "DefinitionList";
+const PAGINATION_NAME = "definition";
 
 const DefinitionListInfo = {
   definitionHeaderElement: document.createElement("h1"),
@@ -35,7 +36,7 @@ const DefinitionListInfo = {
  `;
 },
 
-  async setCurrentTopicById(topicId) {
+  async setCurrentTopicById(topicId, page = 1) {
     await TopicService
         .getTopicById(topicId)
         .then(({id, title, sanitizedTitle}) => {
@@ -43,14 +44,17 @@ const DefinitionListInfo = {
           document.title = `${title} - TopicProject`;
         });
 
-    this.definitionHeaderElement.innerHTML = this.currentTopic.title;
-
-    await TopicService.getAllDefinitionsByTopicId(this.currentTopic.id)
-        .then(definitionList => definitionList
+    let totalPages = 0;
+    await TopicService.getAllDefinitionsByTopicId(this.currentTopic.id, page)
+        .then(defs => {totalPages = defs.totalPages; return defs})
+        .then(definitionList => definitionList.content
             .map(({id, definition}) => this.createDefinitionCard(id, definition))
             .join(""))
         .then(definitionsHtml => this.definitionCardsElement.innerHTML = definitionsHtml);
 
+    Pagination.updateTotalPagesFor(PAGINATION_NAME, totalPages);
+
+    this.definitionHeaderElement.innerHTML = this.currentTopic.title;
     document.querySelector(".right-frame")
         .scrollTop = 0;
   }
@@ -85,13 +89,20 @@ const DefinitionList = {
     headerRow.classList.add("definition-header")
 
     headerRow.appendChild(DefinitionListInfo.definitionHeaderElement);
-    headerRow.appendChild(Pagination.createSudoElement("definition", "definition-pagination"))
+    headerRow.appendChild(Pagination.createSudoElement(PAGINATION_NAME, "definition-pagination"))
 
     definitionRoot.appendChild(headerRow);
     definitionRoot.appendChild(DefinitionListInfo.definitionCardsElement);
 
     Pagination
-        .init(definitionRoot, 10);
+        .init(definitionRoot, 1);
+
+    Pagination.addPageChangedListener((pageNumber, paginationFor) => {
+      if(paginationFor === PAGINATION_NAME){
+         DefinitionListInfo.setCurrentTopicById(DefinitionListInfo.currentTopic.id, pageNumber);
+      }
+    });
+
     TopicService
         .getTopicByRandom()
         .then(topic => DefinitionListInfo.setCurrentTopicById(topic.id));

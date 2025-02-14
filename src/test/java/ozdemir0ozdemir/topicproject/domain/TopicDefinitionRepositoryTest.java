@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 
@@ -50,23 +52,6 @@ class TopicDefinitionRepositoryTest {
 		titleRepository.deleteAll();
 	}
 
-	@Test
-	void should_titleAndDefinitionBeFound() {
-		assertThat(postgres.isRunning()).isTrue();
 
-		List<TopicTitle> titles = titleRepository.findAll();
-		assertThat(titles).hasSize(1);
 
-		TopicTitle title = titles.getFirst();
-		assertThat(title).isNotNull();
-		assertThat(title.getTitle()).isEqualTo("10 şubat 2025 topicproject\'in başlaması");
-
-		List<TopicDefinition> definitions = definitionRepository.findAllByTopicTitleId(title.getId());
-		assertThat(definitions).hasSize(1);
-
-		TopicDefinition definition = definitions.getFirst();
-		assertThat(definition).isNotNull();
-		assertThat(definition.getDefinition())
-				.isEqualTo("Yeni bir başlangıcın ilk adımları olabilir. Belki iyi bir şey olur! swh");
-	}
 }

@@ -185,4 +185,5 @@ main {
 .definition-pagination {
   background-color: transparent;
   width: var(--PAGINATION-WITH);
+  padding-left: 2.5rem;
 }

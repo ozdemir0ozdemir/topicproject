@@ -28,8 +28,11 @@ record TopicController(TopicManager topics) {
 	}
 
 	@GetMapping("{topicTitleId}/definitions")
-	ResponseEntity<List<TopicDefinitionDto>> getAllTopicDefinitionsByTopicTitleUId(@PathVariable Long topicTitleId) {
-		return ResponseEntity.ok(this.topics.getDefinitionsByTitleId(topicTitleId));
+	ResponseEntity<Page<TopicDefinitionDto>> getAllDefinitionsByTopicId(
+			@PathVariable Long topicTitleId,
+			@RequestParam(name = "page", defaultValue = "1") int page) {
+
+		return ResponseEntity.ok(this.topics.getDefinitionsByTitleId(topicTitleId, Math.max(0, page - 1)));
 	}
 
 	@PostMapping
