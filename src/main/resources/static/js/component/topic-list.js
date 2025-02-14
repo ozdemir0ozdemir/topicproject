@@ -15,10 +15,11 @@ const TopicInfo = {
   listElement: undefined,
 };
 
-function createTopicListItem(id, title) {
+function createTopicListItem(id, title, totalDefinition) {
   return `
     <li class="topic">
-      <a href="#" data-id="${id}">${title}</a>
+      <a href="#" data-id="${id}">${title} </a>
+      <span style="margin-left: 3px;">(${totalDefinition})</span>
     </li>`;
 }
 
@@ -58,9 +59,10 @@ const TopicList = {
     let total = 1;
     TopicService
         .getAllTopicTitles(1)
+        .then(topics => {console.log(topics); return topics;})
         .then(topics => {total = topics.totalPages;  return topics;})
         .then(topics => topics.content
-            .map(({id, title}) => createTopicListItem(id, title))
+            .map(({id, title, topicTitleSanitized, totalDefinition}) => createTopicListItem(id, title, totalDefinition))
             .join(""))
         .then(topicsHtml => TopicInfo.listElement.innerHTML = topicsHtml)
         .then(_ => Pagination.init(topicContainer, total));
@@ -78,7 +80,7 @@ const TopicList = {
           .getAllTopicTitles(page)
           .then(topics => {total = topics.totalPages;  return topics;})
           .then(topics => topics.content
-              .map(({id, title}) => createTopicListItem(id, title))
+              .map(({id, title, topicTitleSanitized, totalDefinition}) => createTopicListItem(id, title, totalDefinition))
               .join(""))
           .then(topics => TopicInfo.listElement.innerHTML = topics)
           .then(_ => Pagination.updateTotalPagesFor(PAGINATION_NAME, total))

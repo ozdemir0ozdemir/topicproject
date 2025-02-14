@@ -17,9 +17,9 @@ record TopicController(TopicManager topics) {
 	}
 
 	@GetMapping
-	ResponseEntity<Page<TopicTitleDto>> getAllTopicTitles(@RequestParam(name = "page", defaultValue = "1") int page) {
+	ResponseEntity<Page<TopicTitleWithDefCount>> getAllTopicTitles(@RequestParam(name = "page", defaultValue = "1") int page) {
 
-		return ResponseEntity.ok(this.topics.getAllTitles(Math.max(0, page - 1)));
+		return ResponseEntity.ok(this.topics.getAllTitlesWithDefCount(Math.max(0, page - 1)));
 	}
 
 	@GetMapping("{topicId}")

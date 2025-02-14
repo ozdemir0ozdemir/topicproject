@@ -28,7 +28,8 @@ const DefinitionListInfo = {
 
   createDefinitionCard(id, definition) {
   return `
-  <div class="topic-definition-card">
+  <div class="definition-card">
+    <div class="definition-card-id">${id}</div>
     <div class="topic-definition-text">
       ${definition.replaceAll("<", "&lt;")}
     </div>

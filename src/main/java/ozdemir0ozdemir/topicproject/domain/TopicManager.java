@@ -57,6 +57,10 @@ public class TopicManager {
 		return this.topicTitleRepository.findAll(PageRequest.of(page, 25)).map(TopicTitleDto::from);
 	}
 
+	public Page<TopicTitleWithDefCount> getAllTitlesWithDefCount(int page) {
+		return this.topicDefinitionRepository.findAllTopic(PageRequest.of(page, 25));
+	}
+
 	public Page<TopicDefinitionDto> getDefinitionsByTitleId(Long topicTitleId, int page) {
 		return this.topicDefinitionRepository.findAllByTopicTitleId(topicTitleId, PageRequest.of(page, 10))
 				.map(TopicDefinitionDto::from);

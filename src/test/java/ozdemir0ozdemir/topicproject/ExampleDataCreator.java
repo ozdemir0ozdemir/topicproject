@@ -3,6 +3,7 @@ package ozdemir0ozdemir.topicproject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.springframework.boot.CommandLineRunner;
@@ -215,9 +216,19 @@ public class ExampleDataCreator {
 			List<TopicTitleDto> savedTopics = new ArrayList<>();
 			topicList.forEach(title -> savedTopics.add(topics.saveTitle(title)));
 
+			Random random = new Random();
+
+
 			savedTopics.forEach(topic -> {
+
+				int rnd1 = random.nextInt(0, definitionList.size());
+				int rnd2 = random.nextInt(0, definitionList.size());
+
+				int left = Math.min(rnd1, rnd2);
+				int right = Math.max(rnd1, rnd2);
+
 				List<Integer> ids =
-						IntStream.range(0, definitionList.size()).boxed().collect(Collectors.toList());
+						IntStream.range(left, right).boxed().collect(Collectors.toList());
 
 				Collections.shuffle(ids);
 
