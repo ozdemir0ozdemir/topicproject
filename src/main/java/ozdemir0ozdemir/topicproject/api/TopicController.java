@@ -23,9 +23,9 @@ record TopicController(TopicManager topics) {
 		return ResponseEntity.ok(this.topics.getAllTitles(Math.max(0, page - 1)));
 	}
 
-	@GetMapping("{topicTitleId}")
-	ResponseEntity<TopicTitleDto> getTopicTitleById(@PathVariable String topicTitleId) {
-		return ResponseEntity.ok(this.topics.getTitleBySanitizedTitle(topicTitleId));
+	@GetMapping("{topicId}")
+	ResponseEntity<TopicTitleDto> getTopicById(@PathVariable Long topicId) {
+		return ResponseEntity.ok(this.topics.getTitleByTitleId(topicId));
 	}
 
 	@GetMapping("{topicTitleId}/definitions")

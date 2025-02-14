@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Karla:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,500&display=swap');
 
 * {
   padding: 0;
@@ -11,13 +11,14 @@
   /* CONSTANTS*/
   --HEADER-SIZE: 60px;
   --BUTTON-HEIGHT: 28px;
+  --PAGINATION-WITH: 260px;
 
 
 
   /* COLORS */
   --theme-color: #053168;
-  --bg-color: #eaeaea;
-  --LINE-COLOR: #cccccc;
+  --bg-color: #e4e4e4;
+  --LINE-COLOR: #a3a3a3;
 }
 
 body {
@@ -99,19 +100,25 @@ main {
 .right-frame {
   display: flex;
   flex-direction: column;
-  padding: 0 1rem 100px 1rem;
+  padding: 0 0 100px 0;
+
+  .definition-header {
+    display: flex;
+    flex-direction: column;
+
+    align-items: end;
+    position: sticky;
+    top:0;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 10px -5px var(--LINE-COLOR);
+    padding: 1rem;
+  }
 
   .topic-definitions-title {
-    margin-bottom: 2rem;
     color: var(--theme-color);
     width: 100%;
     font-size: 1.6rem;
-    position: sticky;
-    top: 0;
-    background-color: var(--bg-color);
-    padding: 10px 0;
-    box-shadow: 0 4px 10px -5px var(--LINE-COLOR);
-    border-bottom: 1px solid var(--LINE-COLOR);
   }
 
   .topic-definition-cards {
@@ -121,6 +128,7 @@ main {
     justify-content: start;
     align-items: center;
     gap: 2rem;
+    padding: 2rem 1rem;
   }
 
   .topic-definition-card {
@@ -154,13 +162,24 @@ main {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   column-gap: 5px;
-  position: sticky;
-  top: 0;
-  background-color: var(--bg-color);
-  padding: .7rem 1rem ;
-  box-shadow: 0 4px 10px -5px var(--LINE-COLOR);
 
-  & > button {
+  & > button,
+  & > select{
     height: var(--BUTTON-HEIGHT);
   }
+}
+
+.topic-pagination {
+  position: sticky;
+  top: 0;
+  padding: .7rem 1rem ;
+  box-shadow: 0 4px 10px -5px var(--LINE-COLOR);
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(5px);
+
+}
+
+.definition-pagination {
+  background-color: transparent;
+  width: var(--PAGINATION-WITH);
 }

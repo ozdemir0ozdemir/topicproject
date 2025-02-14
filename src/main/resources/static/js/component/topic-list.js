@@ -2,6 +2,7 @@
 
 import TopicService from "../api/topic-service.js";
 import Pagination from "./pagination.js";
+import DefinitionList from "./definition-list.js";
 
 /* ---------------------------------------------------------------------------
 * Private Section
@@ -64,13 +65,15 @@ const TopicList = {
         .then(topicsHtml => TopicInfo.listElement.innerHTML = topicsHtml)
         .then(_ => Pagination.init(topicContainer, total));
 
-    topicContainer.appendChild(Pagination.createSudoElement(PAGINATION_NAME));
+    topicContainer.appendChild(Pagination.createSudoElement(PAGINATION_NAME, "topic-pagination"));
     topicContainer.appendChild(TopicInfo.listElement);
 
-    Pagination.addPageChangedListener(page => {
+    Pagination.addPageChangedListener((page, paginationFor) => {
+      if(paginationFor !== PAGINATION_NAME){
+        return;
+      }
       let total = 1;
       TopicInfo.listElement.innerHTML = "";
-      // FIXME: request paginated
       TopicService
           .getAllTopicTitles(page)
           .then(topics => {total = topics.totalPages;  return topics;})
@@ -88,7 +91,7 @@ const TopicList = {
           event.preventDefault();
           const id = event.target.getAttribute("data-id");
           if (event.target.localName === "a" && id) {
-            // TODO: invoke topicChangedListeners
+            DefinitionList.changeTopicById(id);
           }
         });
 

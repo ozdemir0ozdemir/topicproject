@@ -19,7 +19,7 @@ const TopicService = {
     }
   },
 
-  async getTopicTitleByRandom() {
+  async getTopicByRandom() {
     try {
       const response = await fetch(`${apiUrl}/topics/random`);
       if (!response.ok) {
@@ -32,9 +32,9 @@ const TopicService = {
     }
   },
 
-  async getTopicTitleById(topicTitleId) {
+  async getTopicById(topicId) {
     try {
-      const response = await fetch(`${apiUrl}/topics/${topicTitleId}`);
+      const response = await fetch(`${apiUrl}/topics/${topicId}`);
       if (!response.ok) {
         throw new Error(`Hata: ${response.status}`)
       }
@@ -45,9 +45,9 @@ const TopicService = {
     }
   },
 
-  async getAllDefinitionsByTopicTitleId(topicTitleId) {
+  async getAllDefinitionsByTopicId(topicId) {
     try {
-      const response = await fetch(`${apiUrl}/topics/${topicTitleId}/definitions`);
+      const response = await fetch(`${apiUrl}/topics/${topicId}/definitions`);
       if (!response.ok) {
         throw new Error(`Hata: ${response.status}`)
       }

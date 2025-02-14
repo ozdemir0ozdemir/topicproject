@@ -68,7 +68,8 @@ const PageInfo = {
         .selectElement
         .forEach(select => select.value = value);
 
-    this.pageChangedListeners.forEach(listener => listener(value))
+    // FIXME : invoke proper listener
+    this.pageChangedListeners.forEach(listener => listener(value, paginationFor))
   },
 
   updateTotalPagesFor(paginationFor, totalPages) {
@@ -114,12 +115,16 @@ const PageInfo = {
 const Pagination = {
 
 
-  createSudoElement(paginationFor) {
+  createSudoElement(paginationFor, cssClass) {
     const pagination = document.createElement("Pagination");
     pagination.setAttribute("data-pagination-for", paginationFor);
+    if(cssClass){
+      pagination.classList.add(cssClass);
+    }
     return pagination;
   },
 
+  // FIXME : add listener by paginationFor property
   addPageChangedListener(listener) {
     PageInfo.pageChangedListeners.push(listener);
   },
@@ -137,7 +142,6 @@ const Pagination = {
   render(sudoElement, totalPages) {
     const paginationRoot = document.createElement("div");
     const paginationFor = sudoElement.getAttribute(DATA_PAGINATION_FOR);
-
     paginationRoot.classList.add("pagination");
     paginationRoot.setAttribute(DATA_PAGINATION_FOR, paginationFor);
 
@@ -197,6 +201,7 @@ const Pagination = {
     paginationRoot.addEventListener("change", listener);
 
 
+    paginationRoot.classList.add(sudoElement.classList);
     sudoElement.replaceWith(paginationRoot);
   }
 
