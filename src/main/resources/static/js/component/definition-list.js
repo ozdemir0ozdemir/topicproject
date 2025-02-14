@@ -3,8 +3,11 @@
 import TopicService from "../api/topic-service.js";
 import Pagination from "./pagination.js";
 
-const HTML_TAG = "DefinitionList"
 
+/* ---------------------------------------------------------------------------
+* Private Section
+* */
+const HTML_TAG = "DefinitionList"
 
 const DefinitionListInfo = {
   definitionHeaderElement: document.createElement("h1"),
@@ -22,8 +25,17 @@ const DefinitionListInfo = {
     }
   },
 
-  async setCurrentTopicById(topicId) {
+  createDefinitionCard(id, definition) {
+  return `
+  <div class="topic-definition-card">
+    <div class="topic-definition-text">
+      ${definition.replaceAll("<", "&lt;")}
+    </div>
+  </div>
+ `;
+},
 
+  async setCurrentTopicById(topicId) {
     await TopicService
         .getTopicById(topicId)
         .then(({id, title, sanitizedTitle}) => {
@@ -32,30 +44,31 @@ const DefinitionListInfo = {
         });
 
     this.definitionHeaderElement.innerHTML = this.currentTopic.title;
-    this.definitionCardsElement.innerHTML = "";
 
     await TopicService.getAllDefinitionsByTopicId(this.currentTopic.id)
         .then(definitionList => definitionList
-            .map(({id, definition}) => createDefinitionCard(id, definition))
+            .map(({id, definition}) => this.createDefinitionCard(id, definition))
             .join(""))
         .then(definitionsHtml => this.definitionCardsElement.innerHTML = definitionsHtml);
 
-
+    document.querySelector(".right-frame")
+        .scrollTop = 0;
   }
-
-
 };
 
-function createDefinitionCard(id, definition) {
-  return `
-  <div class="topic-definition-card">
-    <div class="topic-definition-text">
-      ${definition.replaceAll("<", "&lt;")}
-    </div>
-  </div>
- `;
-}
 
+/**
+ * @author Özdemir Özdemir
+ * @email ozdemirozdemir@hotmail.com.tr
+ * @github ozdemir0ozdemir
+ *
+ * @date 2025 February 14
+ * @since 1.0
+ * @version 1.0
+ *
+ * Definition List Component.
+ * Can be used only once.
+ * */
 const DefinitionList = {
   init(parentElement = document) {
     parentElement.querySelectorAll(HTML_TAG)

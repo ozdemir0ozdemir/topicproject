@@ -17,7 +17,7 @@
 
   /* COLORS */
   /*--theme-color: #053168;*/
-  --theme-color: #500c35;
+  --theme-color: #190101;
   --bg-color: #e4e4e4;
   --LINE-COLOR: #a3a3a3;
 }
@@ -48,6 +48,7 @@ main {
 .right-frame {
   overflow-y: scroll;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 /* LEFT FRAME */
@@ -81,7 +82,7 @@ main {
       flex-direction: column;
       color: var(--theme-color);
       gap: 12px;
-      padding: 0 1rem;
+      padding: .5rem 1rem 5rem 1rem;
       margin-top: 1rem;
 
       .topic > a {
@@ -106,6 +107,7 @@ main {
   .definition-header {
     display: flex;
     flex-direction: column;
+    row-gap: 1rem;
 
     align-items: end;
     position: sticky;
