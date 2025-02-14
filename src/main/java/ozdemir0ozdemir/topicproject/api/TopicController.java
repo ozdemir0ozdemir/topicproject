@@ -1,6 +1,8 @@
 package ozdemir0ozdemir.topicproject.api;
 
 import java.util.List;
+
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ozdemir0ozdemir.topicproject.domain.*;
@@ -16,8 +18,9 @@ record TopicController(TopicManager topics) {
 	}
 
 	@GetMapping
-	ResponseEntity<List<TopicTitleDto>> getAllTopicTitles() {
-		return ResponseEntity.ok(this.topics.getAllTitles());
+	ResponseEntity<Page<TopicTitleDto>> getAllTopicTitles(@RequestParam(name = "page", defaultValue = "1") int page) {
+
+		return ResponseEntity.ok(this.topics.getAllTitles(Math.max(0, page - 1)));
 	}
 
 	@GetMapping("{topicTitleId}")

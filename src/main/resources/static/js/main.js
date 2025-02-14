@@ -2,7 +2,7 @@
 
 import TopicService from "./api/topic-service.js";
 import NewDefinitionForm from "./component/new-definition-form.js";
-import TopicTitlesList from "./component/topic-titles-list.js";
+import TopicList from "./component/topic-list.js";
 
 const newTopicTitle = document.querySelector("#new-topic-title");
 
@@ -25,11 +25,7 @@ const currentTopic = {
   }
 };
 
-TopicTitlesList.topicChangeCallback = (id, title) => {
-  // FIXME: lack of sanitized title
-  currentTopic.setTopic(id, title, "");
-};
-
+/*
 document
     .querySelector(".topic-titles-add-button")
     .addEventListener("click", () => {
@@ -40,8 +36,8 @@ document
               newTopicTitle.value = "";
             });
       }
-
     });
+    */
 
 
 NewDefinitionForm.init(
@@ -56,7 +52,7 @@ NewDefinitionForm.init(
 
 
 // Index Problems Answer with query param
-const topic = new URLSearchParams(window.location.search).get("topic");
+/*const topic = new URLSearchParams(window.location.search).get("topic");
 if (topic) {
   TopicService.getTopicTitleById(encodeURIComponent(topic))
       .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title, topicTitle.sanitizedTitle));
@@ -65,7 +61,10 @@ if (topic) {
       .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title, topicTitle.sanitizedTitle))
       // FIXME: if search is empty ? else &
       .then(topicTitle => window.history.replaceState({}, currentTopic.sanitizedTitle, window.location.href + `&topic=${currentTopic.sanitizedTitle}`));
-}
+}*/
+
+TopicService.getTopicTitleByRandom()
+    .then(topicTitle => currentTopic.setTopic(topicTitle.id, topicTitle.title, topicTitle.sanitizedTitle))
 
 
 

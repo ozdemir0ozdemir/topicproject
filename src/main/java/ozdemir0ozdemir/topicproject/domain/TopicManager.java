@@ -2,6 +2,9 @@ package ozdemir0ozdemir.topicproject.domain;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ozdemir0ozdemir.topicproject.util.Sanitizer;
 
@@ -51,10 +54,10 @@ public class TopicManager {
 				.orElseThrow(() -> new RuntimeException("No topic title found"));
 	}
 
-	public List<TopicTitleDto> getAllTitles() {
-		return this.topicTitleRepository.findAll().stream()
-				.map(TopicTitleDto::from)
-				.toList();
+	public Page<TopicTitleDto> getAllTitles(int page) {
+		return this.topicTitleRepository
+				.findAll(PageRequest.of(page, 25))
+				.map(TopicTitleDto::from);
 	}
 
 	public List<TopicDefinitionDto> getDefinitionsByTitleId(Long topicTitleId) {

@@ -51,15 +51,13 @@ main {
 /* LEFT FRAME */
 .left-frame {
 
-  padding: 16px 16px 100px 16px;
-
   .topic-titles-form {
     display: flex;
     flex-direction: column;
     gap: .3rem;
-    padding-bottom: 1rem;
     border-bottom: 1px solid var(--LINE-COLOR);
-    margin-bottom: 1rem;
+
+    padding: 1rem;
 
     input[type=text] {
       padding: .5rem;
@@ -70,37 +68,31 @@ main {
     }
   }
 
-  .topic-titles-container {
+  .topic-container {
     display: flex;
     flex-direction: column;
-  }
 
-  .topic-titles-list {
-    list-style-position: inside;
-    list-style-type: "-";
-    display: flex;
-    flex-direction: column;
-    color: var(--theme-color);
-    gap: 12px;
-    padding-top: 16px;
-  }
+    .topic-list {
+      list-style-position: inside;
+      list-style-type: "-";
+      display: flex;
+      flex-direction: column;
+      color: var(--theme-color);
+      gap: 12px;
+      padding: 0 1rem;
+      margin-top: 1rem;
 
-  .topic-title > a {
-    color: var(--theme-color);
-    text-decoration: none;
+      .topic > a {
+        color: var(--theme-color);
+        text-decoration: none;
 
-    &:hover {
-      text-decoration: underline;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
-}
 
-.topic-titles-pagination-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  height: var(--BUTTON-HEIGHT);
-  margin: 1rem 0;
-  column-gap: 5px;
 }
 
 /* RIGHT FRAME */
@@ -157,3 +149,18 @@ main {
 
 }
 
+
+.pagination {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 5px;
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-color);
+  padding: .7rem 1rem ;
+  box-shadow: 0 4px 10px -5px var(--LINE-COLOR);
+
+  & > button {
+    height: var(--BUTTON-HEIGHT);
+  }
+}
