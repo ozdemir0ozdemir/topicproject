@@ -12,6 +12,7 @@
   --HEADER-SIZE: 60px;
   --BUTTON-HEIGHT: 28px;
   --PAGINATION-WITH: 260px;
+  --BOX-SHADOW:  0 4px 10px -5px var(--LINE-COLOR);
 
 
 
@@ -19,6 +20,7 @@
   /*--theme-color: #053168;*/
   --theme-color: #00285c;
   --bg-color: #e4e4e4;
+  --BG-COLOR-TRANSPARENT: #e4e4e4bb;
   --LINE-COLOR: #a3a3a3;
 }
 
@@ -49,6 +51,9 @@ main {
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-behavior: smooth;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--LINE-COLOR) transparent;
 }
 
 /* LEFT FRAME */
@@ -113,15 +118,16 @@ main {
   .definition-header {
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
+    row-gap: .4rem;
 
     align-items: end;
     position: sticky;
     top:0;
-    background-color: rgba(255, 255, 255, 0.6);
+
+    background-color: var(--BG-COLOR-TRANSPARENT);
     backdrop-filter: blur(5px);
-    box-shadow: 0 8px 10px -5px var(--LINE-COLOR);
-    padding: 1rem;
+    box-shadow: var(--BOX-SHADOW);
+    padding: .5rem 1rem 1rem 1rem;
   }
 
   .definitions-title {
@@ -182,8 +188,9 @@ main {
   position: sticky;
   top: 0;
   padding: .7rem 1rem ;
-  box-shadow: 0 4px 10px -5px var(--LINE-COLOR);
-  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: var(--BOX-SHADOW);
+  /*background-color: rgba(255, 255, 255, 0.6);*/
+  background-color: var(--BG-COLOR-TRANSPARENT);
   backdrop-filter: blur(5px);
 
 }
