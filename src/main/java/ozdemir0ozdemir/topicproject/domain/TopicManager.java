@@ -57,7 +57,7 @@ public class TopicManager {
 	}
 
 	public Page<TopicTitleWithDefCount> getAllTitlesWithDefCount(int page) {
-		return this.topicDefinitionRepository.findAllTopic(PageRequest.of(page, 25));
+		return this.topicTitleRepository.findAllTopic(PageRequest.of(page, 25));
 	}
 
 	public Page<TopicDefinitionDto> getDefinitionsByTitleId(Long topicTitleId, int page) {

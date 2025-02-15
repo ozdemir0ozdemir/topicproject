@@ -5,25 +5,6 @@ import TopicList from "./component/topic-list.js";
 import DefinitionList from "./component/definition-list.js";
 
 
-/*const currentTopic = {
-  id: null,
-  title: null,
-  sanitizedTitle: null,
-
-  setTopic(id, title, sanitizedTitle) {
-    this.id = id;
-    this.title = title;
-    this.sanitizedTitle = sanitizedTitle;
-    getTopicDefinitionsByTopicTitleId(id, title);
-    // NewDefinitionForm.updatePlaceholder(title);
-    document.title = `${title} - TopicProject`
-
-    // FIXME: url must respect topic changes
-    // window.history.pushState({}, sanitizedTitle, window.location.href + `?topic=${sanitizedTitle}`);
-  }
-};*/
-
-/*
 const newTopicTitle = document.querySelector("#new-topic-title");
 
 document
@@ -32,12 +13,11 @@ document
       if (newTopicTitle.value) {
         TopicService.saveNewTopicTitle(newTopicTitle.value)
             .then(result => {
-              refreshAllTopicTitles();
               newTopicTitle.value = "";
             });
       }
     });
-    */
+
 
 
 // NewDefinitionForm.init(
@@ -63,20 +43,3 @@ if (topic) {
       .then(topicTitle => window.history.replaceState({}, currentTopic.sanitizedTitle, window.location.href + `&topic=${currentTopic.sanitizedTitle}`));
 }*/
 
-
-
-
-
-
-// function getTopicDefinitionsByTopicTitleId(topicTitleId, topicTitle) {
-//   const topicTitleHeader = document.querySelector(".topic-definitions-title");
-//   topicTitleHeader.innerHTML = topicTitle;
-//
-//   const definitionCards = document.querySelector(".topic-definition-cards");
-//   TopicService.getAllDefinitionsByTopicTitleId(topicTitleId)
-//       .then(defList => defList
-//           .map(def => createTopicDefinitionItem(def.id, def.definition))
-//           .join(""))
-//       .then(definitions => definitionCards.innerHTML = definitions);
-// }
-//
