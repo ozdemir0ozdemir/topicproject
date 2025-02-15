@@ -63,7 +63,16 @@ const DefinitionListPrivate = {
         .then(definitionsHtml => this.definitionCardsElement.innerHTML = definitionsHtml);
 
 
-    this.titleElement.innerHTML = this.currentTopic.title;
+    // this.titleElement.innerHTML = this.currentTopic.title;
+    this.titleElement.innerHTML = "";
+    let addInterval = setInterval(() => {
+      if(this.titleElement.innerHTML.length !== this.currentTopic.title.length){
+        this.titleElement.innerHTML = this.currentTopic.title.substring(0, this.titleElement.innerHTML.length + 1);
+      }
+      else {
+        clearInterval(addInterval);
+      }
+    }, 5);
 
     document.title = this.currentTopic.title + " - TopicProject";
     document.querySelector(".right-frame").scrollTop = 0;
