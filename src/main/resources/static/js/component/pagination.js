@@ -1,114 +1,5 @@
 "use strict";
 
-
-/* ---------------------------------------------------------------------------
-* Private Section
-* */
-const DATA_PAGINATION_FOR = "data-pagination-for";
-const HTML_TAG = "Pagination";
-
-const PageInfo = {
-  pages: new Map(),
-  pageChangedListeners: [],
-
-  goNextPageFor(paginationFor) {
-    const page = this.get(paginationFor);
-    if (page.currentPage === page.totalPages) {
-      return
-    }
-
-    this.setCurrentPageFor(paginationFor, this.pages.get(paginationFor).currentPage + 1);
-  },
-
-  goPreviousPageFor(paginationFor) {
-    const page = this.get(paginationFor);
-    if (page.currentPage === 1) {
-      return;
-    }
-
-    this.setCurrentPageFor(paginationFor, this.get(paginationFor).currentPage - 1);
-  },
-
-  goFirstPageFor(paginationFor) {
-    this.setCurrentPageFor(paginationFor, 1);
-  },
-
-  goLastPageFor(paginationFor) {
-    this.setCurrentPageFor(paginationFor, this.get(paginationFor).totalPages);
-  },
-
-  setCurrentPageFor(paginationFor, pageNumber) {
-    const page = this.get(paginationFor);
-
-    // Bounds security
-    pageNumber = pageNumber < 1 ? 1 : pageNumber;
-    pageNumber = pageNumber > page.totalPages ? page.totalPages : pageNumber;
-    page.currentPage = +pageNumber;
-
-    // Previous & Next Buttons disable-enable
-    if(page.currentPage === 1){
-      page.previousButtons.forEach(btn => btn.setAttribute("disabled", "disabled"));
-    }
-    else {
-      page.previousButtons.forEach(btn => btn.removeAttribute("disabled"));
-    }
-
-    if(page.currentPage === page.totalPages){
-      page.nextButtons.forEach(btn => btn.setAttribute("disabled", "disabled"));
-    }
-    else {
-      page.nextButtons.forEach(btn => btn.removeAttribute("disabled"));
-    }
-
-    this.pages.set(paginationFor, page);
-
-    // update all selectors
-    this.get(paginationFor)
-        .selectElement
-        .forEach(select => select.value = pageNumber);
-
-    // FIXME : invoke proper listener
-    this.pageChangedListeners.forEach(listener => listener(pageNumber, paginationFor))
-  },
-
-  updateTotalPagesFor(paginationFor, totalPages) {
-    const pagination = this.get(paginationFor);
-
-    pagination.totalPages = totalPages;
-
-    pagination.selectElement.forEach(el => {
-      el.innerHTML = "";
-
-      for(let i = 1; i <= totalPages; i++) {
-          el.innerHTML += `<option value="${i}" ${pagination.currentPage === i ? 'selected="selected"':''}>${i}</option>`;
-      }
-    });
-  },
-
-  create(paginationFor, currentPage, totalPages, selectElement, previousButtons, nextButtons) {
-    if (this.get(paginationFor)) {
-      const oldPage = this.get(paginationFor);
-      oldPage.selectElement.push(selectElement);
-    } else {
-      this.pages.set(
-          paginationFor,
-          {
-            'currentPage': +currentPage,
-            'totalPages': +totalPages,
-            'selectElement': [selectElement],
-            'previousButtons': previousButtons,
-            'nextButtons': nextButtons
-          }
-      );
-    }
-  },
-
-  get(paginationFor) {
-    return this.pages.get(paginationFor);
-  }
-
-}
-
 /**
  * @author Özdemir Özdemir
  * @email ozdemirozdemir@hotmail.com.tr
@@ -116,66 +7,145 @@ const PageInfo = {
  *
  * @date 2025 February 14
  * @since 1.0
- * @version 1.0
+ * @version 1.1
  *
  * Pagination Component
  * */
-const Pagination = {
+const DATA_PAGINATION_NAME = "data-pagination-name";
+const HTML_TAG = "Pagination";
 
+const PaginationPrivate = {
+  paginationSets: new Map(),
 
-  createSudoElement(paginationFor, cssClass) {
-    const pagination = document.createElement("Pagination");
-    pagination.setAttribute("data-pagination-for", paginationFor);
-    if(cssClass){
-      pagination.classList.add(cssClass);
-    }
+  addPagination(paginationName,
+                      currentPage,
+                      totalPages,
+                      firstPageButton,
+                      previousPageButton,
+                      nextPageButton,
+                      lastPageButton,
+                      selectElement) {
+
+    const pagination = {
+      currentPage: currentPage,
+      totalPages: totalPages,
+      selectElement: selectElement,
+      firstPageButton: firstPageButton,
+      previousPageButton: previousPageButton,
+      nextPageButton: nextPageButton,
+      lastPageButton: lastPageButton,
+      listeners: []
+    };
+
+    this.paginationSets.set(paginationName, pagination);
+
     return pagination;
   },
 
-  // FIXME : add listener by paginationFor property
-  addPageChangedListener(listener) {
-    PageInfo.pageChangedListeners.push(listener);
-  },
-
-  updateTotalPagesFor(paginationFor, totalPages) {
-     PageInfo.updateTotalPagesFor(paginationFor, totalPages);
-  },
-
-  init(parent = document, totalPages) {
-    parent
-        .querySelectorAll(HTML_TAG)
-        .forEach(sudoElement => this.render(sudoElement, totalPages));
-  },
-
-  render(sudoElement, totalPages) {
-    const paginationRoot = document.createElement("div");
-    const paginationFor = sudoElement.getAttribute(DATA_PAGINATION_FOR);
-    paginationRoot.classList.add("pagination");
-    paginationRoot.setAttribute(DATA_PAGINATION_FOR, paginationFor);
-
-    paginationRoot.innerHTML = `
-        <button class ="previous-button" title="first page" data-action="first" type="button" disabled="disabled">|&lt;</button>
-        <button class ="previous-button" title="previous page" data-action="previous" type="button" disabled="disabled">&lt;</button>
-        <select title="current page">
-        </select>
-        <button class ="next-button" title="next page" data-action="next" type="button">&gt;</button>
-        <button class ="next-button" title="last page" data-action="last" type="button">&gt;|</button>
-    `;
-
-    const selector = paginationRoot.querySelector("select");
-    for(let i = 1; i <= totalPages; i++) {
-      selector.innerHTML += `<option value="${i}">${i}</option>`;
+  updatePagination(paginationName, currentPage, totalPages, invokeCallbacks) {
+    const pagination = this.paginationSets.get(paginationName);
+    if(!pagination){
+      console.log("update - Pagination not found: ", paginationName);
+      return;
     }
 
-    PageInfo.create(
-        paginationFor,
+    // update model
+    pagination.currentPage = currentPage;
+    pagination.totalPages = totalPages;
+
+    // recreate options and select current page
+    pagination.selectElement.innerHTML =
+        this.createOptionsElements(currentPage, totalPages);
+
+    // updateButtonsDisabledStatus
+    this.updateButtonsDisabledStatus(pagination);
+
+    if(invokeCallbacks){
+      pagination.listeners.forEach(lis => lis(currentPage));
+    }
+  },
+
+  addPaginationChangeListener(paginationName, listener) {
+    const pagination = this.paginationSets.get(paginationName);
+    if(!pagination){
+      console.log("listener - Pagination not found: ", paginationName);
+      return;
+    }
+
+    pagination.listeners.push(listener);
+  },
+
+  createOptionsElements(currentPage, totalPages) {
+    return [...Array(totalPages).keys()]
+        .map(i => i + 1)
+        .map(i => `<option${i === currentPage ? ' selected="selected"' : ''} value="${i}">${i}</option>`)
+        .join("");
+  },
+
+  updateButtonsDisabledStatus(pagination) {
+    pagination.firstPageButton.removeAttribute("disabled");
+    pagination.previousPageButton.removeAttribute("disabled");
+    pagination.nextPageButton.removeAttribute("disabled");
+    pagination.lastPageButton.removeAttribute("disabled");
+
+    if (pagination.currentPage === 1) {
+      pagination.firstPageButton.setAttribute("disabled", "disabled");
+      pagination.previousPageButton.setAttribute("disabled", "disabled");
+    }
+
+    if (pagination.currentPage === pagination.totalPages) {
+      pagination.nextPageButton.setAttribute("disabled", "disabled");
+      pagination.lastPageButton.setAttribute("disabled", "disabled");
+    }
+  },
+
+};
+
+
+const Pagination = {
+
+  createSudoElement(paginationName = "noname",  cssClass = "") {
+    const pagination = document.createElement("Pagination");
+    pagination.setAttribute(DATA_PAGINATION_NAME, paginationName);
+    pagination.classList = cssClass;
+    return pagination;
+  },
+
+  init(parent = document) {
+    parent
+        .querySelectorAll(HTML_TAG)
+        .forEach(sudoElement => this.render(sudoElement));
+  },
+
+  render(sudoElement) {
+    // Prepare Root
+    const paginationRoot = document.createElement("div");
+    const paginationName = sudoElement.getAttribute(DATA_PAGINATION_NAME);
+    paginationRoot.classList = "pagination " + sudoElement.classList;
+    paginationRoot.setAttribute(DATA_PAGINATION_NAME, paginationName);
+
+    paginationRoot.innerHTML = `
+        <button class = "first-button" title="first page" data-action="first" type="button" disabled="disabled">|&lt;</button>
+        <button class = "previous-button" title="previous page" data-action="previous" type="button" disabled="disabled">&lt;</button>
+        <select title = "current page"></select>
+        <button class = "next-button" title="next page" data-action="next" type="button">&gt;</button>
+        <button class = "last-button" title="last page" data-action="last" type="button">&gt;|</button>
+    `;
+
+    // Prepare Model
+    const model = PaginationPrivate.addPagination(
+        paginationName,
         1,
-        totalPages,
-        paginationRoot.querySelector("select"),
-        paginationRoot.querySelectorAll(".previous-button"),
-        paginationRoot.querySelectorAll(".next-button")
+        1,
+        paginationRoot.querySelector(".first-button"),
+        paginationRoot.querySelector(".previous-button"),
+        paginationRoot.querySelector(".next-button"),
+        paginationRoot.querySelector(".last-button"),
+        paginationRoot.querySelector("select")
     );
 
+
+    // Add Buttons and Select Listener
     // e.target.type = [button, select-one]
     // e.type = [click, change]
     const listener = e => {
@@ -183,33 +153,40 @@ const Pagination = {
         const action = e.target.getAttribute("data-action");
         switch (action) {
           case "next" :
-            PageInfo.goNextPageFor(paginationFor);
+             PaginationPrivate.updatePagination(paginationName, Math.min(model.currentPage += 1, model.totalPages), model.totalPages, true);
             break;
           case "previous" :
-            PageInfo.goPreviousPageFor(paginationFor);
+            PaginationPrivate.updatePagination(paginationName, Math.max(model.currentPage -= 1, 1), model.totalPages, true);
             break;
           case "first" :
-            PageInfo.goFirstPageFor(paginationFor);
+            PaginationPrivate.updatePagination(paginationName, 1, model.totalPages,true);
             break;
-
           case "last" :
-            PageInfo.goLastPageFor(paginationFor);
+            PaginationPrivate.updatePagination(paginationName, model.totalPages, model.totalPages, true);
             break;
           default:
             break;
         }
       } else if (e.target.type === 'select-one' && e.type === 'change') {
-        PageInfo.setCurrentPageFor(paginationFor, e.target.value);
+        PaginationPrivate.updatePagination(paginationName, +e.target.value, model.totalPages, true);
       }
     };
 
     paginationRoot.addEventListener("click", listener);
     paginationRoot.addEventListener("change", listener);
 
-    paginationRoot.classList.add(sudoElement.classList);
-    sudoElement.replaceWith(paginationRoot);
-  }
 
+    // Finally, replace sudo element with real one
+    sudoElement.replaceWith(paginationRoot);
+  },
+
+  updatePagination(paginationName, currentPage, totalPages, invokeCallbacks) {
+    PaginationPrivate.updatePagination(paginationName, currentPage, totalPages, invokeCallbacks);
+  },
+
+  addPaginationChangeListener(paginationName, listener) {
+    PaginationPrivate.addPaginationChangeListener(paginationName, listener);
+  },
 }
 
 Pagination.init();

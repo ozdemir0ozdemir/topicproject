@@ -218,17 +218,14 @@ public class ExampleDataCreator {
 
 			Random random = new Random();
 
-
 			savedTopics.forEach(topic -> {
-
 				int rnd1 = random.nextInt(0, definitionList.size());
 				int rnd2 = random.nextInt(0, definitionList.size());
 
 				int left = Math.min(rnd1, rnd2);
 				int right = Math.max(rnd1, rnd2);
 
-				List<Integer> ids =
-						IntStream.range(left, right).boxed().collect(Collectors.toList());
+				List<Integer> ids = IntStream.range(left, right).boxed().collect(Collectors.toList());
 
 				Collections.shuffle(ids);
 

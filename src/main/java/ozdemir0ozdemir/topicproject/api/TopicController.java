@@ -1,6 +1,5 @@
 package ozdemir0ozdemir.topicproject.api;
 
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,8 @@ record TopicController(TopicManager topics) {
 	}
 
 	@GetMapping
-	ResponseEntity<Page<TopicTitleWithDefCount>> getAllTopicTitles(@RequestParam(name = "page", defaultValue = "1") int page) {
+	ResponseEntity<Page<TopicTitleWithDefCount>> getAllTopicTitles(
+			@RequestParam(name = "page", defaultValue = "1") int page) {
 
 		return ResponseEntity.ok(this.topics.getAllTitlesWithDefCount(Math.max(0, page - 1)));
 	}
@@ -29,8 +29,7 @@ record TopicController(TopicManager topics) {
 
 	@GetMapping("{topicTitleId}/definitions")
 	ResponseEntity<Page<TopicDefinitionDto>> getAllDefinitionsByTopicId(
-			@PathVariable Long topicTitleId,
-			@RequestParam(name = "page", defaultValue = "1") int page) {
+			@PathVariable Long topicTitleId, @RequestParam(name = "page", defaultValue = "1") int page) {
 
 		return ResponseEntity.ok(this.topics.getDefinitionsByTitleId(topicTitleId, Math.max(0, page - 1)));
 	}

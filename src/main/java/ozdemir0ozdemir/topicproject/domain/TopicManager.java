@@ -1,6 +1,5 @@
 package ozdemir0ozdemir.topicproject.domain;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -62,7 +61,8 @@ public class TopicManager {
 	}
 
 	public Page<TopicDefinitionDto> getDefinitionsByTitleId(Long topicTitleId, int page) {
-		return this.topicDefinitionRepository.findAllByTopicTitleId(topicTitleId, PageRequest.of(page, 10))
+		return this.topicDefinitionRepository
+				.findAllByTopicTitleId(topicTitleId, PageRequest.of(page, 10))
 				.map(TopicDefinitionDto::from);
 	}
 }
