@@ -119,47 +119,7 @@ main {
 
 /* RIGHT FRAME */
 .right-frame {
-  display: flex;
-  flex-direction: column;
-  padding: 0 0 100px 0;
-
-  .definition-header {
-    display: flex;
-    flex-direction: column;
-    row-gap: .4rem;
-
-    align-items: end;
-    position: sticky;
-    top:0;
-
-    background-color: var(--BG-COLOR-TRANSPARENT);
-    backdrop-filter: blur(5px);
-    box-shadow: var(--BOX-SHADOW);
-    padding: .5rem 1rem 1rem 1rem;
-  }
-
-  .definitions-title {
-    color: var(--theme-color);
-    width: 100%;
-    font-size: 1.6rem;
-  }
-
-  .definition-cards {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    gap: 2rem;
-    padding: 2rem 1rem;
-  }
-
-  .definition-card {
-    border-bottom: 1px solid var(--LINE-COLOR);
-    padding: .5rem;
-    width: 100%;
-  }
-
+  padding: 0 0 30px 0;
 }
 
 .definition-form {
@@ -200,8 +160,47 @@ main {
 
 }
 
-.definition-pagination {
+.definition-list-pagination {
   background-color: transparent;
   width: var(--PAGINATION-WITH);
   padding-left: 2.5rem;
+}
+
+
+.definition-list-header {
+  display: flex;
+  flex-direction: column;
+  row-gap: .4rem;
+
+  align-items: end;
+  position: sticky;
+  top:0;
+
+  background-color: var(--BG-COLOR-TRANSPARENT);
+  backdrop-filter: blur(5px);
+  box-shadow: var(--BOX-SHADOW);
+  padding: .5rem 1rem 1rem 1rem;
+}
+
+.definition-list-title {
+  color: var(--theme-color);
+  width: 100%;
+  font-size: 1.6rem;
+}
+
+.definition-list-container > ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  list-style: none;
+}
+
+.definition-list-item {
+  border-bottom: 1px solid var(--LINE-COLOR);
+  padding: .5rem;
+  width: 100%;
 }

@@ -89,7 +89,10 @@ const TopicList = {
           event.preventDefault();
           const id = event.target.getAttribute("data-id");
           if (event.target.classList.contains("topic-link") && id) {
-            DefinitionList.changeTopicById(id);
+            const title = event.target.innerHTML.trim();
+            TopicService.getAllDefinitionsByTopicId(id, 1)
+                .then(defsPage =>  DefinitionList.setDefinitionList({id, title}, defsPage))
+
           }
         });
 

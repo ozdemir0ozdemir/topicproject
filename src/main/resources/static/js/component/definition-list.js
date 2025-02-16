@@ -1,10 +1,9 @@
 "use strict";
 
 
-import TopicService from "../api/topic-service.js";
 import Pagination from "./pagination.js";
 import DefinitionForm from "./definition-form.js";
-
+import TopicService from "../api/topic-service.js";
 
 /**
  * @author Özdemir Özdemir
@@ -13,136 +12,131 @@ import DefinitionForm from "./definition-form.js";
  *
  * @date 2025 February 14
  * @since 1.0
- * @version 1.1
+ * @version 1.2
  *
  * Definition List Component.
  * Can be used only once.
  * */
 const HTML_TAG = "DefinitionList";
-const PAGINATION_NAME = "definition";
 
 const DefinitionListPrivate = {
 
-  titleElement: undefined,
-  definitionCardsElement: undefined,
+  topic: {
+    id: undefined,
+    title: undefined
+  },
 
-  currentTopic: {
-    id: null,
-    title: null,
-    sanitizedTitle: null,
+  definitionList: {
+    rootElement: undefined,
+    titleElement: undefined,
+    listElement: undefined,
+  },
 
-    set(id, title, sanitizedTitle) {
-      this.id = id;
-      this.title = title;
-      this.sanitizedTitle = sanitizedTitle;
+  init() {
+    const list = this.definitionList;
+
+    list.rootElement = document.createElement("div");
+    list.rootElement.classList.add("definition-list-container")
+
+
+    const headerElement = document.createElement("div");
+    headerElement.classList.add("definition-list-header");
+
+    list.titleElement = document.createElement("h1");
+    list.titleElement.classList.add("definition-list-title")
+
+    const sudoPaginationElement = Pagination.createSudoElement(HTML_TAG, "definition-list-pagination")
+
+    headerElement.appendChild(list.titleElement);
+    headerElement.appendChild(sudoPaginationElement);
+    Pagination.init(headerElement);
+    Pagination.addPaginationChangeListener(HTML_TAG, page => this.changePage(page));
+
+    list.rootElement.appendChild(headerElement);
+
+
+    list.listElement = document.createElement("ul");
+    list.rootElement.appendChild(list.listElement);
+
+    const sudoDefinitionFormElement = document.createElement("DefinitionForm");
+    list.rootElement.appendChild(sudoDefinitionFormElement);
+    DefinitionForm.init(list.rootElement);
+
+
+    return list;
+  },
+
+  setDefinitionList(topic, defsPage) {
+    if(!this.definitionList.rootElement){
+      return
     }
-  },
+    if (!topic || !topic.id || !topic.title) {
+      return;
+    }
 
-  createDefinitionCard(id, definition) {
-    return `
-    <div class="definition-card">
-      <div class="definition-card-id">${id}</div>
-      <div class="topic-definition-text">
-        ${definition.replaceAll("<", "&lt;")}
-      </div>
-    </div>
-   `;
-  },
+    this.topic.id = topic.id;
+    this.topic.title = topic.title;
 
-  changeTopic(topic) {
-    this.currentTopic.set(topic.id, topic.title, topic.sanitizedTitle);
+    Pagination.updatePagination(HTML_TAG, defsPage.pageable.pageNumber + 1, defsPage.totalPages, false);
 
-    TopicService
-        .getAllDefinitionsByTopicId(topic.id, 1)
-        .then(pageable => {
-          Pagination.updatePagination(PAGINATION_NAME, 1, pageable.totalPages, false);
-          return pageable;
-        })
-        .then(definitionList => definitionList.content
-            .map(({id, definition}) => this.createDefinitionCard(id, definition))
-            .join(""))
-        .then(definitionsHtml => this.definitionCardsElement.innerHTML = definitionsHtml);
-
-
-    // this.titleElement.innerHTML = this.currentTopic.title;
-    this.titleElement.innerHTML = "";
+    this.definitionList.titleElement.innerHTML = "";
     let addInterval = setInterval(() => {
-      if(this.titleElement.innerHTML.length !== this.currentTopic.title.length){
-        this.titleElement.innerHTML = this.currentTopic.title.substring(0, this.titleElement.innerHTML.length + 1);
+      if(this.definitionList.titleElement.innerHTML.length !== topic.title.length){
+        this.definitionList.titleElement.innerHTML = topic.title.substring(0, this.definitionList.titleElement.innerHTML.length + 1);
       }
       else {
         clearInterval(addInterval);
       }
     }, 5);
 
-    document.title = this.currentTopic.title + " - TopicProject";
+    this.definitionList.listElement.innerHTML = defsPage.content
+        .map(def => this.createDefinitionCard(def))
+        .join("");
+
     document.querySelector(".right-frame").scrollTop = 0;
 
     DefinitionForm.setTopic(topic);
   },
 
   changePage(page) {
-    TopicService
-        .getAllDefinitionsByTopicId(this.currentTopic.id, page)
-        .then(definitionList => definitionList.content
-            .map(({id, definition}) => this.createDefinitionCard(id, definition))
-            .join(""))
-        .then(definitionsHtml => this.definitionCardsElement.innerHTML = definitionsHtml);
-    document.querySelector(".right-frame").scrollTop = 0;
+    if(!this.topic && !this.topic.id){
+      return;
+    }
+    TopicService.getAllDefinitionsByTopicId(this.topic.id, page)
+        .then(defsPage => this.setDefinitionList(this.topic, defsPage));
+  },
+
+  createDefinitionCard(definition) {
+    return `
+    <li class="definition-list-item">
+      ${definition.definition.replaceAll("<", "&lt;")}
+    </li>
+   `;
   },
 
 };
 
 const DefinitionList = {
 
-  init(parentElement = document) {
-    parentElement.querySelectorAll(HTML_TAG)
-        .forEach(sudoElement => this.render(sudoElement));
+  init(parentElement = document.querySelector("body")) {
+
+    const sudoElement = parentElement.querySelector(HTML_TAG);
+    if (!sudoElement) {
+      return;
+    }
+
+    sudoElement.replaceWith(this.render(DefinitionListPrivate.init()))
   },
 
-  async render(sudoElement) {
-    // Create Dom Skeleton
-    const definitionRoot = document.createElement("div");
+  render(definitionList) {
 
-    DefinitionListPrivate.titleElement = document.createElement("div");
-    DefinitionListPrivate.titleElement.classList.add("definitions-title");
-
-    DefinitionListPrivate.definitionCardsElement = document.createElement("div");
-    DefinitionListPrivate.definitionCardsElement.classList.add("definition-cards");
-
-    const headerRow = document.createElement("div");
-    headerRow.classList.add("definition-header")
-
-    headerRow.appendChild(DefinitionListPrivate.titleElement);
-    headerRow.appendChild(Pagination.createSudoElement(PAGINATION_NAME, "definition-pagination"));
-    await Pagination.init(headerRow);
-
-    definitionRoot.appendChild(headerRow);
-    definitionRoot.appendChild(DefinitionListPrivate.definitionCardsElement);
-
-
-    // Set topic randomly
-    TopicService
-        .getTopicByRandom()
-        .then(topic => DefinitionListPrivate.changeTopic(topic));
-
-    Pagination.addPaginationChangeListener(PAGINATION_NAME, page => {
-      DefinitionListPrivate.changePage(page);
-    });
-
-    sudoElement.replaceWith(definitionRoot);
+    return definitionList.rootElement;
   },
 
-  changeTopicById(topicId) {
-    TopicService
-        .getTopicById(topicId)
-        .then(topic => DefinitionListPrivate.changeTopic(topic));
+  setDefinitionList(topic, definitions) {
+    DefinitionListPrivate.setDefinitionList(topic, definitions);
   },
-
-
-
 };
 
 DefinitionList.init();
 export default DefinitionList;
-

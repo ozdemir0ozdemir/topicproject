@@ -5,6 +5,7 @@ import TopicList from "./component/topic-list.js";
 import DefinitionList from "./component/definition-list.js";
 import SearchBar from "./component/search-bar.js";
 import DefinitionForm from "./component/definition-form.js";
+import Pagination from "./component/pagination.js";
 
 
 
@@ -31,6 +32,16 @@ DefinitionForm.setListener((topic, definition) => {
       .saveNewTopicDefinition(topic, definition)
       .then(console.log);
 });
+
+TopicService
+    .getTopicByRandom()
+    .then(topic => {
+      TopicService
+          .getAllDefinitionsByTopicId(topic.id, 1)
+          .then(defsPage => {
+            DefinitionList.setDefinitionList(topic, defsPage);
+          });
+    });
 
 
 

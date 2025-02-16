@@ -95,11 +95,13 @@ const DefinitionForm = {
 
   init(parentElement = document.querySelector("body")) {
 
-    const definitionForm = DefinitionFormPrivate.init();
+    const sudoElement = parentElement
+        .querySelector(HTML_TAG);
 
-    parentElement
-        .querySelector(HTML_TAG)
-        .replaceWith(this.render(definitionForm));
+    if(sudoElement){
+      const definitionForm = DefinitionFormPrivate.init();
+      sudoElement.replaceWith(this.render(definitionForm));
+    }
   },
 
   render(definitionForm) {
@@ -137,5 +139,4 @@ const DefinitionForm = {
 
 };
 
-DefinitionForm.init();
 export default DefinitionForm;
