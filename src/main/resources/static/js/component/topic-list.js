@@ -25,11 +25,11 @@ const TopicListPrivate = {
   listElement: undefined,
 
   createTopicListItem(topic) {
-  return `
-    <li class="topic">
-      <span class="topic-link" href="" data-id="${topic.id}">${topic.title} </span>
-      <span style="margin-left: 3px;">(<span class="topic-definition-count">${topic.totalDefinition}</span>)</span>
-    </li>`;
+    return `
+      <li class="topic">
+        <span class="topic-link" data-id="${topic.id}">${topic.title} </span>
+        <span style="margin-left: 3px;">(<span class="topic-definition-count">${topic.totalDefinition}</span>)</span>
+      </li>`;
   },
 
 };
