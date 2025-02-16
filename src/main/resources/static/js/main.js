@@ -3,20 +3,18 @@
 import TopicService from "./api/topic-service.js";
 import TopicList from "./component/topic-list.js";
 import DefinitionList from "./component/definition-list.js";
+import SearchBar from "./component/search-bar.js";
 
 
-const newTopicTitle = document.querySelector("#new-topic-title");
 
-document
-    .querySelector(".topic-titles-add-button")
-    .addEventListener("click", () => {
-      if (newTopicTitle.value) {
-        TopicService.saveNewTopicTitle(newTopicTitle.value)
-            .then(result => {
-              newTopicTitle.value = "";
-            });
-      }
-    });
+SearchBar.setListener("topic", title => {
+  // TODO: First search topic then suggest to create new topic
+  TopicService
+      .saveNewTopicTitle(title)
+      .then(result => {
+        console.log(result);
+      });
+});
 
 
 

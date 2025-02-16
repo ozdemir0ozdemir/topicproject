@@ -34,11 +34,34 @@ body {
 header {
   color: var(--theme-color);
   display: flex;
+  column-gap: 60px;
   align-items: center;
   padding: 0 16px;
   border-bottom: 1px solid var(--LINE-COLOR);
 }
 
+.search-bar-container {
+  display: flex;
+  width: 290px;
+
+  & > input[type=text],
+  & > button {
+    padding: 5px;
+    outline: none;
+  }
+
+  & > input[type=text] {
+    padding-left: 10px;
+    padding-right: 10px;
+    flex: 1;
+  }
+
+  & > button {
+    width: 55px;
+    display: grid;
+    place-content: center;
+  }
+}
 
 main {
   display: grid;
