@@ -97,9 +97,10 @@ main {
 
       }
 
-      .topic > a {
+      .topic > .topic-link {
         color: var(--theme-color);
         text-decoration: none;
+        cursor: pointer;
 
         &:hover {
           text-decoration: underline;

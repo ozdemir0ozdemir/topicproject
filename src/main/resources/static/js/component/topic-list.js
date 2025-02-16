@@ -27,7 +27,7 @@ const TopicListPrivate = {
   createTopicListItem(topic) {
   return `
     <li class="topic">
-      <a href="#" data-id="${topic.id}">${topic.title} </a>
+      <span class="topic-link" href="" data-id="${topic.id}">${topic.title} </span>
       <span style="margin-left: 3px;">(<span class="topic-definition-count">${topic.totalDefinition}</span>)</span>
     </li>`;
   },
@@ -88,7 +88,7 @@ const TopicList = {
         .addEventListener("click", event => {
           event.preventDefault();
           const id = event.target.getAttribute("data-id");
-          if (event.target.localName === "a" && id) {
+          if (event.target.classList.contains("topic-link") && id) {
             DefinitionList.changeTopicById(id);
           }
         });
