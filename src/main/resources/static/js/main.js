@@ -4,6 +4,7 @@ import TopicService from "./api/topic-service.js";
 import TopicList from "./component/topic-list.js";
 import DefinitionList from "./component/definition-list.js";
 import SearchBar from "./component/search-bar.js";
+import DefinitionForm from "./component/definition-form.js";
 
 
 
@@ -16,16 +17,20 @@ SearchBar.setListener("topic", title => {
       });
 });
 
+DefinitionForm.setListener((topic, definition) => {
+  if(!topic
+      ||!topic.id
+      || topic.id <= 0
+      || !definition
+      || definition.length <= 0
+      || definition.trim().length <= 0){
+    return;
+  }
 
-
-// NewDefinitionForm.init(
-//     document.querySelector("#new-definition-text"),
-//     document.querySelector(".new-definition-add-button"),
-//     newTopicDefinition =>
-//         TopicService
-//             .saveNewTopicDefinition(currentTopic, newTopicDefinition)
-//             .then(result => getTopicDefinitionsByTopicTitleId(currentTopic.id, currentTopic.title))
-// );
+  TopicService
+      .saveNewTopicDefinition(topic, definition)
+      .then(console.log);
+});
 
 
 

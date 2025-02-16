@@ -3,6 +3,7 @@
 
 import TopicService from "../api/topic-service.js";
 import Pagination from "./pagination.js";
+import DefinitionForm from "./definition-form.js";
 
 
 /**
@@ -76,6 +77,8 @@ const DefinitionListPrivate = {
 
     document.title = this.currentTopic.title + " - TopicProject";
     document.querySelector(".right-frame").scrollTop = 0;
+
+    DefinitionForm.setTopic(topic);
   },
 
   changePage(page) {
