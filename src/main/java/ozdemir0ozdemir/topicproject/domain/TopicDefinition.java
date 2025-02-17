@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -28,4 +30,7 @@ class TopicDefinition {
 	@Column(name = "topic_definition", nullable = false)
 	@Lob
 	private String definition;
+
+	@Column(columnDefinition = "timestamp without time zone")
+	private Date createdAt;
 }

@@ -6,15 +6,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ozdemir0ozdemir.topicproject.util.Sanitizer;
 
+import java.time.Clock;
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class TopicManager {
 
 	private final TopicTitleRepository topicTitleRepository;
 	private final TopicDefinitionRepository topicDefinitionRepository;
+	private final Clock clock;
 
 	public TopicTitleDto saveTitle(String topicTitle) {
-		var tt = new TopicTitle().setTitle(topicTitle).setTopicTitleSanitized(Sanitizer.sanitizeTitle(topicTitle));
+		var tt = new TopicTitle()
+				.setTitle(topicTitle)
+				.setTopicTitleSanitized(Sanitizer.sanitizeTitle(topicTitle))
+				.setCreatedAt(Date.from(clock.instant()));
 		tt = this.topicTitleRepository.save(tt);
 
 		return TopicTitleDto.from(tt);

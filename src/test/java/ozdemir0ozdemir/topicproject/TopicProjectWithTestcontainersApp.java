@@ -1,6 +1,7 @@
 package ozdemir0ozdemir.topicproject;
 
 import org.springframework.boot.SpringApplication;
+import ozdemir0ozdemir.topicproject.domain.ExampleDataCreator;
 
 public class TopicProjectWithTestcontainersApp {
 

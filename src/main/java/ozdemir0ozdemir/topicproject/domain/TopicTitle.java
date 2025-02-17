@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.time.Clock;
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,4 +29,8 @@ class TopicTitle {
 
 	@Column(name = "topic_title_sanitized")
 	private String topicTitleSanitized;
+
+	@Column(columnDefinition = "timestamp without time zone")
+	private Date createdAt;
+
 }
