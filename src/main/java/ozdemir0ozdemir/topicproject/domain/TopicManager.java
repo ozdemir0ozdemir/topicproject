@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ozdemir0ozdemir.topicproject.util.Sanitizer;
 
 import java.time.Clock;
+import java.time.Instant;
 import java.util.Date;
 
 @Service
@@ -21,7 +22,7 @@ public class TopicManager {
 		var tt = new TopicTitle()
 				.setTitle(topicTitle)
 				.setTopicTitleSanitized(Sanitizer.sanitizeTitle(topicTitle))
-				.setCreatedAt(Date.from(clock.instant()));
+				.setCreatedAt(Date.from(Instant.now(clock)));
 		tt = this.topicTitleRepository.save(tt);
 
 		return TopicTitleDto.from(tt);
@@ -30,7 +31,8 @@ public class TopicManager {
 	public TopicDefinitionDto saveDefinition(Long topicTitleId, String topicDefinition) {
 		var td = new TopicDefinition()
 				.setTopicTitle(this.topicTitleRepository.getReferenceById(topicTitleId))
-				.setDefinition(topicDefinition);
+				.setDefinition(topicDefinition)
+				.setCreatedAt(Date.from(Instant.now(clock)));
 
 		td = this.topicDefinitionRepository.save(td);
 		return TopicDefinitionDto.from(td);

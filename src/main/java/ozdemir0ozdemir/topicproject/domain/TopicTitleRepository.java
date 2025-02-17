@@ -20,7 +20,7 @@ interface TopicTitleRepository extends JpaRepository<TopicTitle, Long> {
 		from TopicTitle as tt
 		left join TopicDefinition as td on td.topicTitle.id = tt.id
 		group by tt.id
-		order by tt.id
+		order by tt.createdAt desc, tt.id
 	""")
 	Page<TopicTitleWithDefCount> findAllTopic(Pageable pageable);
 }

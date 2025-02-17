@@ -110,6 +110,7 @@ const DefinitionListPrivate = {
     return `
     <li class="definition-list-item">
       ${definition.definition.replaceAll("<", "&lt;")}
+      <div style="margin-top: 10px;">${new Date(definition.createdAt).toLocaleDateString()}</div>
     </li>
    `;
   },

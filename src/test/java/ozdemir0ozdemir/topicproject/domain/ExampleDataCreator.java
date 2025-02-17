@@ -182,15 +182,15 @@ public class ExampleDataCreator {
             Random random = new Random();
 
             List<TopicTitle> savedTopics = new ArrayList<>();
-//			topicList.forEach(title -> savedTopics.add(topics.saveTitle(title)));
             topicList.forEach(title ->
                     savedTopics.add(topicTitleRepository.save(
                             new TopicTitle()
                                     .setTitle(title)
                                     .setTopicTitleSanitized(Sanitizer.sanitizeTitle(title))
                                     .setCreatedAt(Date.from(clock.instant()
-                                            .minus(random.nextInt(360), ChronoUnit.DAYS)
-                                            .minus(random.nextInt(12) * 30, ChronoUnit.DAYS))
+                                            .minus(random.nextInt(30), ChronoUnit.DAYS)
+                                            .minus(random.nextInt(12 * 30), ChronoUnit.DAYS)
+                                            .minus(random.nextInt(5 * 30 * 12), ChronoUnit.DAYS))
                                     )))
             );
 
@@ -212,8 +212,9 @@ public class ExampleDataCreator {
                             .setDefinition(definitionList.get(id))
                             .setCreatedAt(
                                     Date.from(clock.instant()
-                                    .minus(random.nextInt(360), ChronoUnit.DAYS)
-                                    .minus(random.nextInt(12) * 30, ChronoUnit.DAYS))
+                                            .minus(random.nextInt(30), ChronoUnit.DAYS)
+                                            .minus(random.nextInt(12 * 30), ChronoUnit.DAYS)
+                                            .minus(random.nextInt(5 * 30 * 12), ChronoUnit.DAYS))
                             );
 
                     definitionRepository.save(def);
