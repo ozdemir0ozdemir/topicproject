@@ -133,8 +133,8 @@ const DefinitionList = {
     return definitionList.rootElement;
   },
 
-  setDefinitionList(topic, definitions) {
-    DefinitionListPrivate.setDefinitionList(topic, definitions);
+  setDefinitionList(topic, defsPage) {
+    DefinitionListPrivate.setDefinitionList(topic, defsPage);
   },
 };
 

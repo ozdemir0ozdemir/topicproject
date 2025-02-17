@@ -13,8 +13,8 @@ SearchBar.setListener("topic", title => {
   // TODO: First search topic then suggest to create new topic
   TopicService
       .saveNewTopicTitle(title)
-      .then(result => {
-        console.log(result);
+      .then(topic => {
+        DefinitionList.setDefinitionList(topic, {pageable: {pageNumber: 0}, totalPages: 1, content: []});
       });
 });
 
@@ -30,7 +30,7 @@ DefinitionForm.setListener((topic, definition) => {
 
   TopicService
       .saveNewTopicDefinition(topic, definition)
-      .then(console.log);
+      .then(def =>  DefinitionList.setDefinitionList(topic, {pageable: {pageNumber: 0}, totalPages: 1, content: [def]}));
 });
 
 TopicService
