@@ -20,6 +20,7 @@ const TopicListPrivate = {
 
   html: {
     rootElement: undefined,
+    titleElement: undefined,
     listElement: undefined,
   },
 
@@ -36,6 +37,10 @@ const TopicListPrivate = {
 
     Pagination.init(topicList.rootElement);
     Pagination.updatePagination(HTML_TAG, 1, 1, false);
+
+    topicList.titleElement = document.createElement("h4");
+    topicList.titleElement.innerHTML = "today";
+    topicList.rootElement.appendChild(topicList.titleElement);
 
     topicList.listElement = document.createElement("ul");
     topicList.listElement.classList.add("topic-list");
