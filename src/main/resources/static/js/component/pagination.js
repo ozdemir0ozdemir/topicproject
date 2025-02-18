@@ -126,9 +126,9 @@ const Pagination = {
 
     paginationRoot.innerHTML = `
         <button class = "first-button" title="first page" data-action="first" type="button" disabled="disabled"><i class="fa-solid fa-f"></i>FIRST</button>
-        <button class = "previous-button" title="previous page" data-action="previous" type="button" disabled="disabled"><i class="fa-solid fa-backward-step"></i>PREV</button>
+        <button class = "previous-button" title="previous page" data-action="previous" type="button" disabled="disabled"><i class="fa-solid fa-p"></i>PREV</button>
         <select title = "current page"></select>
-        <button class = "next-button" title="next page" data-action="next" type="button"><i class="fa-solid fa-forward-step"></i>NEXT</button>
+        <button class = "next-button" title="next page" data-action="next" type="button"><i class="fa-solid fa-n"></i>NEXT</button>
         <button class = "last-button" title="last page" data-action="last" type="button"><i class="fa-solid fa-l"></i>LAST</button>
     `;
 
