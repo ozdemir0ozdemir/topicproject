@@ -58,12 +58,13 @@ const TopicListPrivate = {
     Pagination.updatePagination(HTML_TAG, currentPage, totalPage, false);
   },
 
-  clickListener({isTrusted, target})  {
-    if (isTrusted
-        && target.localName === "span"
-        && target.classList.contains("topic-link")
+  clickListener(event)  {
+    event.preventDefault();
+    if (event.isTrusted
+        && event.target.localName === "a"
+        && event.target.classList.contains("topic-link")
         && this.topicChangeListener) {
-      const id = target.getAttribute("data-id");
+      const id = event.target.getAttribute("data-id");
       this.topicChangeListener(id);
     }
   },
@@ -78,7 +79,7 @@ const TopicListPrivate = {
   createTopicListItem(topic) {
     return `
       <li class="topic">
-        <span class="topic-link" data-id="${topic.id}">${topic.title} </span>
+        <a class="topic-link" href="/topics/${topic.topicTitleSanitized}--${topic.id}/definitions" data-id="${topic.id}">${topic.title} </a>
         <span style="margin-left: 3px;">(<span class="topic-definition-count">${topic.totalDefinition}</span>)</span>
       </li>`;
   },

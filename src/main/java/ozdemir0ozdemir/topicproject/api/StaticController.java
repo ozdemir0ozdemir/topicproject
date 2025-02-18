@@ -13,7 +13,7 @@ public class StaticController {
 
     private static final Logger log = LoggerFactory.getLogger(StaticController.class);
 
-    @GetMapping({"/topics/{topic}"})
+    @GetMapping({"/topics/{topic}/definitions"})
     String topic(@PathVariable String topic) {
         return "index";
     }

@@ -44,6 +44,7 @@ header {
   align-items: center;
   padding: 0 16px;
   border-bottom: 1px solid var(--LINE-COLOR);
+  height: var(--HEADER-SIZE);
 }
 
 .search-bar-container {
@@ -111,6 +112,7 @@ main {
 /* RIGHT FRAME */
 .right-frame {
   padding: 0 0 30px 0;
+  min-width: 850px;
 }
 
 .definition-form {
@@ -138,6 +140,7 @@ main {
   & > button,
   & > select{
     height: var(--BUTTON-HEIGHT);
+
     cursor: pointer;
   }
 
@@ -165,6 +168,7 @@ main {
   & > select {
     border-radius: 0;
     outline: none;
+
   }
 }
 
@@ -196,7 +200,7 @@ main {
 
 
 .definition-list-container {
-  padding: 0 1rem;
+  padding: 0 1rem 0 1rem;
 }
 
 .definition-list-header {
@@ -220,13 +224,13 @@ main {
   justify-content: start;
   align-items: center;
   gap: 2rem;
-  padding: 2rem 1rem;
+  padding: 2rem .4rem;
   list-style: none;
 }
 
 .definition-list-item {
-  border-bottom: 1px solid var(--LINE-COLOR);
-  padding: .5rem;
+  border-bottom: 1px dashed var(--LINE-COLOR);
+  padding: 1rem 0;
   width: 100%;
 }
 
@@ -235,12 +239,11 @@ main {
 .topic-container {
   display: flex;
   flex-direction: column;
-  padding: 0 1rem;
+  padding: 0 0 0 1rem;
 }
 
 .topic-container > h4 {
-  padding: 1rem;
-  padding-bottom: 0;
+  padding: 1rem 1rem 0;
   color: var(--theme-color);
 }
 
@@ -251,15 +254,15 @@ main {
   flex-direction: column;
   color: var(--theme-color);
   gap: 12px;
-  padding: .5rem 1rem 5rem 1rem;
+  padding: .5rem 1.5rem 5rem .5rem;
 
 }
-
+.topic::marker,
 .topic-definition-count {
   color: #7c7c7c;
-  opacity: 1;
-
 }
+
+
 
 .topic > .topic-link {
   color: var(--theme-color);

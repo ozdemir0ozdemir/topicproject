@@ -115,6 +115,10 @@ const MainMaestroPrivate = {
 
           MainMaestroPrivate.setDefinitionsListPage(1);
 
+          window.history.pushState(
+              {topicId: +requestedTopicId},
+              "",
+              `/topics/${sanitizedTitle}--${id}/definitions`);
           document.title = this.selectedTopic.title + " - TopicProject";
         });
   },
