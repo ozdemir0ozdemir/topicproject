@@ -24,6 +24,7 @@
   --BG-COLOR-TRANSPARENT: #252525;
   --LINE-COLOR: #cfcfcf;
   --SHADOW-COLOR: #171717;
+  --LIGHTING-COLOR: #e6ff00;
 }
 
 body {
@@ -58,8 +59,8 @@ header {
   }
 
   & > input[type=text] {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left:5px;
+    padding-right: 5px;
     flex: 1;
     border-bottom: 1px solid black;
   }
@@ -70,16 +71,15 @@ header {
     place-content: center;
 
     border: 0;
-    border-radius: 0;
-    background-color: #5a5a5a;
-    color: white;
-    font-size: .55rem;
-
     border-bottom: 1px solid black;
+    cursor: pointer;
 
+    background-color: white;
+    color: var(--theme-color);
+    font-size: 1rem;
 
     &:hover {
-      background-color: #292929;
+      color: black;
     }
   }
 }
@@ -138,11 +138,13 @@ main {
   & > button,
   & > select{
     height: var(--BUTTON-HEIGHT);
+    cursor: pointer;
   }
 
   & > button {
     display: grid;
     place-content: center;
+
 
 
     border: 0;
@@ -152,7 +154,7 @@ main {
     font-size: .55rem;
 
     &:hover {
-      color: #e6ff00;
+      color: var(--LIGHTING-COLOR);
     }
 
     &:disabled {
