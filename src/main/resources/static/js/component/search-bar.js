@@ -31,7 +31,7 @@ const SearchBarPrivate = {
 
     const submitElement = document.createElement("button")
     submitElement.setAttribute("type", "button");
-    submitElement.innerHTML = `Search`;
+    submitElement.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i>Search`;
 
     rootElement.appendChild(inputElement);
     rootElement.appendChild(submitElement);

@@ -77,6 +77,7 @@ const DefinitionListPrivate = {
     document.querySelector(".right-frame").scrollTop = 0;
 
     DefinitionForm.setTopicTitle(topicTitle);
+    DefinitionForm.clear();
   },
 
 

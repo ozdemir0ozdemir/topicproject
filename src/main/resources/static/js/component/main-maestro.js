@@ -102,8 +102,11 @@ const MainMaestroPrivate = {
   /*************************************************************************/
   setSelectedTopic(requestedTopicId) {
 
+    if(+requestedTopicId === this.selectedTopic.id) {
+      return;
+    }
     TopicService
-        .getTopicById(requestedTopicId)
+        .getTopicById(+requestedTopicId)
         .then(({id, title, sanitizedTitle, createdAt}) => {
           this.selectedTopic.id = id;
           this.selectedTopic.title = title;
@@ -111,6 +114,8 @@ const MainMaestroPrivate = {
           this.selectedTopic.createdAt = createdAt;
 
           MainMaestroPrivate.setDefinitionsListPage(1);
+
+          document.title = this.selectedTopic.title + " - TopicProject";
         });
   },
 

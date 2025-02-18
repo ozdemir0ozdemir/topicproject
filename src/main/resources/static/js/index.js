@@ -33,14 +33,14 @@ tempDiv.addEventListener("click", event => {
     window.history.pushState({data: dataId}, "", "/topics/"+dataId+"/definitions");
     guessRoute();
   }
-})
+});
 
 window.addEventListener("popstate", event => {
   // event.state !== null | undefined
   // event.state.data !== null | undefined
   guessRoute();
 
-})
+});
 
 function guessRoute() {
   const route = window.location.pathname;

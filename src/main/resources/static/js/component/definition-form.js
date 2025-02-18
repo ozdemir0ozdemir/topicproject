@@ -126,6 +126,9 @@ const DefinitionForm = {
     DefinitionFormPrivate.setListener(listener);
   },
 
+  clear() {
+    DefinitionFormPrivate.definitionForm.textareaElement.value = "";
+  },
 };
 
 export default DefinitionForm;

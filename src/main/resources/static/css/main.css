@@ -12,16 +12,18 @@
   --HEADER-SIZE: 60px;
   --BUTTON-HEIGHT: 28px;
   --PAGINATION-WITH: 260px;
-  --BOX-SHADOW:  0 5px 20px -5px var(--LINE-COLOR);
+  --BOX-SHADOW:  0 5px 10px -5px var(--SHADOW-COLOR);
 
 
 
   /* COLORS */
-  /*--theme-color: #053168;*/
-  --theme-color: #00285c;
-  --bg-color: #e4e4e4;
-  --BG-COLOR-TRANSPARENT: rgba(244, 244, 244, 0.73);
+  /*--theme-color: #00285c;*/
+  --theme-color: #323232;
+  /*--bg-color: #e4e4e4;*/
+  --bg-color: #ffffff;
+  --BG-COLOR-TRANSPARENT: rgba(255, 255, 255, 0.7);
   --LINE-COLOR: #a3a3a3;
+  --SHADOW-COLOR: #c5c5c5;
 }
 
 body {
@@ -48,18 +50,36 @@ header {
   & > button {
     padding: 5px;
     outline: none;
+    border-radius: 0;
+    border: 0;
   }
 
   & > input[type=text] {
     padding-left: 10px;
     padding-right: 10px;
     flex: 1;
+    border-bottom: 1px solid black;
   }
+
 
   & > button {
     width: 55px;
     display: grid;
     place-content: center;
+
+    border: 0;
+    border-radius: 0;
+    background-color: #5a5a5a;
+    color: white;
+    font-size: .55rem;
+
+    &:disabled {
+      background-color: #cccccc;
+    }
+
+    &:hover {
+      background-color: #292929;
+    }
   }
 }
 
@@ -110,12 +130,43 @@ main {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   column-gap: 5px;
+  max-width: 218px;
 
   & > button,
   & > select{
     height: var(--BUTTON-HEIGHT);
   }
+
+  & > button {
+    display: grid;
+    place-content: center;
+
+    border: 0;
+    border-radius: 0;
+    background-color: #5a5a5a;
+    color: white;
+    font-size: .55rem;
+
+    &:disabled {
+      background-color: #cccccc;
+    }
+
+    &:hover {
+      background-color: #292929;
+    }
+  }
+
+  & > select {
+    border-radius: 0;
+    outline: none;
+  }
 }
+
+.fa-solid {
+  pointer-events: none;
+}
+
+
 
 .topic-pagination {
   position: sticky;
@@ -125,7 +176,7 @@ main {
   /*background-color: rgba(255, 255, 255, 0.6);*/
   background-color: var(--BG-COLOR-TRANSPARENT);
   backdrop-filter: blur(5px);
-  border-radius: 0 0 15px 15px;
+
 
 }
 
@@ -137,7 +188,7 @@ main {
 
 
 .definition-list-container {
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 .definition-list-header {
@@ -153,7 +204,7 @@ main {
   backdrop-filter: blur(5px);
   box-shadow: var(--BOX-SHADOW);
   padding: .5rem 1rem 1rem 1rem;
-  border-radius: 0 0 15px 50px;
+
 }
 
 .definition-list-title {
@@ -184,7 +235,7 @@ main {
 .topic-container {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 .topic-container > h4 {
