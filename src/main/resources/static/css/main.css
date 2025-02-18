@@ -21,9 +21,9 @@
   --theme-color: #323232;
   /*--bg-color: #e4e4e4;*/
   --bg-color: #ffffff;
-  --BG-COLOR-TRANSPARENT: rgba(255, 255, 255, 0.7);
-  --LINE-COLOR: #a3a3a3;
-  --SHADOW-COLOR: #c5c5c5;
+  --BG-COLOR-TRANSPARENT: #252525;
+  --LINE-COLOR: #cfcfcf;
+  --SHADOW-COLOR: #171717;
 }
 
 body {
@@ -63,7 +63,6 @@ header {
 
 
   & > button {
-    width: 55px;
     display: grid;
     place-content: center;
 
@@ -73,9 +72,8 @@ header {
     color: white;
     font-size: .55rem;
 
-    &:disabled {
-      background-color: #cccccc;
-    }
+    border-bottom: 1px solid black;
+
 
     &:hover {
       background-color: #292929;
@@ -96,6 +94,7 @@ main {
   overflow-x: hidden;
   scroll-behavior: smooth;
 
+  margin-top: 1.5rem;
 
   scrollbar-width: thin;
   scrollbar-color: var(--LINE-COLOR) transparent;
@@ -141,18 +140,19 @@ main {
     display: grid;
     place-content: center;
 
+
     border: 0;
     border-radius: 0;
-    background-color: #5a5a5a;
+    background-color: transparent;
     color: white;
     font-size: .55rem;
 
-    &:disabled {
-      background-color: #cccccc;
+    &:hover {
+      color: #e6ff00;
     }
 
-    &:hover {
-      background-color: #292929;
+    &:disabled {
+      color: #656565;
     }
   }
 
@@ -168,15 +168,17 @@ main {
 
 
 
-.topic-pagination {
+.topic-pagination,
+.definition-list-header {
+  background-color: var(--BG-COLOR-TRANSPARENT);
+  box-shadow: var(--BOX-SHADOW);
+  border-radius: 3px;
   position: sticky;
   top: 0;
-  padding: .7rem 1rem ;
-  box-shadow: var(--BOX-SHADOW);
-  /*background-color: rgba(255, 255, 255, 0.6);*/
-  background-color: var(--BG-COLOR-TRANSPARENT);
-  backdrop-filter: blur(5px);
+}
 
+.topic-pagination {
+  padding: .7rem 1rem ;
 
 }
 
@@ -195,20 +197,12 @@ main {
   display: flex;
   flex-direction: column;
   row-gap: .4rem;
-
   align-items: end;
-  position: sticky;
-  top:0;
-
-  background-color: var(--BG-COLOR-TRANSPARENT);
-  backdrop-filter: blur(5px);
-  box-shadow: var(--BOX-SHADOW);
   padding: .5rem 1rem 1rem 1rem;
-
 }
 
 .definition-list-title {
-  color: var(--theme-color);
+  color: white;
   width: 100%;
   font-size: 1.6rem;
 }
