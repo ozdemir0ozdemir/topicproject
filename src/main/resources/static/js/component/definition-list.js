@@ -127,5 +127,4 @@ const DefinitionList = {
   }
 };
 
-DefinitionList.init();
 export default DefinitionList;

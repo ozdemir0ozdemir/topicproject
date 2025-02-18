@@ -1,8 +1,6 @@
 "use strict";
 
-import TopicService from "../api/topic-service.js";
 import Pagination from "./pagination.js";
-import DefinitionList from "./definition-list.js";
 
 /**
  * @author Özdemir Özdemir
@@ -11,7 +9,7 @@ import DefinitionList from "./definition-list.js";
  *
  * @date 2025 February 14
  * @since 1.0
- * @version 1.1
+ * @version 1.3
  *
  * Topic List Component.
  * Can be used only once.
@@ -117,5 +115,4 @@ const TopicList = {
 
 };
 
-TopicList.init();
 export default TopicList;

@@ -7,13 +7,13 @@
  *
  * @date 2025 February 14
  * @since 1.0
- * @version 1.1
+ * @version 1.2
  *
  * Search bar component
  * Can be used for multiple instances
  * */
 
-const HTML_TAG = "search-bar";
+const HTML_TAG = "SearchBar";
 const PLACEHOLDER = "Search topics or create new ones...";
 
 const SearchBarPrivate = {
@@ -109,5 +109,5 @@ const SearchBar = {
 
 };
 
-SearchBar.init();
+
 export default SearchBar;

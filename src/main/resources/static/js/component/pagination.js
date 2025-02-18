@@ -189,5 +189,4 @@ const Pagination = {
   },
 }
 
-Pagination.init();
 export default Pagination;
