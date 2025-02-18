@@ -59,11 +59,15 @@ const TopicService = {
   },
 
   async saveNewTopicTitle(topicTitle) {
+    if(!topicTitle && topicTitle.trim().length <= 0){
+      return;
+    }
+
     try {
       const response = await fetch(`${apiUrl}/topics`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(TopicRequest.newTitle(topicTitle))
+        body: JSON.stringify(TopicRequest.newTitle(topicTitle.trim().toLowerCase()))
       });
       if (!response.ok) {
         throw new Error(`Error: ${topicTitle} cannot be saved`);
