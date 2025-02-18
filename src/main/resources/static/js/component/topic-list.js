@@ -17,12 +17,60 @@ import DefinitionList from "./definition-list.js";
  * Can be used only once.
  * */
 const HTML_TAG = "TopicList";
-const PAGINATION_NAME = "topic";
-
 
 const TopicListPrivate = {
 
-  listElement: undefined,
+  html: {
+    rootElement: undefined,
+    listElement: undefined,
+  },
+
+  topicChangeListener: undefined,
+
+  init() {
+    const topicList = this.html;
+
+    topicList.rootElement = document.createElement("div");
+    topicList.rootElement.classList.add("topic-container")
+
+    topicList.rootElement.appendChild(
+        Pagination.createSudoElement(HTML_TAG, "topic-pagination"));
+
+    Pagination.init(topicList.rootElement);
+    Pagination.updatePagination(HTML_TAG, 1, 1, false);
+
+    topicList.listElement = document.createElement("ul");
+    topicList.listElement.classList.add("topic-list");
+    topicList.rootElement.appendChild(topicList.listElement);
+
+    topicList.rootElement.addEventListener("click", event => this.clickListener(event));
+    return topicList;
+  },
+
+  setTopics(topics, currentPage, totalPage) {
+    this.html.listElement.innerHTML = topics
+        .map(topic => this.createTopicListItem(topic))
+        .join("");
+
+    Pagination.updatePagination(HTML_TAG, currentPage, totalPage, false);
+  },
+
+  clickListener({isTrusted, target})  {
+    if (isTrusted
+        && target.localName === "span"
+        && target.classList.contains("topic-link")
+        && this.topicChangeListener) {
+      const id = target.getAttribute("data-id");
+      this.topicChangeListener(id);
+    }
+  },
+
+  setTopicChangeListener(listener) {
+    if (typeof listener !== "function") {
+      return;
+    }
+    this.topicChangeListener = listener;
+  },
 
   createTopicListItem(topic) {
     return `
@@ -36,70 +84,36 @@ const TopicListPrivate = {
 
 const TopicList = {
 
+  init(parentElement = document.querySelector("body")) {
+    const sudoElement = parentElement
+        .querySelector(HTML_TAG);
 
-  init() {
-    document
-        .querySelectorAll(HTML_TAG)
-        .forEach(sudoElement => this.render(sudoElement));
+    if (!sudoElement) {
+      return;
+    }
+
+    sudoElement.replaceWith(this.render(TopicListPrivate.init()));
   },
 
-  async render(sudoElement) {
-    // Create Dom Skeleton
-    const topicContainer = document.createElement("div");
-    topicContainer.classList.add("topic-container")
+  render(topicList) {
 
-    TopicListPrivate.listElement = document.createElement("ul");
-    TopicListPrivate.listElement.classList.add("topic-list");
-
-    topicContainer.appendChild(Pagination.createSudoElement(PAGINATION_NAME,"topic-pagination"));
-    await Pagination.init(topicContainer);
-
-    topicContainer.appendChild(TopicListPrivate.listElement);
-
-
-    // Init first topic page
-    TopicService
-        .getAllTopicTitles(1)
-        .then(topics => {
-          Pagination.updatePagination(PAGINATION_NAME, 1, topics.totalPages, false);
-          return topics;
-        })
-        .then(topics => topics.content
-            .map(topic => TopicListPrivate.createTopicListItem(topic))
-            .join(""))
-        .then(topicsHtml => TopicListPrivate.listElement.innerHTML = topicsHtml);
-
-
-    // Change Topic Page Listener
-    Pagination.addPaginationChangeListener(PAGINATION_NAME, page => {
-      TopicService
-          .getAllTopicTitles(page)
-          .then(topics => topics.content
-              .map(topic => TopicListPrivate.createTopicListItem(topic))
-              .join(""))
-          .then(topicsHtml => TopicListPrivate.listElement.innerHTML = topicsHtml);
-      document.querySelector(".left-frame").scrollTop = 0;
-    });
-
-
-    // Change Definition List
-    TopicListPrivate
-        .listElement
-        .addEventListener("click", event => {
-          event.preventDefault();
-          const id = event.target.getAttribute("data-id");
-          if (event.target.classList.contains("topic-link") && id) {
-            const title = event.target.innerHTML.trim();
-            TopicService.getAllDefinitionsByTopicId(id, 1)
-                .then(defsPage =>  DefinitionList.setDefinitionList({id, title}, defsPage))
-
-          }
-        });
-
-
-
-    sudoElement.replaceWith(topicContainer);
+    return topicList.rootElement;
   },
+
+  setTopics(topics, currentPage, totalPage) {
+    TopicListPrivate.setTopics(topics, currentPage, totalPage);
+  },
+
+  setPageChangeListener(listener) {
+    if (typeof listener !== "function") {
+      return;
+    }
+    Pagination.addPaginationChangeListener(HTML_TAG, listener);
+  },
+
+  setTopicChangeListener(listener) {
+    TopicListPrivate.setTopicChangeListener(listener);
+  }
 
 };
 

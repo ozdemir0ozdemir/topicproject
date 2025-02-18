@@ -14,7 +14,7 @@
  * */
 
 const HTML_TAG = "DefinitionForm";
-const PLACEHOLDER = "Write something about";
+const PLACEHOLDER = "write something about";
 
 const DefinitionFormPrivate = {
 
@@ -25,10 +25,6 @@ const DefinitionFormPrivate = {
     listener: undefined
   },
 
-  topic: {
-    id: undefined,
-    title: undefined
-  },
 
   init() {
 
@@ -50,15 +46,11 @@ const DefinitionFormPrivate = {
     return this.definitionForm;
   },
 
-  setTopic(topic) {
-    if (topic.id
-        && topic.id > 0
-        && topic.title.length > 0
-        && topic.title.trim().length > 0) {
+  setTopicTitle(title) {
+    if (title.length > 0
+        && title.trim().length > 0) {
 
-      this.topic.id = topic.id;
-      this.topic.title = topic.title;
-      this.setPlaceholder(topic.title);
+      this.setPlaceholder(title);
     }
   },
 
@@ -67,7 +59,7 @@ const DefinitionFormPrivate = {
       return;
     }
 
-    const sanitizedText = text.trim().toLowerCase();
+    const sanitizedText = this.sanitizeText(text);
 
     if (sanitizedText.length === 0) {
       return;
@@ -86,7 +78,12 @@ const DefinitionFormPrivate = {
 
   sanitizeText(text) {
     return text.trim().toLowerCase();
-  }
+  },
+
+  newDefinitionEntered() {
+    this.definitionForm.listener(this.sanitizeText(this.definitionForm.textareaElement.value));
+    this.definitionForm.textareaElement.value = "";
+  },
 
 
 };
@@ -98,7 +95,7 @@ const DefinitionForm = {
     const sudoElement = parentElement
         .querySelector(HTML_TAG);
 
-    if(sudoElement){
+    if (sudoElement) {
       const definitionForm = DefinitionFormPrivate.init();
       sudoElement.replaceWith(this.render(definitionForm));
     }
@@ -108,29 +105,21 @@ const DefinitionForm = {
 
     definitionForm.textareaElement.addEventListener("keyup", event => {
       if (definitionForm.listener && event.isTrusted && event.key === "Enter" && event.code === "Enter") {
-
-        definitionForm.listener(DefinitionFormPrivate.topic,
-            DefinitionFormPrivate.sanitizeText(definitionForm.textareaElement.value));
-
-        definitionForm.textareaElement.value = "";
+        DefinitionFormPrivate.newDefinitionEntered();
       }
     });
 
     definitionForm.submitElement.addEventListener("click", event => {
       if (definitionForm.listener && event.isTrusted && event.pointerId === 1) {
-
-        definitionForm.listener(DefinitionFormPrivate.topic,
-            DefinitionFormPrivate.sanitizeText(definitionForm.textareaElement.value));
-
-        definitionForm.textareaElement.value = "";
+        DefinitionFormPrivate.newDefinitionEntered();
       }
     });
 
     return definitionForm.rootElement;
   },
 
-  setTopic(topic) {
-    DefinitionFormPrivate.setTopic(topic);
+  setTopicTitle(title) {
+    DefinitionFormPrivate.setTopicTitle(title);
   },
 
   setListener(listener) {

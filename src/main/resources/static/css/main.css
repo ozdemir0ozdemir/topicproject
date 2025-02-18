@@ -83,37 +83,7 @@ main {
 /* LEFT FRAME */
 .left-frame {
 
-  .topic-container {
-    display: flex;
-    flex-direction: column;
 
-    .topic-list {
-      list-style-position: inside;
-      list-style-type: "-";
-      display: flex;
-      flex-direction: column;
-      color: var(--theme-color);
-      gap: 12px;
-      padding: .5rem 1rem 5rem 1rem;
-      margin-top: 1rem;
-
-      .topic-definition-count {
-        color: #7c7c7c;
-        opacity: 1;
-
-      }
-
-      .topic > .topic-link {
-        color: var(--theme-color);
-        text-decoration: none;
-        cursor: pointer;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
 
 }
 
@@ -203,4 +173,38 @@ main {
   border-bottom: 1px solid var(--LINE-COLOR);
   padding: .5rem;
   width: 100%;
+}
+
+
+/* Topic List */
+.topic-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.topic-list {
+  list-style-position: inside;
+  list-style-type: "-";
+  display: flex;
+  flex-direction: column;
+  color: var(--theme-color);
+  gap: 12px;
+  padding: .5rem 1rem 5rem 1rem;
+  margin-top: 1rem;
+}
+
+.topic-definition-count {
+  color: #7c7c7c;
+  opacity: 1;
+
+}
+
+.topic > .topic-link {
+  color: var(--theme-color);
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

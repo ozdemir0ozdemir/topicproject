@@ -111,7 +111,7 @@ const Pagination = {
     return pagination;
   },
 
-  init(parent = document) {
+  init(parent = document.querySelector("body")) {
     parent
         .querySelectorAll(HTML_TAG)
         .forEach(sudoElement => this.render(sudoElement));
