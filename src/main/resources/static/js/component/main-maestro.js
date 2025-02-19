@@ -3,6 +3,7 @@
 import TopicService from "../api/topic-service.js";
 import TopicList from "./topic-list.js";
 import DefinitionList from "./definition-list.js";
+import topicService from "../api/topic-service.js";
 
 /**
  * @author Özdemir Özdemir
@@ -100,9 +101,9 @@ const MainMaestroPrivate = {
   },
 
   /*************************************************************************/
-  setSelectedTopic(requestedTopicId) {
+  setSelectedTopic(requestedTopicId, addHistory) {
 
-    if(+requestedTopicId === this.selectedTopic.id) {
+    if (+requestedTopicId === this.selectedTopic.id) {
       return;
     }
     TopicService
@@ -115,10 +116,14 @@ const MainMaestroPrivate = {
 
           MainMaestroPrivate.setDefinitionsListPage(1);
 
-          window.history.pushState(
-              {topicId: +requestedTopicId},
-              "",
-              `/topics/${sanitizedTitle}--${id}/definitions`);
+
+          if (addHistory) {
+            window.history.pushState(
+                {},
+                "",
+                `/topics/${sanitizedTitle}--${id}/definitions`);
+          }
+
           document.title = this.selectedTopic.title + " - TopicProject";
         });
   },
@@ -137,8 +142,10 @@ const MainMaestroPrivate = {
 
     TopicService
         .getAllDefinitionsByTopicId(this.selectedTopic.id, page)
-        .then(topics => DefinitionList
-            .setDefinitionList(this.selectedTopic.title, page, topics.totalPages, topics.content));
+        .then(defs => {
+          DefinitionList
+              .setDefinitionList(this.selectedTopic.title, page, defs.totalPages, defs.content);
+        });
   },
 
   saveNewDefinition(definition) {
@@ -157,7 +164,7 @@ const MainMaestro = {
     // ### LEFT FRAME ###
     MainMaestroPrivate.setLeftFrame(document.createElement("TopicList"));
     TopicList.init(MainMaestroPrivate.html.leftFrameElement);
-    TopicList.setTopicChangeListener(topic => MainMaestroPrivate.setSelectedTopic(topic));
+    TopicList.setTopicChangeListener(topic => MainMaestroPrivate.setSelectedTopic(topic, true));
     TopicList.setPageChangeListener(page => MainMaestroPrivate.setTopicsListPage(page));
 
 
@@ -170,11 +177,29 @@ const MainMaestro = {
     // ### Initial Values ###
     MainMaestroPrivate.setTopicsListPage(1);
 
-    TopicService
-        .getTopicByRandom()
-        .then(topic => MainMaestroPrivate.setSelectedTopic(topic.id));
+    window.addEventListener("popstate", event => {
+      this.acceptRoute(false);
+    });
+
+    this.acceptRoute(true);
 
   },
+
+  acceptRoute(addHistory) {
+    const route = window.location.pathname;
+    if (route.search("/topics/[a-z0-9-]+/definitions") === 0
+        && route.endsWith("/definitions")) {
+      const title = route.substring(8, route.length - 12);
+      const hyphen = title.search("--");
+      MainMaestroPrivate.setSelectedTopic(+title.substring(hyphen + 2), addHistory);
+
+    } else {
+      TopicService
+          .getTopicByRandom()
+          .then(topic => MainMaestroPrivate.setSelectedTopic(topic.id, true));
+    }
+  },
+
 
 };
 
