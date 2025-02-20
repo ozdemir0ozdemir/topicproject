@@ -55,6 +55,7 @@ const TopicListPrivate = {
         .map(topic => this.createTopicListItem(topic))
         .join("");
 
+    document.querySelector(".left-frame").scrollTo(0, 0);
     Pagination.updatePagination(HTML_TAG, currentPage, totalPage, false);
   },
 

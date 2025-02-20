@@ -124,6 +124,7 @@ main {
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: var(--THEME-COLOR-LIGHT) transparent;
+  scroll-behavior: smooth;
 
 }
 
