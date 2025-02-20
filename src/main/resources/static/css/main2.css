@@ -5,11 +5,12 @@
   margin: 0;
   box-sizing: border-box;
   font-family: Ubuntu, sans-serif;
+  border-radius: 3px;
 }
 
 :root {
   /* CONSTANTS*/
-  --BOX-SHADOW:  0 5px 5px -2px var(--THEME-COLOR-LIGHT);
+  --BOX-SHADOW:  0 5px 5px -2px rgba(0, 0, 0, .1);
   --HEADER-HEIGHT: 100px;
   --LEFT-FRAME-WIDTH: 270px;
   --RIGHT-FRAME-MIN-WIDTH: 500px;
@@ -21,18 +22,20 @@
   --BACKGROUND_COLOR: #ffffff;
 
   --THEME-COLOR: #323232;
-  --THEME-COLOR-LIGHT: #cfcfcf;
+  --THEME-COLOR-LIGHT: #8a8a8a;
+  --THEME-COLOR-LIGHTER: #cfcfcf;
+  --THEME-COLOR-LIGHTEST: #ececec;
   --THEME-COLOR-DARK: #252525;
   --THEME-COLOR-DARKER: #171717;
-
-  --BUTTON-LIGHT-COLOR: #ff0062;
 }
+
 html {
   scroll-behavior: smooth;
   color: var(--THEME-COLOR-DARKER);
 }
 
 body {
+  background-color: var(--BACKGROUND_COLOR);
   overflow-y: scroll;
 
 }
@@ -148,6 +151,7 @@ main {
   background-color: transparent;
   font-size: .6rem;
   cursor: pointer;
+
 }
 .pagination > select {
   background-color: white;
@@ -157,13 +161,16 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: .5rem 0;
 }
 .pagination > button:hover {
-  color: #1d2ca3;
+  /*color: #1d2ca3;*/
+  background-color: var(--THEME-COLOR-LIGHTEST);
 }
 
 .pagination > button:disabled {
-  color: var(--THEME-COLOR-LIGHT);
+  color: var(--THEME-COLOR-LIGHTER);
+  background-color: transparent;
   cursor: default;
 }
 
@@ -185,7 +192,7 @@ main {
   top: 0;
 
   padding: 16px 10px 10px 10px;
-  border-bottom: 1px solid var(--THEME-COLOR-LIGHT);
+  border-bottom: 1px solid var(--THEME-COLOR-LIGHTER);
   background-color: var(--BACKGROUND_COLOR);
   box-shadow: var(--BOX-SHADOW);
 }
@@ -194,12 +201,11 @@ main {
 .topic-list {
   display: flex;
   flex-direction: column;
-  list-style: none;
 }
 
 
 .topic-link:any-link {
-  padding: .5rem 1rem;
+  padding: .6rem .5rem;
   text-decoration: none;
   color: var(--THEME-COLOR-DARK);
   border-radius: 2px;
@@ -207,23 +213,27 @@ main {
 }
 
 .topic-link:hover {
-  background-color: whitesmoke;
-  /*color: var(--BACKGROUND_COLOR);*/
+  background-color: var(--THEME-COLOR-LIGHTEST);
 
 }
 
+
 .topic-definition-count {
-  color: #7c7c7c;
-  font-size: .7rem;
+  color: var(--THEME-COLOR-LIGHT);
+  font-size: .8rem;
 }
 
 
 .topic-link > li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  column-gap: 10px;
+  display: grid;
+  grid-template-columns: 10px 1fr 20px;
 }
+
+.topic-link > li::before {
+  content: '-';
+  color: var(--THEME-COLOR-LIGHT);
+}
+
 
 /* definition list component */
 
@@ -236,7 +246,7 @@ main {
   top: var(--HEADER-HEIGHT);
 
   padding: 16px 10px 10px 10px;
-  border-bottom: 1px solid var(--THEME-COLOR-LIGHT);
+  border-bottom: 1px solid var(--THEME-COLOR-LIGHTER);
   background-color: var(--BACKGROUND_COLOR);
   box-shadow: var(--BOX-SHADOW);
 
@@ -263,7 +273,7 @@ main {
 }
 
 .definition-list-item {
-  border-bottom: 1px solid var(--THEME-COLOR-LIGHT);
+  border-bottom: 1px solid var(--THEME-COLOR-LIGHTER);
   padding: 1rem 0;
 }
 
@@ -279,7 +289,7 @@ main {
     padding: .5rem;
     min-height: 150px;
     resize: none;
-    border: 1px solid var(--THEME-COLOR-LIGHT);
+    border: 1px solid var(--THEME-COLOR-LIGHTER);
     outline: none;
   }
 

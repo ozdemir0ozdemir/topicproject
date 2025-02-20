@@ -208,7 +208,7 @@ public class ExampleDataCreator {
 
                 ids.forEach(id -> {
                     TopicDefinition def = new TopicDefinition()
-                            .setId(topic.getTopicId())
+                            .setTopicTitle(topic)
                             .setDefinition(definitionList.get(id))
                             .setCreatedAt(
                                     Date.from(clock.instant()

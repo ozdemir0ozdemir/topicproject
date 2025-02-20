@@ -18,4 +18,9 @@ public class StaticController {
         return "index";
     }
 
+    @GetMapping({"/topics/{topic}/definitions/{year}/{month}/{day}"})
+    String topicWithFilterDate() {
+        return "index";
+    }
+
 }

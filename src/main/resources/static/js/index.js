@@ -14,4 +14,21 @@ SearchBar.setListener("topic", title => {
       .then(topic => console.log("New topic saved: DO SOMETHING!!! : ", topic));
 });
 
+const today = new Date();
+const dateFilter = document.querySelector("#filter-date");
+dateFilter.valueAsDate = today;
+
+document
+    .querySelector(".filter-pane > #filter-submit")
+    .addEventListener("click", () => {
+      MainMaestro.setDateFilter(dateFilter.valueAsDate.getUTCFullYear(), dateFilter.valueAsDate.getUTCMonth() + 1, dateFilter.valueAsDate.getUTCDate())
+});
+
+document
+    .querySelector(".filter-pane > #filter-reset")
+    .addEventListener("click", () => {
+      MainMaestro.setDateFilter(undefined, undefined, undefined)
+    });
+
+
 

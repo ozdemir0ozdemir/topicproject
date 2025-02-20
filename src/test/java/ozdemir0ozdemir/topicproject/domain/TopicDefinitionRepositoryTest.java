@@ -29,12 +29,12 @@ class TopicDefinitionRepositoryTest {
 	@BeforeEach
 	public void setUp() {
 		title = new TopicTitle();
-		title.setTitle("10 şubat 2025 topicproject\'in başlaması");
+		title.setTopicTitle("10 şubat 2025 topicproject\'in başlaması");
 
 		title = titleRepository.save(title);
 
 		definition = new TopicDefinition()
-				.setTopicId(title)
+				.setId(title.getTopicId())
 				.setDefinition("Yeni bir başlangıcın ilk adımları olabilir. Belki iyi bir şey olur! swh");
 
 		definitionRepository.save(definition);
