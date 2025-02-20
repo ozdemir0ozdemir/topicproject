@@ -78,10 +78,11 @@ const TopicListPrivate = {
 
   createTopicListItem(topic) {
     return `
-      <li class="topic">
-        <a class="topic-link" href="/topics/${topic.topicTitleSanitized}--${topic.id}/definitions" data-id="${topic.id}">${topic.title} </a>
-        <span style="margin-left: 3px;">(<span class="topic-definition-count">${topic.totalDefinition}</span>)</span>
-      </li>`;
+      <a class="topic-link" href="/topics/${topic.topicTitleSanitized}--${topic.id}/definitions" data-id="${topic.id}">
+        <li class="pointer-events-none">
+          <span class="pointer-events-none">${topic.title}</span><span class="topic-definition-count pointer-events-none">${topic.totalDefinition}</span>
+        </li>
+      </a>`;
   },
 
 };

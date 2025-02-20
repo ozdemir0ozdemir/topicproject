@@ -74,7 +74,7 @@ const DefinitionListPrivate = {
         .map(def => this.createDefinitionCard(def))
         .join("");
 
-    document.querySelector(".right-frame").scrollTop = 0;
+    document.querySelector("html").scrollTop = 0;
 
     DefinitionForm.setTopicTitle(topicTitle);
     DefinitionForm.clear();
