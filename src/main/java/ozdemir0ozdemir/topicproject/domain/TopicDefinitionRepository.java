@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 interface TopicDefinitionRepository extends JpaRepository<TopicDefinition, Long> {
 
-	@Query("from TopicDefinition td where td.topicTitle.id = :topicTitleId order by td.createdAt asc")
+	@Query("from TopicDefinition td where td.topicTitle.topicId = :topicTitleId order by td.createdAt asc")
 	Page<TopicDefinition> findAllByTopicTitleId(Long topicTitleId, Pageable pageable);
 }

@@ -15,22 +15,22 @@ import java.util.Date;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "topic_definitions")
+@Table(name = "definitions")
 class TopicDefinition {
 
-	@Column(name = "topic_definition_id", updatable = false)
+	@Column(name = "definition_id", updatable = false)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "topic_title_id", referencedColumnName = "topic_title_id", nullable = false)
+	@JoinColumn(name = "topic_id", referencedColumnName = "topic_id", nullable = false)
 	private TopicTitle topicTitle;
 
-	@Column(name = "topic_definition", nullable = false)
-	@Lob
+	@Column(name = "definition", nullable = false, columnDefinition = "text")
 	private String definition;
 
-	@Column(columnDefinition = "timestamp without time zone")
+	@Column(columnDefinition = "timestamp without time zone",
+	name = "definition_created_at")
 	private Date createdAt;
 }

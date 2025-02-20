@@ -16,21 +16,22 @@ import java.util.Date;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "topic_titles")
+@Table(name = "topics")
 class TopicTitle {
 
-	@Column(name = "topic_title_id", updatable = false)
+	@Column(name = "topic_id", updatable = false)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long topicId;
 
 	@Column(name = "topic_title")
-	private String title;
+	private String topicTitle;
 
-	@Column(name = "topic_title_sanitized")
+	@Column(name = "topic_sanitized_title")
 	private String topicTitleSanitized;
 
-	@Column(columnDefinition = "timestamp without time zone")
+	@Column(columnDefinition = "timestamp without time zone",
+	name = "topic_created_at")
 	private Date createdAt;
 
 }

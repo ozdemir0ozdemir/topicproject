@@ -20,7 +20,7 @@ public class TopicManager {
 
 	public TopicTitleDto saveTitle(String topicTitle) {
 		var tt = new TopicTitle()
-				.setTitle(topicTitle)
+				.setTopicTitle(topicTitle)
 				.setTopicTitleSanitized(Sanitizer.sanitizeTitle(topicTitle))
 				.setCreatedAt(Date.from(Instant.now(clock)));
 		tt = this.topicTitleRepository.save(tt);

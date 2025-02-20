@@ -185,7 +185,7 @@ public class ExampleDataCreator {
             topicList.forEach(title ->
                     savedTopics.add(topicTitleRepository.save(
                             new TopicTitle()
-                                    .setTitle(title)
+                                    .setTopicTitle(title)
                                     .setTopicTitleSanitized(Sanitizer.sanitizeTitle(title))
                                     .setCreatedAt(Date.from(clock.instant()
                                             .minus(random.nextInt(30), ChronoUnit.DAYS)
@@ -208,7 +208,7 @@ public class ExampleDataCreator {
 
                 ids.forEach(id -> {
                     TopicDefinition def = new TopicDefinition()
-                            .setTopicTitle(topic)
+                            .setId(topic.getTopicId())
                             .setDefinition(definitionList.get(id))
                             .setCreatedAt(
                                     Date.from(clock.instant()

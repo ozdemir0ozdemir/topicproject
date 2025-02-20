@@ -16,11 +16,11 @@ interface TopicTitleRepository extends JpaRepository<TopicTitle, Long> {
 
 	@Query(
 			"""
-		select tt.id as id, tt.title as title, tt.topicTitleSanitized as topicTitleSanitized, count(td.id) as totalDefinition
+		select tt.topicId as id, tt.topicTitle as title, tt.topicTitleSanitized as topicTitleSanitized, count(td.id) as totalDefinition
 		from TopicTitle as tt
-		left join TopicDefinition as td on td.topicTitle.id = tt.id
-		group by tt.id
-		order by tt.createdAt desc, tt.id
+		left join TopicDefinition as td on td.topicTitle.topicId = tt.topicId
+		group by tt.topicId
+		order by tt.createdAt desc, tt.topicId
 	""")
 	Page<TopicTitleWithDefCount> findAllTopic(Pageable pageable);
 }

@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: topic
+      POSTGRES_PASSWORD: topic
+      POSTGRES_DB: topic
+      PG_USER: topic
+    ports:
+      - 5432:5432
+
+
+

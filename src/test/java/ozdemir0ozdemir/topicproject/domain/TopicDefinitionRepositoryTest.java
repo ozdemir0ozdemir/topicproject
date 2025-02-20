@@ -34,7 +34,7 @@ class TopicDefinitionRepositoryTest {
 		title = titleRepository.save(title);
 
 		definition = new TopicDefinition()
-				.setTopicTitle(title)
+				.setTopicId(title)
 				.setDefinition("Yeni bir başlangıcın ilk adımları olabilir. Belki iyi bir şey olur! swh");
 
 		definitionRepository.save(definition);
