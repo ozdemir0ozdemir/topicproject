@@ -12,13 +12,11 @@ interface TopicRepository extends JpaRepository<Topic, Long> {
 	@Query("from Topic order by random() limit 1")
 	Optional<Topic> findByRandom();
 
-	@Query(
-			value =
-					"""
-	select t.id id, t.title title, t.sanitizedTitle sanitizedTitle, count(d.defId) totalDefinition
-	from (select d.id defId ,d.topic.id topicId from Definition d where d.createdAt >= :startDate and d.createdAt < :endDate) d
-	left join Topic t on t.id = d.topicId
+	@Query("""
+	select t.id id, t.title title, t.sanitizedTitle sanitizedTitle, count(d.id) totalDefinition from Topic t
+	left join Definition d on d.topic.id = t.id and d.createdAt between :startDate and :endDate
 	group by t.id
+	having count(d.id) > 0
 	""")
 	Page<TopicProjection> findAllTopicDefinedByDay(Date startDate, Date endDate, Pageable pageable);
 }

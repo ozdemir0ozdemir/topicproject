@@ -1,6 +1,7 @@
 package ozdemir0ozdemir.topicproject.domain;
 
 import java.time.Clock;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -180,10 +181,8 @@ public class ExampleDataCreator {
 			topicList.forEach(title -> topics.add(new Topic()
 					.setTitle(title)
 					.setSanitizedTitle(Sanitizer.sanitizeTitle(title))
-					.setCreatedAt(Date.from(clock.instant()
-							.minus(random.nextInt(30), ChronoUnit.DAYS)
-							.minus(random.nextInt(12 * 30), ChronoUnit.DAYS)
-							.minus(random.nextInt(5 * 30 * 12), ChronoUnit.DAYS)))));
+					.setCreatedAt(Date.from(Instant.now(clock)
+							.plus(random.nextInt(4) - 2, ChronoUnit.DAYS)))));
 
 			topicRepository.saveAll(topics);
 
@@ -204,10 +203,8 @@ public class ExampleDataCreator {
 					Definition def = new Definition()
 							.setTopic(topic)
 							.setDefinition(definitionList.get(id))
-							.setCreatedAt(Date.from(clock.instant()
-									.minus(random.nextInt(30), ChronoUnit.DAYS)
-									.minus(random.nextInt(12 * 30), ChronoUnit.DAYS)
-									.minus(random.nextInt(5 * 30 * 12), ChronoUnit.DAYS)));
+							.setCreatedAt(Date.from(Instant.now(clock)
+									.plus(random.nextInt(4) - 2, ChronoUnit.DAYS)));
 					definitions.add(def);
 				});
 			});
