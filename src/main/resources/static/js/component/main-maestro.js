@@ -3,7 +3,6 @@
 import TopicService from "../api/topic-service.js";
 import TopicList from "./topic-list.js";
 import DefinitionList from "./definition-list.js";
-import topicService from "../api/topic-service.js";
 
 /**
  * @author Özdemir Özdemir
@@ -52,6 +51,8 @@ const MainMaestroPrivate = {
 
     html.rootElement.appendChild(html.leftFrameElement);
     html.rootElement.appendChild(html.rightFrameElement);
+
+    this.setDateFilterToToday();
   },
 
   // Set frames content
@@ -96,21 +97,13 @@ const MainMaestroPrivate = {
 
           MainMaestroPrivate.setDefinitionsListPage(1);
 
-          const {year, month, day} = this.dateFilter;
-          if (addHistory && year && month && day) {
+          if (addHistory) {
             window.history.pushState(
                 {},
                 "",
-                `/topics/${sanitizedTitle}--${id}/definitions/${year}/${month}/${day}`);
+                `/topics/${sanitizedTitle}--${id}/definitions`);
           }
-          else {
-            if (addHistory) {
-              window.history.pushState(
-                  {},
-                  "",
-                  `/topics/${sanitizedTitle}--${id}/definitions`);
-            }
-          }
+
 
           document.title = this.selectedTopic.title + " - TopicProject";
         });
@@ -119,9 +112,9 @@ const MainMaestroPrivate = {
   setTopicsListPage(page) {
     // TODO: FILTER DATE
     TopicService
-        .getAllTopicTitles(page)
+        .getAllTopicTitles(page, this.dateFilter.year, this.dateFilter.month - 1, this.dateFilter.day)
         .then(topics => {
-          TopicList.setTopics(topics.content, topics.pageable.pageNumber + 1, topics.totalPages);
+          TopicList.setTopics(topics.content, topics.currentPage, topics.totalPages);
         });
   },
 
@@ -163,7 +156,9 @@ const MainMaestro = {
     DefinitionList.setDefinitionFormListener(definition => MainMaestroPrivate.saveNewDefinition(definition));
 
     // ### Initial Values ###
+
     MainMaestroPrivate.setTopicsListPage(1);
+
 
     window.addEventListener("popstate", event => {
       this.acceptRoute(false);
@@ -173,40 +168,31 @@ const MainMaestro = {
 
   },
 
+
   setDateFilter(year, month, day) {
     MainMaestroPrivate.setDateFilter(+year, +month, +day);
-    const route = window.location.pathname;
-    if(route.search("/topics/[a-z0-9-]+/definitions") === 0) {
-      const [topics, title, definitions]
-          = route.substring(1).split("/");
+    MainMaestroPrivate.setTopicsListPage(1);
 
-      const hyphen = title.search("--");
-      MainMaestroPrivate.setSelectedTopic(+title.substring(hyphen + 2), true);
-    }
+    // const route = window.location.pathname;
+    // if(route.search("/topics/[a-z0-9-]+/definitions") === 0) {
+    //   const [topics, title, definitions]
+    //       = route.substring(1).split("/");
+    //
+    //   const hyphen = title.search("--");
+    //   MainMaestroPrivate.setSelectedTopic(+title.substring(hyphen + 2), true);
+    // }
   },
 
 
   acceptRoute(addHistory) {
     const route = window.location.pathname;
-    if (route.search("/topics/[a-z0-9-]+/definitions") === 0  && route.endsWith("/definitions")) {
+    if (route.search("/topics/[a-z0-9-]+/definitions") === 0 && route.endsWith("/definitions")) {
       const [topics, title, definitions] = route.substring(1).split("/");
       const hyphen = title.search("--");
-
-      MainMaestroPrivate.setSelectedTopic(+title.substring(hyphen + 2), addHistory);
-
-    }
-    else if (route.search("/topics/[a-z0-9-]+/definitions/[0-9]+/[0-9]+/[0-9]+") === 0 ) {
-      const [topics, title, definitions, year, month, day]
-          = route.substring(1).split("/");
-      if(topics === "topics" && definitions === "definitions"){
-        MainMaestroPrivate.setDateFilter(+year, +month, +day);
-
-        const hyphen = title.search("--");
+      if (topics === "topics" && definitions === "definitions") {
         MainMaestroPrivate.setSelectedTopic(+title.substring(hyphen + 2), addHistory);
       }
-    }
-
-    else {
+    } else {
       TopicService
           .getTopicByRandom()
           .then(topic => MainMaestroPrivate.setSelectedTopic(topic.id, true));

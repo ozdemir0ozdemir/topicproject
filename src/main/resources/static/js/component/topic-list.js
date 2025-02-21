@@ -79,7 +79,7 @@ const TopicListPrivate = {
 
   createTopicListItem(topic) {
     return `
-      <a class="topic-link" href="/topics/${topic.topicTitleSanitized}--${topic.id}/definitions" data-id="${topic.id}">
+      <a class="topic-link" href="/topics/${topic.sanitizedTitle}--${topic.id}/definitions" data-id="${topic.id}">
         <li class="pointer-events-none">
           <span class="pointer-events-none">${topic.title}</span><span class="topic-definition-count pointer-events-none">${topic.totalDefinition}</span>
         </li>

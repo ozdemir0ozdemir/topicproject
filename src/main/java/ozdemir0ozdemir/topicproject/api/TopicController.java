@@ -1,47 +1,51 @@
 package ozdemir0ozdemir.topicproject.api;
 
-import org.springframework.data.domain.Page;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ozdemir0ozdemir.topicproject.domain.*;
+import ozdemir0ozdemir.topicproject.api.request.CreateTopic;
+import ozdemir0ozdemir.topicproject.api.response.PageResponse;
+import ozdemir0ozdemir.topicproject.domain.TopicDto;
+import ozdemir0ozdemir.topicproject.domain.TopicProjection;
+import ozdemir0ozdemir.topicproject.domain.TopicService;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/topics")
 @CrossOrigin // TODO: DEV ONLY -- DELETED SOON
-record TopicController(TopicManager topics) {
+@RequiredArgsConstructor
+class TopicController {
+
+	private final TopicService service;
 
 	@GetMapping("/random")
-	ResponseEntity<TopicTitleDto> getTopicByRandom() {
-		return ResponseEntity.ok(this.topics.getTitleByRandom());
+	ResponseEntity<TopicDto> getRandomTopic() {
+		return ResponseEntity.ok(this.service.getRandomTopic());
 	}
 
+	// TODO: Proper Validation
 	@GetMapping
-	ResponseEntity<Page<TopicTitleWithDefCount>> getAllTopicTitles(
-			@RequestParam(name = "page", defaultValue = "1") int page) {
+	ResponseEntity<PageResponse<TopicProjection>> getAllTopics(
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam String date) {
 
-		return ResponseEntity.ok(this.topics.getAllTitlesWithDefCount(Math.max(0, page - 1)));
+		List<Integer> dateArray = Arrays
+				.stream(date.split("-"))
+				.map(Integer::parseInt).toList();
+		LocalDate localDate = LocalDate.of(dateArray.get(0),dateArray.get(1), dateArray.get(2));
+		return ResponseEntity.ok(this.service.getAllTopics(Math.max(0, page - 1), localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth()));
 	}
 
-	@GetMapping("{topicId}")
-	ResponseEntity<TopicTitleDto> getTopicById(@PathVariable Long topicId) {
-		return ResponseEntity.ok(this.topics.getTitleByTitleId(topicId));
-	}
-
-	@GetMapping("{topicTitleId}/definitions")
-	ResponseEntity<Page<TopicDefinitionDto>> getAllDefinitionsByTopicId(
-			@PathVariable Long topicTitleId, @RequestParam(name = "page", defaultValue = "1") int page) {
-
-		return ResponseEntity.ok(this.topics.getDefinitionsByTitleId(topicTitleId, Math.max(0, page - 1)));
+	@GetMapping("/{id}")
+	ResponseEntity<TopicDto> getTopicById(@PathVariable Long id) {
+		return ResponseEntity.ok(this.service.getTopicById(id));
 	}
 
 	@PostMapping
-	ResponseEntity<TopicTitleDto> saveNewTopicTitle(@RequestBody NewTopicTitleRequest req) {
-		return ResponseEntity.ok(this.topics.saveTitle(req.title()));
-	}
-
-	@PostMapping("{topicTitleId}/definitions")
-	ResponseEntity<TopicDefinitionDto> saveNewTopicDefinition(
-			@PathVariable Long topicTitleId, @RequestBody NewTopicDefinitionRequest req) {
-		return ResponseEntity.ok(this.topics.saveDefinition(topicTitleId, req.definition()));
+	ResponseEntity<TopicDto> saveNewTopicTitle(@RequestBody CreateTopic request) {
+		return ResponseEntity.ok(this.service.saveTopic(request.title()));
 	}
 }

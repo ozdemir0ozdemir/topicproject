@@ -6,9 +6,9 @@ const apiUrl = "http://localhost:8080/api/v1";
 
 const TopicService = {
 
-  async getAllTopicTitles(page) {
+  async getAllTopicTitles(page, year, month, day) {
     try {
-      const response = await fetch(`${apiUrl}/topics?page=${page}`);
+      const response = await fetch(`${apiUrl}/topics?page=${page}&date=${year}-${month}-${day}`);
       if (!response.ok) {
         throw new Error(`Hata: ${response.status}`)
       }

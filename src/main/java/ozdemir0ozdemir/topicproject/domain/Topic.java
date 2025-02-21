@@ -1,14 +1,12 @@
 package ozdemir0ozdemir.topicproject.domain;
 
 import jakarta.persistence.*;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.time.Clock;
-import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,21 +15,19 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @Table(name = "topics")
-class TopicTitle {
+class Topic {
 
 	@Column(name = "topic_id", updatable = false)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long topicId;
+	private Long id;
 
-	@Column(name = "topic_title")
-	private String topicTitle;
+	@Column(name = "title")
+	private String title;
 
-	@Column(name = "topic_sanitized_title")
-	private String topicTitleSanitized;
+	@Column(name = "sanitized_title")
+	private String sanitizedTitle;
 
-	@Column(columnDefinition = "timestamp without time zone",
-	name = "topic_created_at")
+	@Column(columnDefinition = "timestamp without time zone", name = "created_at")
 	private Date createdAt;
-
 }
