@@ -110,7 +110,6 @@ const MainMaestroPrivate = {
   },
 
   setTopicsListPage(page) {
-    // TODO: FILTER DATE
     TopicService
         .getAllTopicTitles(page, this.dateFilter.year, this.dateFilter.month - 1, this.dateFilter.day)
         .then(topics => {
@@ -120,9 +119,8 @@ const MainMaestroPrivate = {
 
   setDefinitionsListPage(page) {
     // TODO: FILTER DATE
-
     TopicService
-        .getAllDefinitionsByTopicId(this.selectedTopic.id, page)
+        .getAllDefinitionsByTopicId(this.selectedTopic.id, page, this.dateFilter.year, this.dateFilter.month - 1, this.dateFilter.day)
         .then(defs => {
           DefinitionList
               .setDefinitionList(this.selectedTopic.title, page, defs.totalPages, defs.content);

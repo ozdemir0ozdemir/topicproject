@@ -8,24 +8,41 @@ import ozdemir0ozdemir.topicproject.api.response.PageResponse;
 import ozdemir0ozdemir.topicproject.domain.DefinitionDto;
 import ozdemir0ozdemir.topicproject.domain.DefinitionService;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/topics/{topicId}/definitions")
 @CrossOrigin // TODO: DEV ONLY -- DELETED SOON
 @RequiredArgsConstructor
 class DefinitionController {
 
-	private final DefinitionService service;
+    private final DefinitionService service;
 
-	@GetMapping
-	ResponseEntity<PageResponse<DefinitionDto>> getAllDefinitionsByTopicId(
-			@PathVariable Long topicId, @RequestParam(name = "page", defaultValue = "1") int page) {
+    @GetMapping
+    ResponseEntity<PageResponse<DefinitionDto>> getAllDefinitionsByTopicId(
+            @PathVariable Long topicId,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "date") String dateString) {
 
-		return ResponseEntity.ok(this.service.getDefinitionsByTitleId(topicId, Math.max(0, page - 1)));
-	}
+        List<Integer> dateArray = Arrays
+                .stream(dateString.split("-"))
+                .map(Integer::parseInt).toList();
+        LocalDate localDate = LocalDate.of(dateArray.get(0), dateArray.get(1), dateArray.get(2));
 
-	@PostMapping
-	ResponseEntity<DefinitionDto> saveNewTopicDefinition(
-			@PathVariable Long topicId, @RequestBody CreateDefinition request) {
-		return ResponseEntity.ok(this.service.saveDefinition(topicId, request.definition()));
-	}
+        return ResponseEntity.ok(this.service
+                .getDefinitionsByTitleId(
+                        topicId,
+                        Math.max(0, page - 1),
+                        localDate.getYear(),
+                        localDate.getMonthValue(),
+                        localDate.getDayOfMonth()));
+    }
+
+    @PostMapping
+    ResponseEntity<DefinitionDto> saveNewTopicDefinition(
+            @PathVariable Long topicId, @RequestBody CreateDefinition request) {
+        return ResponseEntity.ok(this.service.saveDefinition(topicId, request.definition()));
+    }
 }
