@@ -1,5 +1,8 @@
 package ozdemir0ozdemir.topicproject.api;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,10 +11,6 @@ import ozdemir0ozdemir.topicproject.api.response.PageResponse;
 import ozdemir0ozdemir.topicproject.domain.TopicDto;
 import ozdemir0ozdemir.topicproject.domain.TopicProjection;
 import ozdemir0ozdemir.topicproject.domain.TopicService;
-
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/topics")
@@ -29,14 +28,13 @@ class TopicController {
 	// TODO: Proper Validation
 	@GetMapping
 	ResponseEntity<PageResponse<TopicProjection>> getAllTopics(
-			@RequestParam(defaultValue = "1") int page,
-			@RequestParam String date) {
+			@RequestParam(defaultValue = "1") int page, @RequestParam String date) {
 
-		List<Integer> dateArray = Arrays
-				.stream(date.split("-"))
-				.map(Integer::parseInt).toList();
-		LocalDate localDate = LocalDate.of(dateArray.get(0),dateArray.get(1), dateArray.get(2));
-		return ResponseEntity.ok(this.service.getAllTopics(Math.max(0, page - 1), localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth()));
+		List<Integer> dateArray =
+				Arrays.stream(date.split("-")).map(Integer::parseInt).toList();
+		LocalDate localDate = LocalDate.of(dateArray.get(0), dateArray.get(1), dateArray.get(2));
+		return ResponseEntity.ok(this.service.getAllTopics(
+				Math.max(0, page - 1), localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth()));
 	}
 
 	@GetMapping("/{id}")

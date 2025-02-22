@@ -41,7 +41,6 @@ public class TopicService {
 				.orElseThrow(() -> new RuntimeException("No topic title found"));
 	}
 
-
 	/**
 	 * @param page  is the page number
 	 * @param month is zero based (0-11)

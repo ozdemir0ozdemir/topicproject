@@ -12,7 +12,8 @@ interface TopicRepository extends JpaRepository<Topic, Long> {
 	@Query("from Topic order by random() limit 1")
 	Optional<Topic> findByRandom();
 
-	@Query("""
+	@Query(
+			"""
 	select t.id id, t.title title, t.sanitizedTitle sanitizedTitle, count(d.id) totalDefinition from Topic t
 	left join Definition d on d.topic.id = t.id and d.createdAt between :startDate and :endDate
 	group by t.id

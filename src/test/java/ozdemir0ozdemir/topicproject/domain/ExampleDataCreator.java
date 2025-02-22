@@ -181,11 +181,9 @@ public class ExampleDataCreator {
 			topicList.forEach(title -> topics.add(new Topic()
 					.setTitle(title)
 					.setSanitizedTitle(Sanitizer.sanitizeTitle(title))
-					.setCreatedAt(Date.from(Instant.now(clock)
-							.plus(random.nextInt(4) - 2, ChronoUnit.DAYS)))));
+					.setCreatedAt(Date.from(Instant.now(clock).plus(random.nextInt(4) - 2, ChronoUnit.DAYS)))));
 
 			topicRepository.saveAll(topics);
-
 
 			List<Definition> definitions = new ArrayList<>();
 			topics.forEach(topic -> {
@@ -203,8 +201,7 @@ public class ExampleDataCreator {
 					Definition def = new Definition()
 							.setTopic(topic)
 							.setDefinition(definitionList.get(id))
-							.setCreatedAt(Date.from(Instant.now(clock)
-									.plus(random.nextInt(4) - 2, ChronoUnit.DAYS)));
+							.setCreatedAt(Date.from(Instant.now(clock).plus(random.nextInt(4) - 2, ChronoUnit.DAYS)));
 					definitions.add(def);
 				});
 			});
