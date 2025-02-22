@@ -22,12 +22,12 @@ public class ExampleDataCreator {
 			topicList.add("consectetur adipiscing elit");
 			topicList.add("Etiam tincidunt eleifend neque");
 			topicList.add("Nam non tellus lacus");
-			topicList.add("Sed massa eros");
-			topicList.add("luctus nec sodales a");
-			topicList.add("lacinia sit amet nibh");
-			topicList.add("Nunc elementum mauris scelerisque");
-			topicList.add("Nunc elementum mauris scelerisque");
-			topicList.add("convallis nunc vitae");
+			topicList.add("altmış karakter uzunluğunda bir başlık yazıyorum bu bir yazı");
+			topicList.add("yetmiş karakter uzunluğunda bir başlık yazıyorum bu bir yazıdır başlık");
+			topicList.add("seksen karakter uzunluğunda bir başlık yazıyorum bu bir yazıdır başlık ve seksen");
+			topicList.add("doksan karakter uzunluğunda bir başlık yazıyorum bu bir yazıdır başlık ve doksan karakteri");
+			topicList.add("yüz karakter uzunluğunda bir başlık yazıyorum bu bir yazıdır başlık ve yüz karakter bulunuyor bu yaz");
+			topicList.add("yüz-on karakter uzunluğunda bir başlık yazıyorum bu bir yazıdır başlık ve yüz-on karakter bulunur bu yazıda mı");
 			topicList.add("scelerisque nunc");
 			topicList.add("Pellentesque cursus efficitur risus");
 			topicList.add("non ullamcorper mauris eleifend a");

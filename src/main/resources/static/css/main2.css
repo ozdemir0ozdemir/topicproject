@@ -216,6 +216,7 @@ main {
 .topic-definition-count {
   color: var(--THEME-COLOR-LIGHT);
   font-size: .8rem;
+  justify-self: end;
 }
 
 
@@ -289,6 +290,5 @@ main {
   }
 
   button {
-    height: var(--BUTTON-HEIGHT);
   }
 }
