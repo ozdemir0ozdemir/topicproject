@@ -19,7 +19,8 @@ class Topic {
 
 	@Column(name = "topic_id", updatable = false)
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "topics_id_gen", sequenceName = "topics_id_seq", initialValue = 100000, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "topics_id_gen")
 	private Long id;
 
 	@Column(name = "title")

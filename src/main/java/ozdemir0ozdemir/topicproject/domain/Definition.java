@@ -19,7 +19,8 @@ class Definition {
 
 	@Column(name = "definition_id", updatable = false)
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "definitions_id_gen", sequenceName = "definitions_id_seq", initialValue = 100000, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "definitions_id_gen")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
