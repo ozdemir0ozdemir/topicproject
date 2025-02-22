@@ -11,7 +11,7 @@
 :root {
   /* CONSTANTS*/
   --BOX-SHADOW:  0 5px 5px -2px rgba(0, 0, 0, .1);
-  --HEADER-HEIGHT: 100px;
+  --HEADER-HEIGHT: 75px;
   --LEFT-FRAME-WIDTH: 270px;
   --RIGHT-FRAME-MIN-WIDTH: 500px;
   --RIGHT-FRAME-MAX-WIDTH: 750px;
