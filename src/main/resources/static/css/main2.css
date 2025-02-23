@@ -253,6 +253,7 @@ main {
 
 .definition-list-title {
   font-size: 1.3rem;
+  cursor: default;
 }
 
 .definition-list-pagination {
@@ -262,15 +263,36 @@ main {
 
 .definition-list-container > ul {
   list-style: none;
-  padding: 1rem .5rem;
+  padding: 0 .5rem;
   display: flex;
   flex-direction: column;
-  row-gap: 2rem;
+  row-gap: 1rem;
 }
 
 .definition-list-item {
   border-bottom: 1px solid var(--THEME-COLOR-LIGHTER);
-  padding: 1rem 0;
+  padding: 2rem 0;
+}
+
+.definition-list-show-all-button {
+  margin: 1rem .5rem;
+  padding: 5px 10px;
+  width: 98%;
+  border: 1px solid var(--THEME-COLOR-LIGHTER);
+  background-color: var(--THEME-COLOR-LIGHTEST);
+  border-radius: 15px;
+  font-size: .8rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.definition-list-show-all-button:hover {
+  background-color: var(--THEME-COLOR-LIGHTER);
+}
+
+.definition-list-show-all-button:active {
+  background-color: var(--THEME-COLOR-LIGHT);
+  color:white;
 }
 
 /* definition form component*/
@@ -300,6 +322,8 @@ main {
     background-color: var(--THEME-COLOR-LIGHTEST);
     border-radius: 0 0 15px 15px;
     font-size: .8rem;
+    cursor: pointer;
+    font-weight: bold;
 
   }
 

@@ -24,7 +24,10 @@ const DefinitionListPrivate = {
     rootElement: undefined,
     titleElement: undefined,
     listElement: undefined,
+    showAllElement: undefined,
   },
+
+  showAllButtonListener: undefined,
 
   init() {
     const list = this.definitionList;
@@ -54,6 +57,20 @@ const DefinitionListPrivate = {
     list.listElement = document.createElement("ul");
     list.rootElement.appendChild(list.listElement);
 
+    list.showAllElement = document.createElement("button");
+    list.showAllElement.setAttribute("type", "button");
+    list.showAllElement.classList.add("definition-list-show-all-button");
+    list.showAllElement.style.display = "block";
+    list.showAllElement.innerHTML = "show all";
+
+    list.showAllElement.addEventListener("click", e => {
+      if(this.showAllButtonListener){
+        this.showAllButtonListener(e);
+      }
+    });
+
+    list.rootElement.appendChild(list.showAllElement);
+
     const sudoDefinitionFormElement = document.createElement("DefinitionForm");
     list.rootElement.appendChild(sudoDefinitionFormElement);
     DefinitionForm.init(list.rootElement);
@@ -62,7 +79,7 @@ const DefinitionListPrivate = {
     return list;
   },
 
-  setDefinitionList(topicTitle, currentPage, totalPages, definitions) {
+  setDefinitionList(topicTitle, currentPage, totalPages, definitions, displayShowAll = true) {
     if(!this.definitionList.rootElement){
       return
     }
@@ -75,6 +92,7 @@ const DefinitionListPrivate = {
         .join("");
 
     document.querySelector("html").scrollTop = 0;
+    DefinitionListPrivate.definitionList.showAllElement.style.display = displayShowAll ? "block" : "none";
 
     DefinitionForm.setTopicTitle(topicTitle);
     DefinitionForm.clear();
@@ -109,8 +127,8 @@ const DefinitionList = {
     return definitionList.rootElement;
   },
 
-  setDefinitionList(topicTitle, currentPage, totalPages, definitions) {
-    DefinitionListPrivate.setDefinitionList(topicTitle, currentPage, totalPages, definitions);
+  setDefinitionList(topicTitle, currentPage, totalPages, definitions, displayShowAll) {
+    DefinitionListPrivate.setDefinitionList(topicTitle, currentPage, totalPages, definitions, displayShowAll);
   },
 
   setPageChangeListener(listener) {
@@ -125,6 +143,13 @@ const DefinitionList = {
       return;
     }
     DefinitionForm.setListener(listener);
+  },
+
+  setShowAllButtonListener(listener) {
+    if (typeof listener !== "function") {
+      return;
+    }
+    DefinitionListPrivate.showAllButtonListener = listener;
   }
 };
 

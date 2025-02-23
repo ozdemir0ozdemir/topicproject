@@ -23,13 +23,18 @@ class DefinitionController {
 	ResponseEntity<PageResponse<DefinitionDto>> getAllDefinitionsByTopicId(
 			@PathVariable Long topicId,
 			@RequestParam(name = "page", defaultValue = "1") int page,
-			@RequestParam(name = "date") String dateString) {
+			@RequestParam(name = "date", defaultValue = "") String dateString) {
+
+		if (dateString.isBlank() || dateString.isEmpty()) {
+			return ResponseEntity.ok(this.service.getDefinitionsByTopicId(topicId, Math.max(0, page - 1)));
+		}
 
 		List<Integer> dateArray =
 				Arrays.stream(dateString.split("-")).map(Integer::parseInt).toList();
 		LocalDate localDate = LocalDate.of(dateArray.get(0), dateArray.get(1), dateArray.get(2));
+		// TODO: check dateString is acceptable for the localDate and valid
 
-		return ResponseEntity.ok(this.service.getDefinitionsByTitleId(
+		return ResponseEntity.ok(this.service.getDefinitionsByTopicId(
 				topicId,
 				Math.max(0, page - 1),
 				localDate.getYear(),

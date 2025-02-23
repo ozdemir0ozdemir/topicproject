@@ -45,9 +45,22 @@ const TopicService = {
     }
   },
 
-  async getAllDefinitionsByTopicId(topicId, page, year, month, day) {
+  async getFilteredDefinitionsByTopicId(topicId, page, year, month, day) {
     try {
       const response = await fetch(`${apiUrl}/topics/${topicId}/definitions?page=${page}&date=${year}-${month}-${day}`);
+      if (!response.ok) {
+        throw new Error(`Hata: ${response.status}`)
+      }
+      return await response.json();
+    } catch (error) {
+      console.log("Hata: ", error);
+      return null;
+    }
+  },
+
+  async getAllDefinitionsByTopicId(topicId, page) {
+    try {
+      const response = await fetch(`${apiUrl}/topics/${topicId}/definitions?page=${page}`);
       if (!response.ok) {
         throw new Error(`Hata: ${response.status}`)
       }

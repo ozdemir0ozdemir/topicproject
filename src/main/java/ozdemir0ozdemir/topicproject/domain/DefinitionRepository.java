@@ -15,4 +15,10 @@ interface DefinitionRepository extends JpaRepository<Definition, Long> {
 	order by d.createdAt asc
 	""")
 	Page<Definition> findAllByTopicId(Long topicId, Date startDate, Date endDate, Pageable pageable);
+
+	@Query("""
+	from Definition d where d.topic.id = :topicId
+	order by d.createdAt asc
+	""")
+	Page<Definition> findAllByTopicId(Long topicId, Pageable pageable);
 }

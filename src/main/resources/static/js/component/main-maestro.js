@@ -19,6 +19,7 @@ import DefinitionList from "./definition-list.js";
  * */
 const MainMaestroPrivate = {
 
+
   html: {
     rootElement: undefined,
     leftFrameElement: undefined,
@@ -28,7 +29,8 @@ const MainMaestroPrivate = {
   dateFilter: {
     year: undefined,
     month: undefined,
-    day: undefined
+    day: undefined,
+    active: true
   },
 
   selectedTopic: {
@@ -95,6 +97,7 @@ const MainMaestroPrivate = {
           this.selectedTopic.sanitizedTitle = sanitizedTitle;
           this.selectedTopic.createdAt = createdAt;
 
+          this.dateFilter.active = true;
           MainMaestroPrivate.setDefinitionsListPage(1);
 
           if (addHistory) {
@@ -118,19 +121,35 @@ const MainMaestroPrivate = {
   },
 
   setDefinitionsListPage(page) {
-    // TODO: FILTER DATE
-    TopicService
-        .getAllDefinitionsByTopicId(this.selectedTopic.id, page, this.dateFilter.year, this.dateFilter.month - 1, this.dateFilter.day)
-        .then(defs => {
-          DefinitionList
-              .setDefinitionList(this.selectedTopic.title, page, defs.totalPages, defs.content);
-        });
+    if(this.dateFilter.active){
+
+      TopicService
+          .getFilteredDefinitionsByTopicId(this.selectedTopic.id, page, this.dateFilter.year, this.dateFilter.month - 1, this.dateFilter.day)
+          .then(defs => {
+            DefinitionList
+                .setDefinitionList(this.selectedTopic.title, page, defs.totalPages, defs.content);
+          });
+    }
+    else {
+      TopicService
+          .getAllDefinitionsByTopicId(this.selectedTopic.id, page)
+          .then(defs => {
+            DefinitionList
+                .setDefinitionList(this.selectedTopic.title, page, defs.totalPages, defs.content, false);
+          });
+    }
+
   },
 
   saveNewDefinition(definition) {
     TopicService
         .saveNewTopicDefinition(this.selectedTopic, definition)
         .then(def => console.log("new definition saved. DO SOMETHING!!! : ", def));
+  },
+
+  deactivateDateFilter() {
+    this.dateFilter.active = false;
+    this.setDefinitionsListPage(1);
   },
 
 };
@@ -152,6 +171,7 @@ const MainMaestro = {
     DefinitionList.init(MainMaestroPrivate.html.rightFrameElement);
     DefinitionList.setPageChangeListener(page => MainMaestroPrivate.setDefinitionsListPage(page));
     DefinitionList.setDefinitionFormListener(definition => MainMaestroPrivate.saveNewDefinition(definition));
+    DefinitionList.setShowAllButtonListener(() => MainMaestroPrivate.deactivateDateFilter());
 
     // ### Initial Values ###
 
@@ -168,6 +188,7 @@ const MainMaestro = {
 
 
   setDateFilter(year, month, day) {
+    MainMaestroPrivate.dateFilter.active = true;
     MainMaestroPrivate.setDateFilter(+year, +month, +day);
     MainMaestroPrivate.setTopicsListPage(1);
 
@@ -180,6 +201,8 @@ const MainMaestro = {
     //   MainMaestroPrivate.setSelectedTopic(+title.substring(hyphen + 2), true);
     // }
   },
+
+
 
 
   acceptRoute(addHistory) {

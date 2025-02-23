@@ -27,7 +27,7 @@ public class DefinitionService {
 		return DefinitionDto.from(definition);
 	}
 
-	public PageResponse<DefinitionDto> getDefinitionsByTitleId(Long topicId, int page, int year, int month, int day) {
+	public PageResponse<DefinitionDto> getDefinitionsByTopicId(Long topicId, int page, int year, int month, int day) {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(year, month, day, 0, 0, 0);
@@ -38,6 +38,13 @@ public class DefinitionService {
 
 		return PageResponse.of(this.repository
 				.findAllByTopicId(topicId, startDate, endDate, PageRequest.of(page, 10))
+				.map(DefinitionDto::from));
+	}
+
+	public PageResponse<DefinitionDto> getDefinitionsByTopicId(Long topicId, int page) {
+
+		return PageResponse.of(this.repository
+				.findAllByTopicId(topicId, PageRequest.of(page, 10))
 				.map(DefinitionDto::from));
 	}
 }
