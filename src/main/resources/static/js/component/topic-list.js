@@ -1,6 +1,7 @@
 "use strict";
 
 import Pagination from "./pagination.js";
+import DateFilter from "./date-filter";
 
 /**
  * @author Özdemir Özdemir
@@ -20,7 +21,7 @@ const TopicListPrivate = {
 
   html: {
     rootElement: undefined,
-    titleElement: undefined,
+    dateFilterElement: undefined,
     listElement: undefined,
   },
 
@@ -38,9 +39,9 @@ const TopicListPrivate = {
     Pagination.init(topicList.rootElement);
     Pagination.updatePagination(HTML_TAG, 1, 1, false);
 
-    topicList.titleElement = document.createElement("h4");
-    topicList.titleElement.innerHTML = "today";
-    topicList.rootElement.appendChild(topicList.titleElement);
+    topicList.dateFilterElement = document.createElement("DateFilter");
+    topicList.rootElement.appendChild(topicList.dateFilterElement);
+    DateFilter.init(topicList.rootElement);
 
     topicList.listElement = document.createElement("ul");
     topicList.listElement.classList.add("topic-list");
@@ -60,11 +61,11 @@ const TopicListPrivate = {
   },
 
   clickListener(event)  {
-    event.preventDefault();
     if (event.isTrusted
         && event.target.localName === "a"
         && event.target.classList.contains("topic-link")
         && this.topicChangeListener) {
+      event.preventDefault();
       const id = event.target.getAttribute("data-id");
       this.topicChangeListener(id);
     }
