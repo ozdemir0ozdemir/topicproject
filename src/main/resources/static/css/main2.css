@@ -282,14 +282,34 @@ main {
 
 
   textarea {
-    padding: .5rem;
+    padding: 1rem;
     min-height: 150px;
     resize: none;
     border: 1px solid var(--THEME-COLOR-LIGHTER);
+    border-bottom: 0;
     outline: none;
+    background-color: var(--THEME-COLOR-LIGHTEST);
+    border-radius: 15px 15px 0 0;
+    box-shadow: inset 0 2px 4px 0 var(--THEME-COLOR-LIGHTER);
   }
 
   button {
+    padding: .5rem;
+    border: 1px solid var(--THEME-COLOR-LIGHTER);
+    border-top: 0;
+    background-color: var(--THEME-COLOR-LIGHTEST);
+    border-radius: 0 0 15px 15px;
+    font-size: .8rem;
+
+  }
+
+  button:hover {
+    background-color: var(--THEME-COLOR-LIGHTER);
+  }
+
+  button:active {
+    background-color: var(--THEME-COLOR-LIGHT);
+    color:white;
   }
 }
 
