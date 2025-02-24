@@ -231,11 +231,12 @@ main {
 
 
 .topic-link:any-link {
-  padding: .6rem .5rem;
+  padding: .4em .5em;
   text-decoration: none;
   color: var(--THEME-COLOR-DARK);
   border-radius: 2px;
-  font-size: .9rem;
+  font-size: .9em;
+  line-height: 1.5em;
 }
 
 .topic-link:hover {

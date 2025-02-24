@@ -85,8 +85,8 @@ public class ExampleDataCreator {
 
 			List<Topic> topics = new ArrayList<>();
 			topicList.forEach(title -> topics.add(new Topic()
-					.setTitle(title.toLowerCase())
-					.setSanitizedTitle(Sanitizer.sanitizeTitle(title.toLowerCase()))
+					.setTitle(title.toLowerCase(Locale.ENGLISH))
+					.setSanitizedTitle(Sanitizer.sanitizeTitle(title.toLowerCase(Locale.ENGLISH)))
 					.setCreatedAt(Date.from(Instant.now(clock).minus(random.nextInt(2), ChronoUnit.DAYS)))));
 
 			topicRepository.saveAll(topics);
@@ -106,7 +106,7 @@ public class ExampleDataCreator {
 				ids.forEach(id -> {
 					Definition def = new Definition()
 							.setTopic(topic)
-							.setDefinition(definitionList.get(id).toLowerCase())
+							.setDefinition(definitionList.get(id).toLowerCase(Locale.ENGLISH))
 							.setCreatedAt(Date.from(Instant.now(clock).minus(random.nextInt(2) , ChronoUnit.DAYS)));
 					definitions.add(def);
 				});
