@@ -101,6 +101,12 @@ const SearchBoxPrivate = {
         return;
       }
 
+      if (event.key === "Escape") {
+        event.preventDefault();
+        this.blurAndClear();
+        return;
+      }
+
       if (this.html.input.value.trim().length === 0) {
         this.html.list.style.display = "none";
         this.html.list.innerHTML = "";
