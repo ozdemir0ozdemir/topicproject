@@ -175,7 +175,8 @@ main {
   outline: none;
   border: none;
   background-color: transparent;
-  font-size: .6rem;
+  font-size: .7rem;
+  font-weight: bold;
   cursor: pointer;
 
 }
