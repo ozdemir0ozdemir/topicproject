@@ -142,6 +142,7 @@ const MainMaestroPrivate = {
   },
 
   saveNewDefinition(definition) {
+    // TODO: May create new title also
     TopicService
         .saveNewTopicDefinition(this.selectedTopic, definition)
         .then(def => console.log("new definition saved. DO SOMETHING!!! : ", def));

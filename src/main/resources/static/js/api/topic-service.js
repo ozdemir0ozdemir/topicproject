@@ -109,6 +109,24 @@ const TopicService = {
     }
   },
 
+  async searchTopicsByTitle(title) {
+    try {
+      const response = await fetch(`${apiUrl}/topics/search/${title}`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+      });
+      if (!response.ok) {
+        throw new Error(`Error: cannot be searched`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.log("Error: ", error);
+      return null;
+    }
+  },
+
+
+
 }
 
 export default TopicService;

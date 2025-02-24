@@ -20,4 +20,10 @@ interface TopicRepository extends JpaRepository<Topic, Long> {
 	having count(d.id) > 0
 	""")
 	Page<TopicProjection> findAllTopicDefinedByDay(Date startDate, Date endDate, Pageable pageable);
+
+	@Query("""
+	select t.id id, t.title title, t.sanitizedTitle sanitizedTitle, 0 totalDefinition from Topic t
+	where t.sanitizedTitle like %:sanitizedTitle%
+	""")
+	Page<TopicProjection> searchAllBySanitizedTitle(String sanitizedTitle, Pageable pageable);
 }

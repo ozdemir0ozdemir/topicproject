@@ -58,6 +58,13 @@ public class TopicService {
 				this.topicRepository.findAllTopicDefinedByDay(startDate, endDate, PageRequest.of(page, 25)));
 	}
 
+	public PageResponse<TopicProjection> searchAllBySanitizedTitle(String title) {
+
+		String sanitizedTitle = Sanitizer.sanitizeTitle(title);
+		return PageResponse.of(
+				this.topicRepository.searchAllBySanitizedTitle(sanitizedTitle, PageRequest.of(0, 25)));
+	}
+
 	Topic getReferenceById(Long topicId) {
 		return this.topicRepository.getReferenceById(topicId);
 	}

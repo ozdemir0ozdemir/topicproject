@@ -37,6 +37,12 @@ class TopicController {
 				Math.max(0, page - 1), localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth()));
 	}
 
+	@GetMapping("/search/{title}")
+	ResponseEntity<PageResponse<TopicProjection>> getTopicById(@PathVariable String title) {
+		return ResponseEntity.ok(this.service.searchAllBySanitizedTitle(title));
+	}
+
+
 	@GetMapping("/{id}")
 	ResponseEntity<TopicDto> getTopicById(@PathVariable Long id) {
 		return ResponseEntity.ok(this.service.getTopicById(id));
