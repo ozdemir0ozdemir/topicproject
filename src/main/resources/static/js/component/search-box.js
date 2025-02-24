@@ -1,6 +1,8 @@
 "use strict";
 
-const HTML_TAG = "SearchBox";
+import {SEARCH_BOX_TAG} from "../constant.js";
+
+const HTML_TAG = SEARCH_BOX_TAG;
 const SearchBoxPrivate = {
 
   html: {

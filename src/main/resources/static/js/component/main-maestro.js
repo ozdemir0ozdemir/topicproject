@@ -19,6 +19,7 @@ import DefinitionList from "./definition-list.js";
  * */
 const MainMaestroPrivate = {
 
+  rightFrames: new Map(),
 
   html: {
     rootElement: undefined,
@@ -174,6 +175,8 @@ const MainMaestro = {
     DefinitionList.setDefinitionFormListener(definition => MainMaestroPrivate.saveNewDefinition(definition));
     DefinitionList.setShowAllButtonListener(() => MainMaestroPrivate.deactivateDateFilter());
 
+    MainMaestroPrivate.rightFrames.set("definition-list", MainMaestroPrivate.html.rightFrameElement.childNodes.item(0));
+
     // ### Initial Values ###
 
     MainMaestroPrivate.setTopicsListPage(1);
@@ -185,6 +188,23 @@ const MainMaestro = {
 
     this.acceptRoute(true);
 
+    const nonButton = document.querySelector(".non-useful-button");
+    const defButton = document.querySelector(".definition-list-button");
+
+
+    // DEV
+    const nonCompo = document.createElement("div")
+    nonCompo.innerHTML = `<h1>Non Useful Component</h1>`;
+    MainMaestroPrivate.rightFrames.set("non-useful", nonCompo);
+
+    nonButton.addEventListener("click", e => {
+      MainMaestroPrivate.setRightFrame(MainMaestroPrivate.rightFrames.get("non-useful"));
+    });
+
+    defButton.addEventListener("click", e => {
+      MainMaestroPrivate.setRightFrame(MainMaestroPrivate.rightFrames.get("definition-list"));
+    });
+
   },
 
 
@@ -192,18 +212,7 @@ const MainMaestro = {
     MainMaestroPrivate.dateFilter.active = true;
     MainMaestroPrivate.setDateFilter(+year, +month, +day);
     MainMaestroPrivate.setTopicsListPage(1);
-
-    // const route = window.location.pathname;
-    // if(route.search("/topics/[a-z0-9-]+/definitions") === 0) {
-    //   const [topics, title, definitions]
-    //       = route.substring(1).split("/");
-    //
-    //   const hyphen = title.search("--");
-    //   MainMaestroPrivate.setSelectedTopic(+title.substring(hyphen + 2), true);
-    // }
   },
-
-
 
 
   acceptRoute(addHistory) {

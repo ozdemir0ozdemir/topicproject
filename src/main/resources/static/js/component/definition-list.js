@@ -3,6 +3,7 @@
 
 import Pagination from "./pagination.js";
 import DefinitionForm from "./definition-form.js";
+import {DEFINITION_LIST_TAG} from "../constant.js";
 
 /**
  * @author Özdemir Özdemir
@@ -16,7 +17,7 @@ import DefinitionForm from "./definition-form.js";
  * Definition List Component.
  * Can be used only once.
  * */
-const HTML_TAG = "DefinitionList";
+const HTML_TAG = DEFINITION_LIST_TAG;
 
 const DefinitionListPrivate = {
 

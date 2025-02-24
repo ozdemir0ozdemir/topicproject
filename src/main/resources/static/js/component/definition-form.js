@@ -1,5 +1,7 @@
 "use strict";
 
+import {DEFINITION_FORM_TAG} from "../constant.js";
+
 /**
  * @author Özdemir Özdemir
  * @email ozdemirozdemir@hotmail.com.tr
@@ -13,7 +15,7 @@
  * Can be used only once
  * */
 
-const HTML_TAG = "DefinitionForm";
+const HTML_TAG = DEFINITION_FORM_TAG;
 const PLACEHOLDER = "write something about";
 
 const DefinitionFormPrivate = {

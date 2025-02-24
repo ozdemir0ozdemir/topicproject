@@ -2,6 +2,7 @@
 
 import Pagination from "./pagination.js";
 import DateFilter from "./date-filter.js";
+import {TOPIC_LIST_TAG} from "../constant.js";
 
 /**
  * @author Özdemir Özdemir
@@ -15,7 +16,7 @@ import DateFilter from "./date-filter.js";
  * Topic List Component.
  * Can be used only once.
  * */
-const HTML_TAG = "TopicList";
+const HTML_TAG = TOPIC_LIST_TAG;
 
 const TopicListPrivate = {
 

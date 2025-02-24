@@ -1,5 +1,7 @@
 "use strict";
 
+import {PAGINATION_TAG} from "../constant.js";
+
 /**
  * @author Özdemir Özdemir
  * @email ozdemirozdemir@hotmail.com.tr
@@ -12,7 +14,7 @@
  * Pagination Component
  * */
 const DATA_PAGINATION_NAME = "data-pagination-name";
-const HTML_TAG = "Pagination";
+const HTML_TAG = PAGINATION_TAG;
 
 const PaginationPrivate = {
   paginationSets: new Map(),
