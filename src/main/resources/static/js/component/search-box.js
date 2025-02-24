@@ -71,11 +71,17 @@ const SearchBoxPrivate = {
     const keyDownListener = event => {
       if (event.key === "ArrowUp") {
         event.preventDefault();
-        this.selectedIndex = Math.max(-1, --this.selectedIndex);
+        this.selectedIndex = Math.max(-2, --this.selectedIndex);
+        if(this.selectedIndex === -2) {
+          this.selectedIndex = this.listSize;
+        }
         this.selectListItem(this.selectedIndex);
       } else if (event.key === "ArrowDown") {
         event.preventDefault();
-        this.selectedIndex = Math.min(this.listSize, ++this.selectedIndex);
+        this.selectedIndex = Math.min(this.listSize + 1, ++this.selectedIndex);
+        if(this.selectedIndex === this.listSize + 1) {
+          this.selectedIndex = 0;
+        }
         this.selectListItem(this.selectedIndex);
       } else if (event.key === "Enter") {
         event.preventDefault();
