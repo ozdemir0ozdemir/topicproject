@@ -1,7 +1,7 @@
 "use strict";
 
 import Pagination from "./pagination.js";
-import DateFilter from "./date-filter";
+import DateFilter from "./date-filter.js";
 
 /**
  * @author Özdemir Özdemir

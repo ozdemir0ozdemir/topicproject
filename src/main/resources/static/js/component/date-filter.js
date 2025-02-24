@@ -1,6 +1,6 @@
 "use strict";
 
-import MainMaestro from "./main-maestro";
+import MainMaestro from "./main-maestro.js";
 
 const HTML_TAG = "DateFilter";
 
